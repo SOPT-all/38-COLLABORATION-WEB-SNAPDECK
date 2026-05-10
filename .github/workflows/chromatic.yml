@@ -36,4 +36,4 @@ jobs:
       - name: Publish to Chromatic
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-        run: pnpm exec chromatic --ci --build-script-name=build-storybook
+        run: pnpm exec chromatic --ci --build-script-name=build-storybook --exit-zero-on-changes

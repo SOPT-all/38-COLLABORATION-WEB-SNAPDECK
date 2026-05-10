@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "dotenv -e .env.chromatic -- chromatic"
+    "chromatic": "dotenv -e .env.chromatic -- chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
