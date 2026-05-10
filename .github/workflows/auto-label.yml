@@ -1,0 +1,83 @@
+name: Auto Label PR and Issue
+
+on:
+  issues:
+    types: [opened, edited]
+
+  pull_request:
+    types: [opened, edited, reopened, ready_for_review]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  auto-label:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add labels by title and author
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const payload = context.payload;
+
+            const isPR = Boolean(payload.pull_request);
+
+            const target = isPR
+              ? payload.pull_request
+              : payload.issue;
+
+            const title = target.title;
+            const author = target.user.login;
+            const issueNumber = target.number;
+
+            const labels = [];
+
+            const titleLabelMap = [
+              { pattern: /^\[?Feat\]?[:\)]?/i, label: "🥚 Feat" },
+              { pattern: /^\[?Fix\]?[:\)]?/i, label: "🐛 Fix" },
+              { pattern: /^\[?Docs\]?[:\)]?/i, label: "📃 Docs" },
+              { pattern: /^\[?Refactor\]?[:\)]?/i, label: "🧹 Refactor" },
+              { pattern: /^\[?Chore\]?[:\)]?/i, label: "🪜 Chore" },
+              { pattern: /^\[?Style\]?[:\)]?/i, label: "🎨 Style" },
+              { pattern: /^\[?Init\]?[:\)]?/i, label: "🐾 Init" },
+              { pattern: /^\[?Hotfix\]?[:\)]?/i, label: "🚨 Hotfix" },
+            ];
+
+            for (const { pattern, label } of titleLabelMap) {
+              if (pattern.test(title)) {
+                labels.push(label);
+              }
+            }
+
+            const authorLabelMap = {
+              jyeon03: "🐵 지연",
+              chungyo: "🐨 충영",
+              nyewon: "🐶 예원",
+              gyeongbibin: "🐻‍❄️ 경빈",
+              seojin15: "🐰 서진",
+            };
+
+            if (authorLabelMap[author]) {
+              labels.push(authorLabelMap[author]);
+            }
+
+            const uniqueLabels = [...new Set(labels)];
+
+            if (uniqueLabels.length === 0) {
+              console.log("추가할 라벨이 없습니다.");
+              return;
+            }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              labels: uniqueLabels,
+            });
+
+            console.log(
+              `Added labels: ${uniqueLabels.join(", ")}`
+            );

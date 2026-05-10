@@ -2,6 +2,7 @@
   "name": "38-collaboration-web-snapdeck",
   "private": true,
   "version": "0.0.0",
+  "packageManager": "pnpm@10.26.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
