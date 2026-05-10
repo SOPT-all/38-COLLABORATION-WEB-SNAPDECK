@@ -1,0 +1,110 @@
+/*
+  Composite font / text styles (.typo-*) — maps Figma variable IDs to utility classes.
+*/
+
+@layer utilities {
+  .typo-head-b-20 {
+    font-size: var(--text-head-b-20);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .typo-head-b-17 {
+    font-size: var(--text-head-b-17);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .typo-head-b-16 {
+    font-size: var(--text-head-b-16);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .typo-head-sb-16 {
+    font-size: var(--text-head-sb-16);
+    font-weight: 600;
+    line-height: 1.4423;
+    letter-spacing: -0.04em;
+  }
+
+  .typo-head-b-14 {
+    font-size: var(--text-head-b-14);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .typo-head-sb-14 {
+    font-size: var(--text-head-sb-14);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .typo-body-m-15 {
+    font-size: var(--text-body-m-15);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+
+  .typo-body-r-14 {
+    font-size: var(--text-body-r-14);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .typo-caption-m-11 {
+    font-size: var(--text-caption-m-11);
+    font-weight: 500;
+    line-height: 1.2rem;
+    letter-spacing: 0;
+  }
+
+  .typo-caption-l-11 {
+    font-size: var(--text-caption-l-11);
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+
+  .typo-caption-m-10 {
+    font-size: var(--text-caption-m-10);
+    font-weight: 500;
+    line-height: 1.7rem;
+    letter-spacing: 0;
+  }
+
+  .typo-caption-r-10 {
+    font-size: var(--text-caption-r-10);
+    font-weight: 400;
+    line-height: 1.5rem;
+    letter-spacing: 0.01em;
+  }
+
+  .typo-caption-r-9 {
+    font-size: var(--text-caption-r-9);
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+
+  .typo-caption-r-8 {
+    font-size: var(--text-caption-r-8);
+    font-weight: 400;
+    line-height: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .typo-etc-r-21 {
+    font-size: var(--text-etc-r-21);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+}

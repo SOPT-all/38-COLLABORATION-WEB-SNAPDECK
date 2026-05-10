@@ -1,0 +1,9 @@
+/*
+  Corner radius tokens.
+*/
+
+@theme {
+  --radius-sm: 0.4rem;
+  --radius-md: 0.8rem;
+  --radius-lg: 1.2rem;
+}
