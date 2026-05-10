@@ -6,4 +6,7 @@
   --z-dropdown: 1000;
   --z-modal: 2000;
   --z-toast: 3000;
+  --z-content: 1;
+  --z-background: 0;
+  --z-header: 1000;
 }
