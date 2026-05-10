@@ -156,6 +156,10 @@ jobs:
           fi
 
           if [ "$EVENT_NAME" = "pull_request" ]; then
+            if [ "$ACTION" = "opened" ]; then
+              sleep 10
+            fi
+
             PR_TITLE="${{ github.event.pull_request.title }}"
             IS_MERGED="${{ github.event.pull_request.merged }}"
             PR_NUMBER="${{ github.event.pull_request.number }}"
