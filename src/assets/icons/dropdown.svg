@@ -3,7 +3,7 @@
 <path d="M5 5L11 5L11 11L5 11L5 5Z" fill="url(#pattern0_2315_1630)"/>
 </mask>
 <g mask="url(#mask0_2315_1630)">
-<path d="M11 5L11 11L5 11L5 5L11 5Z" fill="#B3B3B3"/>
+<path d="M11 5L11 11L5 11L5 5L11 5Z" fill="currentColor"/>
 </g>
 <defs>
 <pattern id="pattern0_2315_1630" patternContentUnits="objectBoundingBox" width="1" height="1">
