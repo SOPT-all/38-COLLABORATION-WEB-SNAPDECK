@@ -2,7 +2,7 @@
   Composite font / text styles (.typo-*) — maps Figma variable IDs to utility classes.
 */
 
-@layer utilities {
+@layer fontstyles {
   .typo-head-b-20 {
     font-size: var(--text-head-b-20);
     font-weight: 700;
