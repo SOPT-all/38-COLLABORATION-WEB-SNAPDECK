@@ -1,9 +1,3 @@
-export const lazyHomePage = async () => {
-  const { default: Component } = await import("@/pages/HomePage");
-
-  return { Component };
-};
-
 export const lazyContentPage = async () => {
   const { default: Component } = await import("@/pages/ContentPage");
 

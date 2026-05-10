@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
+import HomePage from "@/pages/HomePage";
 import RootLayout, { RouterHydrateFallback } from "./layout";
-import { lazyContentPage, lazyHomePage, lazyNotFoundPage } from "./lazy";
+import { lazyContentPage, lazyNotFoundPage } from "./lazy";
 import { PATHS } from "./paths";
 
 export const router = createBrowserRouter([
@@ -11,7 +12,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        lazy: lazyHomePage,
+        Component: HomePage,
       },
       {
         path: PATHS.content,
