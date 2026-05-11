@@ -1,11 +1,9 @@
-/*
-  Tailwind entry + design tokens. Import order: token partials → tailwind → font-style utilities.
-*/
 @import "./tokens/colors.css";
 @import "./tokens/typography.css";
 @import "./tokens/spacing.css";
 @import "./tokens/radius.css";
 @import "./tokens/shadows.css";
 @import "./tokens/z-index.css";
+@import "./reset.css" layer(base);
 @import "tailwindcss";
 @import "./tokens/fontstyles.css";
