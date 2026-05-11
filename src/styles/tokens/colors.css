@@ -5,14 +5,14 @@
 
 @theme {
   /* Snapdesk grayscale */
-  --color-snapdesk-000: #ffffff;
-  --color-snapdesk-100: #d9d9d9;
-  --color-snapdesk-400: #b3b3b3;
-  --color-snapdesk-500: #4d4d4d;
-  --color-snapdesk-600: #2c2c2c;
-  --color-snapdesk-700: #282828;
-  --color-snapdesk-800: #1b1b1b;
-  --color-snapdesk-900: #1a1a1a;
+  --color-snapdeck-000: #ffffff;
+  --color-snapdeck-300: #d9d9d9;
+  --color-snapdeck-400: #b3b3b3;
+  --color-snapdeck-500: #4d4d4d;
+  --color-snapdeck-600: #2c2c2c;
+  --color-snapdeck-700: #282828;
+  --color-snapdeck-800: #1b1b1b;
+  --color-snapdeck-900: #1a1a1a;
 
   /* Sub palette */
   --color-sub-blue-1: #336CFF;
@@ -21,7 +21,7 @@
   --color-sub-green: #4DD943;
 
   /* Semantic overlays — snapdesk base + Figma alpha (900_50 / 900_70 / 700_30) */
-  --color-overlay-900-50: color-mix(in srgb, var(--color-snapdesk-900) 50%, transparent);
-  --color-overlay-900-70: color-mix(in srgb, var(--color-snapdesk-900) 70%, transparent);
-  --color-overlay-700-30: color-mix(in srgb, var(--color-snapdesk-700) 30%, transparent);
+  --color-overlay-900-50: color-mix(in srgb, var(--color-snapdeck-900) 50%, transparent);
+  --color-overlay-900-70: color-mix(in srgb, var(--color-snapdeck-900) 70%, transparent);
+  --color-overlay-700-30: color-mix(in srgb, var(--color-snapdeck-700) 30%, transparent);
 }
