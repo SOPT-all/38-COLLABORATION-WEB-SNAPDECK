@@ -34,5 +34,5 @@ export default defineConfig([
     },
   },
   eslintPluginPrettierRecommended,
-  ...storybook.configs["flat/recommended"]
+  ...storybook.configs["flat/recommended"],
 ]);
