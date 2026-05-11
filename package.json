@@ -2,6 +2,7 @@
   "name": "38-collaboration-web-snapdeck",
   "private": true,
   "version": "0.0.0",
+  "packageManager": "pnpm@10.26.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,11 +14,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "react-router": "^7.15.0",
+    "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@tailwindcss/vite": "^4.1.14",
     "@types/node": "^24.12.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -30,6 +36,7 @@
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "globals": "^17.5.0",
     "prettier": "^3.8.3",
+    "tailwindcss": "^4.1.14",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
     "vite": "^8.0.10"
