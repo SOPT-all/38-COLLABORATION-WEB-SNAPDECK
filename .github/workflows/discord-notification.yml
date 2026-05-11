@@ -50,7 +50,7 @@ jobs:
               jyeon03) echo "<@1219518046163435544>" ;;
               chungyo) echo "<@340668628867219456>" ;;
               nyewon) echo "<@1016558289296830484>" ;;
-              gyeongbibin) echo "<@1502382738542690515>" ;;
+              gyeongbibin) echo "<@1502269805011406960>" ;;
               seojin15) echo "<@952484462141259816>" ;;
               *) echo "@$1" ;;
             esac
