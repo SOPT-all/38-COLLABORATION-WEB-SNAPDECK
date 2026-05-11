@@ -1,0 +1,1 @@
+{"v":5,"entries":{"pages-homepage--default":{"type":"story","subtype":"story","id":"pages-homepage--default","name":"Default","title":"Pages/HomePage","importPath":"./src/pages/HomePage/HomePage.stories.tsx","componentPath":"./src/pages/HomePage/index.tsx","tags":["dev","test","manifest"],"exportName":"Default"}}}

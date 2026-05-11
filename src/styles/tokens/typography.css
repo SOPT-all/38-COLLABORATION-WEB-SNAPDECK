@@ -11,9 +11,7 @@
   /* px → rem @ 10px root: 20→2, 17→1.7, 16→1.6, 15→1.5, 14→1.4, 11→1.1, 10→1, 9→0.9, 8→0.8, 21→2.1 */
   --text-head-b-20: 2rem;
   --text-head-b-17: 1.7rem;
-  --text-head-b-16: 1.6rem;
   --text-head-sb-16: 1.6rem;
-  --text-head-b-14: 1.4rem;
   --text-head-sb-14: 1.4rem;
 
   --text-body-m-15: 1.5rem;
@@ -23,7 +21,6 @@
   --text-caption-l-11: 1.1rem;
   --text-caption-m-10: 1rem;
   --text-caption-r-10: 1rem;
-  --text-caption-r-9: 0.9rem;
   --text-caption-r-8: 0.8rem;
 
   --text-etc-r-21: 2.1rem;

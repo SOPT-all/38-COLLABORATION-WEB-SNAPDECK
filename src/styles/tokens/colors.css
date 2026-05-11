@@ -10,30 +10,18 @@
   --color-snapdesk-400: #b3b3b3;
   --color-snapdesk-500: #4d4d4d;
   --color-snapdesk-600: #2c2c2c;
-  --color-snapdesk-700: #232426;
-  --color-snapdesk-800: #1d1e20;
-  --color-snapdesk-900: #000000;
-
-  /* Alpha / overlay helpers */
-  --color-snapdesk-000-20: rgb(255 255 255 / 0.2);
-  --color-snapdesk-000-70: rgb(255 255 255 / 0.7);
-  --color-snapdesk-700-20: rgb(35 36 38 / 0.2);
-
-  /* Legacy grayscale aliases (Figma variable names still used in places) */
-  --color-grayscale-000: #ffffff;
-  --color-grayscale-900: #1b1e22;
-  --color-grayscale-amp-000: #ffffff;
-  --color-grayscale-amp-200: #e2e6ee;
-  --color-grayscale-amp-999: #000000;
+  --color-snapdesk-700: #282828;
+  --color-snapdesk-800: #1b1b1b;
+  --color-snapdesk-900: #1a1a1a;
 
   /* Sub palette */
-  --color-sub-blue-1: #3b6cff;
-  --color-sub-blue-2: #82a2ff;
+  --color-sub-blue-1: #336CFF;
+  --color-sub-blue-2: #80A3FF;
   --color-sub-red: #bf4444;
-  --color-sub-green: #6dcd43;
+  --color-sub-green: #4DD943;
 
-  /* Semantic overlays from Variables (same hex as snapdesk scale where applicable) */
-  --color-overlay-900-50: #1a1a1a;
-  --color-overlay-900-70: #1a1a1a;
-  --color-overlay-700-30: #2c2c2c;
+  /* Semantic overlays — snapdesk base + Figma alpha (900_50 / 900_70 / 700_30) */
+  --color-overlay-900-50: color-mix(in srgb, var(--color-snapdesk-900) 50%, transparent);
+  --color-overlay-900-70: color-mix(in srgb, var(--color-snapdesk-900) 70%, transparent);
+  --color-overlay-700-30: color-mix(in srgb, var(--color-snapdesk-700) 30%, transparent);
 }
