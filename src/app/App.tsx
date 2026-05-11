@@ -1,5 +1,5 @@
-import "@/styles/theme.css";
-import "@/styles/global.css";
+import "@/shared/styles/theme.css";
+import "@/shared/styles/global.css";
 
 import { RouterProvider } from "react-router";
 
