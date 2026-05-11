@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./app/App.tsx";
 
 async function enableMocking() {
-  if (import.meta.env.DEV) {
+  if (import.meta.env.DEV && import.meta.env.VITE_ENABLE_MSW === "true") {
     const { worker } = await import("@/shared/mocks/browser.ts");
 
     await worker.start({
