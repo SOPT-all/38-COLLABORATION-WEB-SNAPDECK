@@ -4,8 +4,9 @@ import react from "@vitejs/plugin-react";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
-import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
-import { playwright } from '@vitest/browser-playwright';
+import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
+import { playwright } from "@vitest/browser-playwright";
+import svgr from "vite-plugin-svgr";
 
 // ESM: __dirname is not defined; Storybook/Vite load this file as native ESM.
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -14,7 +15,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [tailwindcss(), react()],
+  plugins: [tailwindcss(), react(), svgr()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src")
