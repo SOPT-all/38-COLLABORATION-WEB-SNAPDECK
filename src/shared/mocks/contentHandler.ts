@@ -1,7 +1,7 @@
-import { http, HttpResponse } from 'msw'
+import { HttpResponse, http } from "msw";
 
 export const contentHandlers = [
-  http.get('/api', () => {
-    return HttpResponse.json()
+  http.get("/api", () => {
+    return HttpResponse.json();
   }),
-]
+];
