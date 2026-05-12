@@ -1,8 +1,8 @@
 @layer base {
   :root {
     color-scheme: light;
-    background-color: var(--color-snapdesk-000);
-    color: var(--color-snapdesk-900);
+    background-color: var(--color-snapdeck-000);
+    color: var(--color-snapdeck-900);
     font-family: var(--font-sans);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -55,6 +55,6 @@
   input::placeholder,
   textarea::placeholder {
     opacity: 1;
-    color: var(--color-snapdesk-400);
+    color: var(--color-snapdeck-400);
   }
 }
