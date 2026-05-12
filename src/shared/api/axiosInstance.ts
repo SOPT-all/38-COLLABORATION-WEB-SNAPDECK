@@ -10,7 +10,13 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    return response.data.data;
+    const body = response.data;
+
+    if (!body.success) {
+      return Promise.reject(body);
+    }
+
+    return body.data;
   },
 
   (error) => {
