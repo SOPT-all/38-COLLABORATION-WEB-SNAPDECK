@@ -1,8 +1,11 @@
 import { StrictMode } from "react";
+
 import { createRoot } from "react-dom/client";
+
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { queryClient } from "./shared/api/queryClient.ts";
+
 import App from "./app/App.tsx";
 
 async function enableMocking() {

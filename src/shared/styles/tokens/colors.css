@@ -15,13 +15,25 @@
   --color-snapdeck-900: #1a1a1a;
 
   /* Sub palette */
-  --color-sub-blue-1: #336CFF;
-  --color-sub-blue-2: #80A3FF;
+  --color-sub-blue-1: #336cff;
+  --color-sub-blue-2: #80a3ff;
   --color-sub-red: #bf4444;
-  --color-sub-green: #4DD943;
+  --color-sub-green: #4dd943;
 
   /* Semantic overlays — snapdesk base + Figma alpha (900_50 / 900_70 / 700_30) */
-  --color-overlay-900-50: color-mix(in srgb, var(--color-snapdeck-900) 50%, transparent);
-  --color-overlay-900-70: color-mix(in srgb, var(--color-snapdeck-900) 70%, transparent);
-  --color-overlay-700-30: color-mix(in srgb, var(--color-snapdeck-700) 30%, transparent);
+  --color-overlay-900-50: color-mix(
+    in srgb,
+    var(--color-snapdeck-900) 50%,
+    transparent
+  );
+  --color-overlay-900-70: color-mix(
+    in srgb,
+    var(--color-snapdeck-900) 70%,
+    transparent
+  );
+  --color-overlay-700-30: color-mix(
+    in srgb,
+    var(--color-snapdeck-700) 30%,
+    transparent
+  );
 }
