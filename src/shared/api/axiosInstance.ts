@@ -9,8 +9,8 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(
-  (respone) => {
-    return respone;
+  (response) => {
+    return response.data.data;
   },
 
   (error) => {
