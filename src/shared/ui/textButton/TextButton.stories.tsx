@@ -7,7 +7,7 @@ import { ResearchIcon, RightSmallIcon, WebIcon } from "@/assets";
 import TextButton, { type TextButtonProps } from "./TextButton";
 
 const variantOptions = ["primary", "neutral", "danger"] as const;
-const sizeOptions = ["xs", "sm", "md", "lg", "cta"] as const;
+const sizeOptions = ["xs", "sm", "md", "lg", "xl"] as const;
 const iconSizeOptions = ["sm", "md", "lg"] as const;
 const stateOptions = ["default", "active"] as const;
 
@@ -255,12 +255,12 @@ const FigmaGuide = () => (
             title="btn_modalicn"
             description="모달 안에서 쓰는 full-width CTA"
             usage="URL 입력 모달의 제출 버튼에 사용합니다. 빈 값/유효하지 않은 값은 disabled, 유효한 값은 enabled로 표현합니다."
-            propsText='variant="primary" size="cta" fullWidth leftIcon'
+            propsText='variant="primary" size="xl" fullWidth leftIcon'
           >
             <div className="flex w-[25.2rem] flex-col gap-12">
               <TextButton
                 variant="primary"
-                size="cta"
+                size="xl"
                 leftIcon={<WebIcon />}
                 fullWidth
                 disabled
@@ -269,7 +269,7 @@ const FigmaGuide = () => (
               </TextButton>
               <TextButton
                 variant="primary"
-                size="cta"
+                size="xl"
                 leftIcon={<WebIcon />}
                 fullWidth
               >
@@ -277,7 +277,7 @@ const FigmaGuide = () => (
               </TextButton>
               <TextButton
                 variant="primary"
-                size="cta"
+                size="xl"
                 state="active"
                 leftIcon={<WebIcon />}
                 fullWidth
@@ -371,7 +371,7 @@ export const ContentType: Story = {
 export const ModalCta: Story = {
   args: {
     variant: "primary",
-    size: "cta",
+    size: "xl",
     leftIcon: <WebIcon />,
     fullWidth: true,
     children: "스크랩",

@@ -19,7 +19,7 @@ const textButtonVariants = cva(
         sm: "h-24 min-w-[6rem] gap-[0.7rem] rounded-sm px-12 typo-body-m-15",
         md: "h-[3.2rem] min-w-[8rem] gap-4 rounded-button px-8 typo-body-m-15",
         lg: "h-[4rem] min-w-[13rem] gap-8 rounded-button px-8 typo-body-m-15",
-        cta: "h-[4.4rem] gap-8 rounded-sm px-[1rem] typo-body-r-14",
+        xl: "h-[4.4rem] gap-8 rounded-sm px-[1rem] typo-body-r-14",
       },
       fullWidth: {
         true: "w-full",
@@ -65,7 +65,7 @@ const DEFAULT_ICON_SIZE_BY_SIZE: Record<
   sm: "sm",
   md: "sm",
   lg: "md",
-  cta: "lg",
+  xl: "lg",
 };
 
 export interface TextButtonProps extends ButtonElementProps {
