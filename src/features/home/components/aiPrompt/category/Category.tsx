@@ -21,6 +21,10 @@ const cardClassName = cn(
 );
 
 const Category = ({ value, onChange, className }: CategoryProps) => {
+  const handleCategoryClick = (categoryValue: CategoryValue) => {
+    onChange(value === categoryValue ? undefined : categoryValue);
+  };
+
   return (
     <div
       className={cn(
@@ -38,7 +42,7 @@ const Category = ({ value, onChange, className }: CategoryProps) => {
             aria-pressed={isSelected}
             className={cn(cardClassName, isSelected && "border-snapdeck-300")}
             key={option.value}
-            onClick={() => onChange(isSelected ? undefined : option.value)}
+            onClick={() => handleCategoryClick(option.value)}
             type="button"
           >
             <CategoryPreview type={option.value} />
