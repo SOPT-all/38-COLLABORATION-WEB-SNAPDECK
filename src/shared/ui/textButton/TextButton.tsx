@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import type { ComponentPropsWithRef, ReactNode } from "react";
 
 import { type VariantProps, cn, cva } from "@/shared/utils/cn";
 
@@ -45,7 +45,7 @@ const textButtonIconVariants = cva(
   },
 );
 
-type ButtonElementProps = ComponentPropsWithoutRef<"button">;
+type ButtonElementProps = ComponentPropsWithRef<"button">;
 type TextButtonVariantTypes = NonNullable<
   VariantProps<typeof textButtonVariants>["variant"]
 >;
@@ -80,6 +80,7 @@ export interface TextButtonProps extends ButtonElementProps {
 }
 
 const TextButton = ({
+  ref,
   variant,
   size,
   state = "default",
@@ -104,6 +105,7 @@ const TextButton = ({
 
   return (
     <button
+      ref={ref}
       {...buttonProps}
       type={type}
       aria-pressed={ariaPressed}
