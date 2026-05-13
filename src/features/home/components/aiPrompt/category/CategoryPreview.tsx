@@ -79,17 +79,22 @@ const CategoryPreview = ({ type }: { type: CategoryValue }) => {
     );
   }
 
-  return (
-    <div className="flex h-[5.3rem] w-full flex-col gap-[0.4rem]">
-      <Shape className="h-[0.3rem] w-[4.6rem]" />
-      <div className="grid grid-cols-2 gap-x-[0.4rem] gap-y-[0.2rem]">
-        <Shape className="h-[2.2rem]" />
-        <Shape className="h-[2.2rem]" />
-        <Shape className="h-[2.2rem]" />
-        <Shape className="h-[2.2rem]" />
+  if (type === "standard") {
+    return (
+      <div className="flex h-[5.3rem] w-full flex-col gap-[0.4rem]">
+        <Shape className="h-[0.3rem] w-[4.6rem]" />
+        <div className="grid grid-cols-2 gap-x-[0.4rem] gap-y-[0.2rem]">
+          <Shape className="h-[2.2rem]" />
+          <Shape className="h-[2.2rem]" />
+          <Shape className="h-[2.2rem]" />
+          <Shape className="h-[2.2rem]" />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  const exhaustiveCheck: never = type;
+  return exhaustiveCheck;
 };
 
 export default CategoryPreview;
