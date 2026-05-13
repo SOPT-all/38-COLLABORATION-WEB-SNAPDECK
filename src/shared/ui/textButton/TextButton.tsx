@@ -8,11 +8,11 @@ const textButtonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-sub-blue-2 text-snapdeck-000 hover:bg-sub-blue-1 enabled:data-[state=active]:bg-sub-blue-1 disabled:bg-snapdeck-300 disabled:text-snapdeck-000",
+          "bg-sub-blue-2 text-snapdeck-000 hover:bg-sub-blue-1 enabled:data-[state=active]:bg-sub-blue-1 disabled:bg-snapdeck-400 disabled:text-snapdeck-000",
         neutral:
-          "border-snapdeck-300 bg-snapdeck-000 text-snapdeck-500 hover:bg-snapdeck-300 enabled:data-[state=active]:bg-snapdeck-300 disabled:border-snapdeck-300 disabled:bg-snapdeck-300 disabled:text-snapdeck-500",
+          "border-snapdeck-300 bg-snapdeck-000 text-snapdeck-500 hover:bg-snapdeck-300 enabled:data-[state=active]:bg-snapdeck-300 disabled:border-snapdeck-300 disabled:bg-snapdeck-400 disabled:text-snapdeck-500",
         danger:
-          "bg-snapdeck-400 text-snapdeck-000 hover:bg-sub-red enabled:data-[state=active]:bg-sub-red disabled:bg-snapdeck-300 disabled:text-snapdeck-000",
+          "bg-snapdeck-400 text-snapdeck-000 hover:bg-sub-red enabled:data-[state=active]:bg-sub-red disabled:bg-snapdeck-400 disabled:text-snapdeck-000",
       },
       size: {
         xs: "h-24 min-w-[4.1rem] gap-[1rem] rounded-sm px-[1rem] typo-body-r-14",
