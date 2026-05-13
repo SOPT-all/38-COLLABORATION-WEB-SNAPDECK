@@ -2,14 +2,14 @@ import { useMemo, useState } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { deriveTextFieldModalStatus } from "@/shared/libs/urlValidation";
+import "@/shared/styles/global.css";
+import "@/shared/styles/theme.css";
 import {
   TextFieldModal,
   type TextFieldModalChannel,
   type TextFieldModalStatus,
-} from "@/shared/components/TextFieldModal";
-import { deriveTextFieldModalStatus } from "@/shared/libs/urlValidation";
-import "@/shared/styles/global.css";
-import "@/shared/styles/theme.css";
+} from "@/shared/ui/textFieldModal/TextFieldModal";
 
 const meta = {
   title: "Shared/TextFieldModal",
