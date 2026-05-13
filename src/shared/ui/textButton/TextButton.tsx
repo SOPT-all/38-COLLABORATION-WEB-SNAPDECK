@@ -68,7 +68,7 @@ const DEFAULT_ICON_SIZE_BY_SIZE: Record<
   xl: "lg",
 };
 
-export interface TextButtonProps extends ButtonElementProps {
+export interface TextButtonProps extends Omit<ButtonElementProps, "children"> {
   variant: TextButtonVariantTypes;
   size?: TextButtonSizeTypes;
   state?: TextButtonStateTypes;
@@ -77,6 +77,7 @@ export interface TextButtonProps extends ButtonElementProps {
   rightIcon?: ReactNode;
   iconSize?: TextButtonIconSizeTypes;
   iconClassName?: string;
+  children: ReactNode;
 }
 
 const TextButton = ({
@@ -117,10 +118,16 @@ const TextButton = ({
         className,
       )}
     >
-      {leftIcon ? <span className={iconSlotClassName}>{leftIcon}</span> : null}
+      {leftIcon ? (
+        <span aria-hidden className={iconSlotClassName}>
+          {leftIcon}
+        </span>
+      ) : null}
       {children}
       {rightIcon ? (
-        <span className={iconSlotClassName}>{rightIcon}</span>
+        <span aria-hidden className={iconSlotClassName}>
+          {rightIcon}
+        </span>
       ) : null}
     </button>
   );
