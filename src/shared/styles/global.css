@@ -37,12 +37,18 @@
     outline-offset: 0.2rem;
   }
 
-  :where(a, button, input, textarea, select, summary):focus:not(:focus-visible) {
+  :where(a, button, input, textarea, select, summary):focus:not(
+      :focus-visible
+    ) {
     outline: none;
   }
 
   ::selection {
-    background-color: color-mix(in srgb, var(--color-sub-blue-1, #3b6cff) 28%, transparent);
+    background-color: color-mix(
+      in srgb,
+      var(--color-sub-blue-1, #3b6cff) 28%,
+      transparent
+    );
     color: inherit;
   }
 

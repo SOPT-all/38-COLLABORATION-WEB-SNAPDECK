@@ -1,5 +1,3 @@
-import { contentHandlers } from './contentHandler'
+import { contentHandlers } from "./contentHandler";
 
-export const handlers = [
-  ...contentHandlers,
-]
+export const handlers = [...contentHandlers];

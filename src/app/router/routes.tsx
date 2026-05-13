@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router";
+
 import HomePage from "@/pages/HomePage";
+
 import RootLayout, { RouterHydrateFallback } from "./layout";
 import { lazyContentPage, lazyNotFoundPage } from "./lazy";
 import { PATHS } from "./paths";
