@@ -6,21 +6,21 @@ import { useMemo, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import {
-  TextFieldNotionModal,
-  type TextFieldNotionModalChannel,
-  type TextFieldNotionModalStatus,
-} from "@/shared/components/TextFieldNotionModal";
-import { deriveTextFieldNotionModalStatus } from "@/shared/libs/urlValidation";
+  TextFieldModal,
+  type TextFieldModalChannel,
+  type TextFieldModalStatus,
+} from "@/shared/components/TextFieldModal";
+import { deriveTextFieldModalStatus } from "@/shared/libs/urlValidation";
 
 const meta = {
-  title: "Shared/TextFieldNotionModal",
-  component: TextFieldNotionModal,
+  title: "Shared/TextFieldModal",
+  component: TextFieldModal,
   parameters: {
     layout: "padded",
     docs: {
       description: {
         component: `
-URL 입력 필드(모달 안) 동작입니다.
+모달용 URL 텍스트 필드 동작입니다.
 
 - **channel**을 통해 \`notion\` / \`web\`으로 분기할 수 있습니다.
 
@@ -29,10 +29,10 @@ URL 입력 필드(모달 안) 동작입니다.
 - **[negative]** 형식 오류 또는 미입력 시 → 빨간 외곽선 + 하단 안내 문구 (\`channel\`에 따라 web/notion 카피)
 
 **default → active → negative**  
-\`status\`는 필드 안에서 판별하지 않고, **\`@/shared/libs/urlValidation\`**(및 컴포넌트 re-export)의 \`deriveTextFieldNotionModalStatus\` 등으로 부모가 계산해 넘깁니다. 예: 비어 있고 아직 오류 표시 안 함 → \`default\`; 비어 있고 blur(또는 제출) 후 → \`negative\`; 유효 URL → \`active\`; 그 외 문자열 → \`negative\`.
+\`status\`는 필드 안에서 판별하지 않고, **\`@/shared/libs/urlValidation\`**(및 컴포넌트 re-export)의 \`deriveTextFieldModalStatus\` 등으로 부모가 계산해 넘깁니다. 예: 비어 있고 아직 오류 표시 안 함 → \`default\`; 비어 있고 blur(또는 제출) 후 → \`negative\`; 유효 URL → \`active\`; 그 외 문자열 → \`negative\`.
 
 **InteractiveStatusFlow 스토리**  
-스토리북에서만 쓰는 **데모**입니다. \`channel="notion"\` / \`channel="web"\` 필드를 나란히 두고, 각각 \`useState\`로 값·blur를 관리한 뒤 \`deriveTextFieldNotionModalStatus\`로 \`status\`를 넣습니다. 실제 모달에 자동으로 붙는 동작은 아니며, **부모에서 어떻게 유틸과 연결하는지** 참고용입니다. **초기화**는 스토리 전용으로 상태만 리셋합니다.
+스토리북에서만 쓰는 **데모**입니다. \`channel="notion"\` / \`channel="web"\` 필드를 나란히 두고, 각각 \`useState\`로 값·blur를 관리한 뒤 \`deriveTextFieldModalStatus\`로 \`status\`를 넣습니다. 실제 모달에 자동으로 붙는 동작은 아니며, **부모에서 어떻게 유틸과 연결하는지** 참고용입니다. **초기화**는 스토리 전용으로 상태만 리셋합니다.
 
 디자인 시스템에 있는 액티브 중 타이핑 속성은 별도 처리하지 않았습니다.
 
@@ -45,12 +45,12 @@ URL 입력 필드(모달 안) 동작입니다.
   argTypes: {
     status: {
       control: "select",
-      options: ["default", "active", "negative"] satisfies TextFieldNotionModalStatus[],
+      options: ["default", "active", "negative"] satisfies TextFieldModalStatus[],
       description: "default · active · negative",
     },
     channel: {
       control: "select",
-      options: ["notion", "web"] satisfies TextFieldNotionModalChannel[],
+      options: ["notion", "web"] satisfies TextFieldModalChannel[],
       description: "성공·오류 기본 문구 분기",
     },
     disabled: {
@@ -66,7 +66,7 @@ URL 입력 필드(모달 안) 동작입니다.
     },
     className: { description: "`input` 전용 클래스" },
   },
-} satisfies Meta<typeof TextFieldNotionModal>;
+} satisfies Meta<typeof TextFieldModal>;
 
 export default meta;
 
@@ -150,7 +150,7 @@ export const StatusRow: Story = {
       <div className="grid gap-[1.6rem] md:grid-cols-3">
         <div className="flex flex-col gap-[0.6rem]">
           <span className="typo-caption-m-10 text-snapdeck-500">default · notion</span>
-          <TextFieldNotionModal
+          <TextFieldModal
             status="default"
             channel="notion"
             placeholder="https://..."
@@ -158,7 +158,7 @@ export const StatusRow: Story = {
         </div>
         <div className="flex flex-col gap-[0.6rem]">
           <span className="typo-caption-m-10 text-snapdeck-500">active · notion</span>
-          <TextFieldNotionModal
+          <TextFieldModal
             status="active"
             channel="notion"
             defaultValue="https://x.notion.site/abc"
@@ -167,7 +167,7 @@ export const StatusRow: Story = {
         </div>
         <div className="flex flex-col gap-[0.6rem]">
           <span className="typo-caption-m-10 text-snapdeck-500">negative · notion</span>
-          <TextFieldNotionModal
+          <TextFieldModal
             status="negative"
             channel="notion"
             defaultValue="x"
@@ -187,13 +187,13 @@ export const InteractiveStatusFlow: Story = {
 function InteractiveUrlFieldBlock({
   channel,
 }: {
-  channel: TextFieldNotionModalChannel;
+  channel: TextFieldModalChannel;
 }) {
   const [value, setValue] = useState("");
   const [blurred, setBlurred] = useState(false);
 
   const status = useMemo(
-    () => deriveTextFieldNotionModalStatus(value, blurred, channel),
+    () => deriveTextFieldModalStatus(value, blurred, channel),
     [value, blurred, channel],
   );
 
@@ -214,7 +214,7 @@ function InteractiveUrlFieldBlock({
       >
         {label} · <code className="text-snapdeck-500">channel=&quot;{channel}&quot;</code>
       </h3>
-      <TextFieldNotionModal
+      <TextFieldModal
         channel={channel}
         status={status}
         value={value}

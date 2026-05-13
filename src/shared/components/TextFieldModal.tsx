@@ -51,13 +51,13 @@ const COPY = {
   },
 } as const;
 
-export type TextFieldNotionModalStatus = NonNullable<
+export type TextFieldModalStatus = NonNullable<
   VariantProps<typeof shellVariants>["status"]
 >;
 
-export type TextFieldNotionModalChannel = keyof typeof COPY;
+export type TextFieldModalChannel = keyof typeof COPY;
 
-export type TextFieldNotionModalProps = Omit<
+export type TextFieldModalProps = Omit<
   ComponentPropsWithoutRef<"input">,
   "size"
 > & {
@@ -66,9 +66,9 @@ export type TextFieldNotionModalProps = Omit<
    * - **active**: 유효한 URL — 파란 테두리, 하단 성공 문구(web/notion)
    * - **negative**: 형식 오류 또는 미입력 — 빨간 테두선, 하단 안내 문구(web/notion)
    */
-  status?: TextFieldNotionModalStatus;
+  status?: TextFieldModalStatus;
   /** 성공·오류 문구 분기: `web` | `notion` (기본 `notion`) */
-  channel?: TextFieldNotionModalChannel;
+  channel?: TextFieldModalChannel;
   /** `channel` 기본 문구 대신 쓸 성공 헬퍼(선택) */
   successMessage?: ReactNode;
   /** `channel` 기본 문구 대신 쓸 오류 헬퍼(선택) */
@@ -76,10 +76,10 @@ export type TextFieldNotionModalProps = Omit<
   containerClassName?: string;
 };
 
-export const TextFieldNotionModal = forwardRef<
+export const TextFieldModal = forwardRef<
   HTMLInputElement,
-  TextFieldNotionModalProps
->(function TextFieldNotionModal(
+  TextFieldModalProps
+>(function TextFieldModal(
   {
     className,
     containerClassName,
@@ -153,10 +153,10 @@ export const TextFieldNotionModal = forwardRef<
   );
 });
 
-TextFieldNotionModal.displayName = "TextFieldNotionModal";
+TextFieldModal.displayName = "TextFieldModal";
 
 export {
-  deriveTextFieldNotionModalStatus,
+  deriveTextFieldModalStatus,
   isValidNotionUrl,
   isValidWebUrl,
 } from "@/shared/libs/urlValidation";

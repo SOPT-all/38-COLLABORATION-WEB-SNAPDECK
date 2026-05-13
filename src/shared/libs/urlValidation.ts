@@ -1,7 +1,7 @@
-/** `TextFieldNotionModal`의 `channel`과 동일 */
+/** `TextFieldModal`의 `channel`과 동일 */
 export type UrlModalChannel = "notion" | "web";
 
-/** `TextFieldNotionModal`의 `status`와 동일 */
+/** `TextFieldModal`의 `status`와 동일 */
 export type UrlModalFieldStatus = "default" | "active" | "negative";
 
 /**
@@ -34,10 +34,10 @@ function isValidUrlForChannel(trimmed: string, channel: UrlModalChannel): boolea
 }
 
 /**
- * 모달 URL 필드용: 빈 값 + blur 여부 + 채널별 URL 형식으로 `status`를 계산합니다.
+ * 모달용 `TextFieldModal`: 빈 값 + blur 여부 + 채널별 URL 형식으로 `status`를 계산합니다.
  * (비어 있고 아직 blur 전 → `default`, blur 후 비움 → `negative`, 유효 URL → `active`, 그 외 → `negative`)
  */
-export function deriveTextFieldNotionModalStatus(
+export function deriveTextFieldModalStatus(
   value: string,
   blurred: boolean,
   channel: UrlModalChannel,
