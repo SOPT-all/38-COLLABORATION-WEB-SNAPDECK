@@ -1,10 +1,11 @@
-import { cva, type VariantProps } from "class-variance-authority";
 import {
   forwardRef,
   useId,
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from "react";
+
+import { type VariantProps, cva } from "class-variance-authority";
 
 import { CheckIcon } from "@/assets";
 import { cn } from "@/shared/utils/cn";
@@ -134,7 +135,7 @@ export const TextFieldModal = forwardRef<
       {showSuccess || showError ? (
         <p
           id={helperId}
-          className={cn("flex items-center gap-[0.4rem] typo-caption-r-8")}
+          className={cn("typo-caption-r-8 flex items-center gap-[0.4rem]")}
         >
           {showSuccess ? (
             <>
@@ -154,10 +155,3 @@ export const TextFieldModal = forwardRef<
 });
 
 TextFieldModal.displayName = "TextFieldModal";
-
-export {
-  deriveTextFieldModalStatus,
-  isValidNotionUrl,
-  isValidWebUrl,
-} from "@/shared/libs/urlValidation";
-export type { UrlModalChannel, UrlModalFieldStatus } from "@/shared/libs/urlValidation";

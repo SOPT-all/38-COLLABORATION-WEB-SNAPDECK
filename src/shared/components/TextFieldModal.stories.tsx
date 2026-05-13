@@ -1,5 +1,5 @@
-import "@/shared/styles/theme.css";
 import "@/shared/styles/global.css";
+import "@/shared/styles/theme.css";
 
 import { useMemo, useState } from "react";
 
@@ -29,7 +29,7 @@ const meta = {
 - **[negative]** 형식 오류 또는 미입력 시 → 빨간 외곽선 + 하단 안내 문구 (\`channel\`에 따라 web/notion 카피)
 
 **default → active → negative**  
-\`status\`는 필드 안에서 판별하지 않고, **\`@/shared/libs/urlValidation\`**(및 컴포넌트 re-export)의 \`deriveTextFieldModalStatus\` 등으로 부모가 계산해 넘깁니다. 예: 비어 있고 아직 오류 표시 안 함 → \`default\`; 비어 있고 blur(또는 제출) 후 → \`negative\`; 유효 URL → \`active\`; 그 외 문자열 → \`negative\`.
+\`status\`는 필드 안에서 판별하지 않고, **\`@/shared/libs/urlValidation\`**의 \`deriveTextFieldModalStatus\` 등으로 부모가 계산해 넘깁니다. 예: 비어 있고 아직 오류 표시 안 함 → \`default\`; 비어 있고 blur(또는 제출) 후 → \`negative\`; 유효 URL → \`active\`; 그 외 문자열 → \`negative\`.
 
 **InteractiveStatusFlow 스토리**  
 스토리북에서만 쓰는 **데모**입니다. \`channel="notion"\` / \`channel="web"\` 필드를 나란히 두고, 각각 \`useState\`로 값·blur를 관리한 뒤 \`deriveTextFieldModalStatus\`로 \`status\`를 넣습니다. 실제 모달에 자동으로 붙는 동작은 아니며, **부모에서 어떻게 유틸과 연결하는지** 참고용입니다. **초기화**는 스토리 전용으로 상태만 리셋합니다.
@@ -45,7 +45,11 @@ const meta = {
   argTypes: {
     status: {
       control: "select",
-      options: ["default", "active", "negative"] satisfies TextFieldModalStatus[],
+      options: [
+        "default",
+        "active",
+        "negative",
+      ] satisfies TextFieldModalStatus[],
       description: "default · active · negative",
     },
     channel: {
@@ -149,7 +153,9 @@ export const StatusRow: Story = {
       </p>
       <div className="grid gap-[1.6rem] md:grid-cols-3">
         <div className="flex flex-col gap-[0.6rem]">
-          <span className="typo-caption-m-10 text-snapdeck-500">default · notion</span>
+          <span className="typo-caption-m-10 text-snapdeck-500">
+            default · notion
+          </span>
           <TextFieldModal
             status="default"
             channel="notion"
@@ -157,7 +163,9 @@ export const StatusRow: Story = {
           />
         </div>
         <div className="flex flex-col gap-[0.6rem]">
-          <span className="typo-caption-m-10 text-snapdeck-500">active · notion</span>
+          <span className="typo-caption-m-10 text-snapdeck-500">
+            active · notion
+          </span>
           <TextFieldModal
             status="active"
             channel="notion"
@@ -166,7 +174,9 @@ export const StatusRow: Story = {
           />
         </div>
         <div className="flex flex-col gap-[0.6rem]">
-          <span className="typo-caption-m-10 text-snapdeck-500">negative · notion</span>
+          <span className="typo-caption-m-10 text-snapdeck-500">
+            negative · notion
+          </span>
           <TextFieldModal
             status="negative"
             channel="notion"
@@ -205,7 +215,7 @@ function InteractiveUrlFieldBlock({
 
   return (
     <section
-      className="flex flex-col gap-[0.8rem] rounded-field border border-snapdeck-200 p-[1.2rem]"
+      className="rounded-field border-snapdeck-200 flex flex-col gap-[0.8rem] border p-[1.2rem]"
       aria-labelledby={`interactive-${channel}-heading`}
     >
       <h3
@@ -225,11 +235,13 @@ function InteractiveUrlFieldBlock({
       />
       <p className="typo-caption-m-10 text-snapdeck-500">
         현재 status:{" "}
-        <code className="rounded bg-snapdeck-100 px-[0.4rem] py-[0.1rem]">{status}</code>
+        <code className="bg-snapdeck-100 rounded px-[0.4rem] py-[0.1rem]">
+          {status}
+        </code>
         {" · "}
         <button
           type="button"
-          className="typo-caption-m-10 underline text-snapdeck-600"
+          className="typo-caption-m-10 text-snapdeck-600 underline"
           onClick={() => {
             setValue("");
             setBlurred(false);
@@ -246,8 +258,8 @@ function InteractiveStatusFlowDemo() {
   return (
     <div className="flex max-w-[48rem] flex-col gap-[1.6rem]">
       <p className="typo-caption-m-10 text-snapdeck-500">
-        두 필드는 상태가 서로 독립입니다. 동일 규칙으로 <strong>default → active → negative</strong>를
-        확인할 수 있습니다.
+        두 필드는 상태가 서로 독립입니다. 동일 규칙으로{" "}
+        <strong>default → active → negative</strong>를 확인할 수 있습니다.
       </p>
       <div className="flex flex-col gap-[1.6rem] md:flex-row md:items-start md:gap-[2rem]">
         <div className="min-w-0 flex-1">

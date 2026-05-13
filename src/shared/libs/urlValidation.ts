@@ -29,8 +29,13 @@ export function isValidNotionUrl(trimmed: string): boolean {
   }
 }
 
-function isValidUrlForChannel(trimmed: string, channel: UrlModalChannel): boolean {
-  return channel === "notion" ? isValidNotionUrl(trimmed) : isValidWebUrl(trimmed);
+function isValidUrlForChannel(
+  trimmed: string,
+  channel: UrlModalChannel,
+): boolean {
+  return channel === "notion"
+    ? isValidNotionUrl(trimmed)
+    : isValidWebUrl(trimmed);
 }
 
 /**
