@@ -9,7 +9,7 @@ import CategoryPreview from "./CategoryPreview";
 
 type CategoryProps = {
   value?: CategoryValue;
-  onChange: (value: CategoryValue | undefined) => void;
+  handleChange: (value: CategoryValue | undefined) => void;
   className?: string;
 };
 
@@ -20,9 +20,9 @@ const cardClassName = cn(
   "transition-colors hover:border-snapdeck-300",
 );
 
-const Category = ({ value, onChange, className }: CategoryProps) => {
+const Category = ({ value, handleChange, className }: CategoryProps) => {
   const handleCategoryClick = (categoryValue: CategoryValue) => {
-    onChange(value === categoryValue ? undefined : categoryValue);
+    handleChange(value === categoryValue ? undefined : categoryValue);
   };
 
   return (
