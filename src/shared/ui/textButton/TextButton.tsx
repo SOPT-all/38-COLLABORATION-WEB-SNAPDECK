@@ -92,7 +92,6 @@ const TextButton = ({
   className,
   children,
   type = "button",
-  "aria-pressed": ariaPressed,
   ...buttonProps
 }: TextButtonProps) => {
   const resolvedSize = size ?? "sm";
@@ -108,7 +107,6 @@ const TextButton = ({
       ref={ref}
       {...buttonProps}
       type={type}
-      aria-pressed={ariaPressed}
       data-state={state}
       className={cn(
         textButtonVariants({
