@@ -89,7 +89,7 @@ closeOnBackdrop={false}
 modal content wrapper에 custom class를 추가합니다.
 
 \`\`\`tsx
-className="p-[var(--spacing-24)]"
+className="p-24"
 \`\`\`
 
 ---
@@ -198,10 +198,10 @@ const ModalPreview = (args: ModalProps) => {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative h-[30rem] w-[50rem]">
+    <div ref={containerRef} className="relative h-120 w-200">
       {target && (
         <Modal {...args} portalTarget={target}>
-          <div className="p-[var(--spacing-16)] text-[length:var(--typo-head-sb-16)] text-[var(--color-snapdeck-900)]">
+          <div className="text-snapdeck-900 typo-head-sb-16 p-16">
             Modal Content
           </div>
         </Modal>

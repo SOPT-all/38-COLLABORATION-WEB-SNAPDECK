@@ -51,9 +51,9 @@ const Modal = ({
   return createPortal(
     <div
       className={cn(
-        "fixed inset-0 z-[var(--z-modal)]",
+        "fixed inset-0 z-(--z-modal)",
         "flex items-center justify-center",
-        "bg-[var(--color-overlay-900-70)]",
+        "bg-overlay-900-70",
       )}
       onClick={handleBackdropClick}
     >
@@ -62,10 +62,10 @@ const Modal = ({
         aria-modal="true"
         aria-label="Modal"
         className={cn(
-          "min-h-[14.5rem] w-[33.6rem]",
-          "rounded-[var(--radius-md)]",
-          "border border-[var(--color-snapdeck-300)]",
-          "bg-[var(--color-snapdeck-000)]",
+          "min-h-58 w-[33.6rem]",
+          "rounded-md",
+          "border-snapdeck-300 border",
+          "bg-snapdeck-000",
           className,
         )}
         onClick={(e) => e.stopPropagation()}
