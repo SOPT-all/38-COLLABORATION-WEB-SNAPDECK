@@ -1,8 +1,8 @@
 import {
-  forwardRef,
-  useId,
   type ComponentPropsWithoutRef,
   type ReactNode,
+  forwardRef,
+  useId,
 } from "react";
 
 import { type VariantProps, cva } from "class-variance-authority";
@@ -77,81 +77,80 @@ export type TextFieldModalProps = Omit<
   containerClassName?: string;
 };
 
-export const TextFieldModal = forwardRef<
-  HTMLInputElement,
-  TextFieldModalProps
->(function TextFieldModal(
-  {
-    className,
-    containerClassName,
-    status = "default",
-    channel = "notion",
-    disabled,
-    successMessage: successMessageProp,
-    errorMessage: errorMessageProp,
-    id: idProp,
-    "aria-describedby": ariaDescribedByProp,
-    ...inputProps
-  },
-  ref,
-) {
-  const reactId = useId();
-  const inputId = idProp ?? `url-field-${reactId}`;
-  const helperId = `${inputId}-helper`;
+export const TextFieldModal = forwardRef<HTMLInputElement, TextFieldModalProps>(
+  function TextFieldModal(
+    {
+      className,
+      containerClassName,
+      status = "default",
+      channel = "notion",
+      disabled,
+      successMessage: successMessageProp,
+      errorMessage: errorMessageProp,
+      id: idProp,
+      "aria-describedby": ariaDescribedByProp,
+      ...inputProps
+    },
+    ref,
+  ) {
+    const reactId = useId();
+    const inputId = idProp ?? `url-field-${reactId}`;
+    const helperId = `${inputId}-helper`;
 
-  const copy = COPY[channel];
+    const copy = COPY[channel];
 
-  const resolvedSuccess = successMessageProp ?? copy.success;
-  const resolvedError = errorMessageProp ?? copy.error;
+    const resolvedSuccess = successMessageProp ?? copy.success;
+    const resolvedError = errorMessageProp ?? copy.error;
 
-  const showSuccess = !disabled && status === "active";
-  const showError = !disabled && status === "negative";
+    const showSuccess = !disabled && status === "active";
+    const showError = !disabled && status === "negative";
 
-  const describedBy =
-    [ariaDescribedByProp, showSuccess || showError ? helperId : null]
-      .filter(Boolean)
-      .join(" ") || undefined;
+    const describedBy =
+      [ariaDescribedByProp, showSuccess || showError ? helperId : null]
+        .filter(Boolean)
+        .join(" ") || undefined;
 
-  const shellClass = disabled ? shellDisabled : shellVariants({ status });
+    const shellClass = disabled ? shellDisabled : shellVariants({ status });
 
-  return (
-    <div
-      className={cn(
-        "flex w-full max-w-[30rem] flex-col gap-[0.5rem]",
-        containerClassName,
-      )}
-    >
-      <div className={cn(shellClass)}>
-        <input
-          ref={ref}
-          id={inputId}
-          disabled={disabled}
-          aria-invalid={showError || undefined}
-          aria-describedby={describedBy}
-          className={cn(inputVariants(), className)}
-          {...inputProps}
-        />
+    return (
+      <div
+        className={cn(
+          "flex w-full max-w-[30rem] flex-col gap-[0.5rem]",
+          containerClassName,
+        )}
+      >
+        <div className={cn(shellClass)}>
+          <input
+            ref={ref}
+            id={inputId}
+            disabled={disabled}
+            aria-invalid={showError || undefined}
+            aria-describedby={describedBy}
+            className={cn(inputVariants(), className)}
+            {...inputProps}
+          />
+        </div>
+        {showSuccess || showError ? (
+          <p
+            id={helperId}
+            className={cn("typo-caption-r-8 flex items-center gap-[0.4rem]")}
+          >
+            {showSuccess ? (
+              <>
+                <CheckIcon
+                  aria-hidden
+                  className="size-[1.2rem] shrink-0 text-[color:var(--color-sub-green)]"
+                />
+                <span className={helperSuccessText}>{resolvedSuccess}</span>
+              </>
+            ) : (
+              <span className={helperErrorText}>{resolvedError}</span>
+            )}
+          </p>
+        ) : null}
       </div>
-      {showSuccess || showError ? (
-        <p
-          id={helperId}
-          className={cn("typo-caption-r-8 flex items-center gap-[0.4rem]")}
-        >
-          {showSuccess ? (
-            <>
-              <CheckIcon
-                aria-hidden
-                className="size-[1.2rem] shrink-0 text-[color:var(--color-sub-green)]"
-              />
-              <span className={helperSuccessText}>{resolvedSuccess}</span>
-            </>
-          ) : (
-            <span className={helperErrorText}>{resolvedError}</span>
-          )}
-        </p>
-      ) : null}
-    </div>
-  );
-});
+    );
+  },
+);
 
 TextFieldModal.displayName = "TextFieldModal";

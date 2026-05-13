@@ -1,6 +1,3 @@
-import "@/shared/styles/global.css";
-import "@/shared/styles/theme.css";
-
 import { useMemo, useState } from "react";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
@@ -11,6 +8,8 @@ import {
   type TextFieldModalStatus,
 } from "@/shared/components/TextFieldModal";
 import { deriveTextFieldModalStatus } from "@/shared/libs/urlValidation";
+import "@/shared/styles/global.css";
+import "@/shared/styles/theme.css";
 
 const meta = {
   title: "Shared/TextFieldModal",
@@ -149,7 +148,8 @@ export const StatusRow: Story = {
   render: () => (
     <div className="flex max-w-[96rem] flex-col gap-[2rem]">
       <p className="typo-caption-m-10 text-snapdeck-500">
-        열: <strong>status</strong> — default · active · negative (입력창 아이콘 없음)
+        열: <strong>status</strong> — default · active · negative (입력창 아이콘
+        없음)
       </p>
       <div className="grid gap-[1.6rem] md:grid-cols-3">
         <div className="flex flex-col gap-[0.6rem]">
@@ -222,7 +222,8 @@ function InteractiveUrlFieldBlock({
         id={`interactive-${channel}-heading`}
         className="typo-caption-m-10 text-snapdeck-600"
       >
-        {label} · <code className="text-snapdeck-500">channel=&quot;{channel}&quot;</code>
+        {label} ·{" "}
+        <code className="text-snapdeck-500">channel=&quot;{channel}&quot;</code>
       </h3>
       <TextFieldModal
         channel={channel}
