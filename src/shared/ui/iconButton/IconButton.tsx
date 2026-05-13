@@ -10,7 +10,7 @@ const iconButtonVariants = cva(
         category:
           "rounded-[0.6rem] text-snapdeck-400 hover:bg-sub-blue-2 hover:text-snapdeck-000",
         delete:
-          "rounded-sm text-snapdeck-500 hover:bg-sub-blue-2 hover:text-snapdeck-000",
+          "rounded-sm text-snapdeck-500 hover:bg-sub-blue-2 hover:text-snapdeck-000 [&>svg]:size-[1.2rem]",
         send: "rounded-[0.5rem] bg-sub-blue-1 text-snapdeck-000 disabled:bg-snapdeck-400",
       },
     },
