@@ -51,9 +51,7 @@ const Category = ({ value, handleChange, className }: CategoryProps) => {
               {isSelected && (
                 <CheckIcon
                   aria-hidden
-                  className="text-snapdeck-900"
-                  width="0.8rem"
-                  height="0.8rem"
+                  className="text-snapdeck-900 size-[0.8rem]"
                 />
               )}
             </span>
