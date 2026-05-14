@@ -1,3 +1,4 @@
+import { assertNever } from "@/shared/utils/assertNever";
 import { cn } from "@/shared/utils/cn";
 
 import type { CategoryValue } from "../../../constants/categoryOptions";
@@ -93,8 +94,7 @@ const CategoryPreview = ({ type }: { type: CategoryValue }) => {
     );
   }
 
-  const exhaustiveCheck: never = type;
-  return exhaustiveCheck;
+  return assertNever(type, "처리되지 않은 카테고리 프리뷰 타입입니다");
 };
 
 export default CategoryPreview;
