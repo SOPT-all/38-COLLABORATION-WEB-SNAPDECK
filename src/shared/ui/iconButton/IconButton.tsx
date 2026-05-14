@@ -32,6 +32,9 @@ const iconSlotVariants = cva(
         lg: "size-[2.4rem]",
       },
     },
+    defaultVariants: {
+      iconSize: "lg",
+    },
   },
 );
 
