@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { type ComponentPropsWithRef, type ReactNode, forwardRef } from "react";
 
 import { type VariantProps, cn, cva } from "@/shared/utils/cn";
 
@@ -35,7 +35,7 @@ const iconSlotVariants = cva(
   },
 );
 
-type ButtonElementProps = ComponentPropsWithoutRef<"button">;
+type ButtonElementProps = ComponentPropsWithRef<"button">;
 type IconButtonVariantsTypes = NonNullable<
   VariantProps<typeof iconButtonVariants>["variant"]
 >;
@@ -61,27 +61,33 @@ export interface IconButtonProps extends ButtonElementProps {
   "aria-label": string;
 }
 
-const IconButton = ({
-  variant,
-  tone,
-  radius,
-  iconSize,
-  className,
-  children,
-  type = "button",
-  "aria-label": ariaLabel,
-  ...buttonProps
-}: IconButtonProps) => {
-  return (
-    <button
-      {...buttonProps}
-      type={type}
-      aria-label={ariaLabel}
-      className={cn(iconButtonVariants({ variant, tone, radius }), className)}
-    >
-      <span className={cn(iconSlotVariants({ iconSize }))}>{children}</span>
-    </button>
-  );
-};
+const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  (
+    {
+      variant,
+      tone,
+      radius,
+      iconSize,
+      className,
+      children,
+      type = "button",
+      "aria-label": ariaLabel,
+      ...buttonProps
+    },
+    ref,
+  ) => {
+    return (
+      <button
+        ref={ref}
+        {...buttonProps}
+        type={type}
+        aria-label={ariaLabel}
+        className={cn(iconButtonVariants({ variant, tone, radius }), className)}
+      >
+        <span className={cn(iconSlotVariants({ iconSize }))}>{children}</span>
+      </button>
+    );
+  },
+);
 
 export default IconButton;
