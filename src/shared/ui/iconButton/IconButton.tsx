@@ -39,9 +39,6 @@ const iconSlotVariants = cva(
 );
 
 type ButtonElementProps = ComponentPropsWithRef<"button">;
-type IconButtonVariantsTypes = NonNullable<
-  VariantProps<typeof iconButtonVariants>["variant"]
->;
 
 type IconButtonToneTypes = NonNullable<
   VariantProps<typeof iconButtonVariants>["tone"]
@@ -55,14 +52,16 @@ type IconButtonSizeTypes = NonNullable<
   VariantProps<typeof iconSlotVariants>["iconSize"]
 >;
 
-export interface IconButtonProps extends ButtonElementProps {
-  variant: IconButtonVariantsTypes;
-  tone?: IconButtonToneTypes;
+type BaseProps = ButtonElementProps & {
   radius?: IconButtonRadiusTypes;
   iconSize?: IconButtonSizeTypes;
   children: ReactNode;
   "aria-label": string;
-}
+};
+
+type IconButtonProps =
+  | ({ variant: "ghost"; tone?: IconButtonToneTypes } & BaseProps)
+  | ({ variant: "primary"; tone?: never } & BaseProps);
 
 const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (
