@@ -17,6 +17,9 @@
     "chromatic": "dotenv -e .env.chromatic -- chromatic --exit-zero-on-changes"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.100.9",
+    "@tanstack/react-query-devtools": "^5.100.9",
+    "axios": "^1.16.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "react": "^19.2.5",
