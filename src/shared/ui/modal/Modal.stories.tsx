@@ -1,13 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-
+import * as Dialog from "@radix-ui/react-dialog";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import "@/shared/styles/global.css";
 import "@/shared/styles/theme.css";
 
-import Modal, { type ModalProps } from "./Modal";
+import Modal from "./Modal";
 
-const meta = {
+const meta: Meta<typeof Modal> = {
   title: "Shared/Modal",
   component: Modal,
 
@@ -19,90 +18,72 @@ const meta = {
         component: `
 공통 Modal 컴포넌트입니다.
 
-overlay 영역과 modal content를 createPortal로 분리 렌더링하며, 기본적으로 document.body에 마운트됩니다.
-
-Storybook 환경에서는 preview 내부 렌더링을 위해 portalTarget을 별도로 전달할 수 있습니다.
+Radix Dialog 기반으로 구현되어 있으며, 접근성, focus trap, ESC close, overlay dismiss 등을 기본 지원합니다.
 
 ---
 
 ## Features
 
-- createPortal을 사용하여 overlay와 modal content를 렌더링합니다.
-- 기본적으로 document.body에 mount되며, 필요 시 portalTarget을 통해 특정 HTMLElement 내부로 렌더링 위치를 변경할 수 있습니다.
-- Modal이 open 상태일 때 ESC key를 입력하면 onClose가 호출되며 overlay(backdrop) 영역 클릭 시에도 modal close가 가능합니다.
-- overlay click close 동작은 closeOnBackdrop prop으로 제어할 수 있으며 기본값은 true입니다.
+- Radix Dialog 기반 modal입니다.
+- overlay와 modal content를 Portal 기반으로 렌더링합니다.
+- Modal이 open 상태일 때 ESC key 입력 시 modal close가 가능합니다.
+- overlay(backdrop) 영역 클릭 시 modal dismiss가 가능합니다.
+- Modal open 시 focus가 modal 내부로 이동합니다.
+- Modal close 시 기존 focus 위치로 복귀합니다.
 - modal 내부 콘텐츠는 children 기반으로 구성합니다.
+- 공통 Modal은 shell과 accessibility 동작만 담당하며, width / padding / 내부 layout은 className과 children으로 사용하는 쪽에서 구성할 수 있습니다.
 
 ---
 
 ## Design Spec
 
-- Width: 336px
-- Min Height: 145px
-- Radius: var(--radius-md)
-- Border: var(--color-snapdeck-300)
-- Overlay: var(--color-overlay-900-70)
+- Radius: --radius-md
+- Border: --color-snapdeck-300
+- Overlay: --color-overlay-900-70
 
 ---
 
 ## Props
 
+### defaultOpen
+
+초기 modal open 상태입니다.
+
+\`\`\`tsx
+<Modal defaultOpen>
+\`\`\`
+
+---
+
 ### open
 
-모달 open 상태입니다.
+controlled modal open 상태입니다.
 
 \`\`\`tsx
-open={true}
+<Modal open={open}>
 \`\`\`
 
 ---
 
-### onClose
+### onOpenChange
 
-모달 닫기 핸들러입니다.
-
-- ESC key
-- overlay click(closeOnBackdrop=true)
-
-상황에서 호출됩니다.
+modal open 상태 변경 핸들러입니다.
 
 \`\`\`tsx
-onClose={() => setOpen(false)}
-\`\`\`
-
----
-
-### closeOnBackdrop
-
-overlay 클릭 시 modal close 여부입니다.
-
-기본값은 true입니다.
-
-\`\`\`tsx
-closeOnBackdrop={false}
+<Modal
+  open={open}
+  onOpenChange={setOpen}
+/>
 \`\`\`
 
 ---
 
 ### className
 
-modal content wrapper에 custom class를 추가합니다.
+modal content wrapper에 custom className을 추가합니다.
 
 \`\`\`tsx
-className="p-24"
-\`\`\`
-
----
-
-### portalTarget
-
-modal portal mount target입니다.
-
-기본값은 document.body이며,
-Storybook preview 내부 렌더링 시 custom HTMLElement를 전달할 수 있습니다.
-
-\`\`\`tsx
-portalTarget={containerRef.current}
+<Modal.Content className="w-[45.6rem] p-24" />
 \`\`\`
 
 ---
@@ -110,32 +91,14 @@ portalTarget={containerRef.current}
 ## Usage Guide
 
 \`\`\`tsx
-const [open, setOpen] = useState(false);
+<Modal>
+  <Modal.Trigger>
+    <button>열기</button>
+  </Modal.Trigger>
 
-<Modal
-  open={open}
-  onClose={() => setOpen(false)}
->
-  <div>
-    Modal Content
-  </div>
-</Modal>
-\`\`\`
-
----
-
-## Storybook Preview
-
-Storybook Docs 환경에서는
-modal이 document.body 전체를 덮지 않도록
-preview container를 portalTarget으로 전달합니다.
-
-\`\`\`tsx
-<Modal
-  {...args}
-  portalTarget={target}
->
-  <div>Modal Content</div>
+  <Modal.Content className="w-[33.6rem] p-16">
+    <div>Modal Content</div>
+  </Modal.Content>
 </Modal>
 \`\`\`
         `,
@@ -146,70 +109,44 @@ preview container를 portalTarget으로 전달합니다.
   tags: ["autodocs"],
 
   argTypes: {
-    open: {
-      control: "boolean",
-      description: "모달 open 상태",
-    },
-
-    onClose: {
-      action: "closed",
-      description: "모달 닫기 핸들러",
-    },
-
-    closeOnBackdrop: {
-      control: "boolean",
-      description: "overlay 클릭 시 modal close 여부",
-    },
-
-    className: {
-      control: "text",
-      description: "modal wrapper custom className",
-    },
-
     children: {
       control: false,
       description: "modal 내부 콘텐츠",
     },
-
-    portalTarget: {
-      control: false,
-      description: "portal mount target HTMLElement",
-    },
   },
-
-  args: {
-    open: true,
-    closeOnBackdrop: true,
-    onClose: () => {},
-  },
-} satisfies Meta<typeof Modal>;
+};
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
-
-const ModalPreview = (args: ModalProps) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  const [target, setTarget] = useState<HTMLElement | null>(null);
-
-  useEffect(() => {
-    setTarget(containerRef.current);
-  }, []);
-
-  return (
-    <div ref={containerRef} className="relative h-120 w-200">
-      {target && (
-        <Modal {...args} portalTarget={target}>
-          <div className="text-snapdeck-900 typo-head-sb-16 p-16">
-            Modal Content
-          </div>
-        </Modal>
-      )}
-    </div>
-  );
-};
+type Story = StoryObj<typeof Modal>;
 
 export const Default: Story = {
-  render: (args) => <ModalPreview {...args} />,
+  render: () => (
+    <Modal>
+      <Modal.Trigger>
+        <button className="bg-snapdeck-900 text-snapdeck-000 rounded-md px-12 py-8">
+          모달 열기
+        </button>
+      </Modal.Trigger>
+
+      <Modal.Content className="w-[33.6rem] p-16">
+        <div className="flex flex-col gap-16">
+          <Dialog.Title className="text-snapdeck-900 typo-head-sb-16">
+            Modal Title
+          </Dialog.Title>
+          <Dialog.Description className="text-snapdeck-700 typo-body-rg-14">
+            기본 Modal 예시입니다.
+          </Dialog.Description>
+
+          <div className="flex justify-end">
+            <Modal.Close>
+              <button className="bg-snapdeck-900 text-snapdeck-000 rounded-md px-12 py-8">
+                닫기
+              </button>
+            </Modal.Close>
+          </div>
+        </div>
+      </Modal.Content>
+    </Modal>
+  ),
 };

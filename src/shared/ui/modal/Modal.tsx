@@ -1,80 +1,87 @@
-import { type PropsWithChildren, useEffect } from "react";
+import type { ReactNode } from "react";
 
-import { createPortal } from "react-dom";
+import * as Dialog from "@radix-ui/react-dialog";
 
 import { cn } from "@/shared/utils/cn";
 
-export interface ModalProps extends PropsWithChildren {
-  open: boolean;
-  onClose: () => void;
-  closeOnBackdrop?: boolean;
-  className?: string;
-  portalTarget?: HTMLElement;
+interface ModalRootProps {
+  defaultOpen?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  children: ReactNode;
 }
 
-const Modal = ({
+interface ModalTriggerProps {
+  children: ReactNode;
+}
+
+interface ModalCloseProps {
+  children: ReactNode;
+}
+
+interface ModalContentProps {
+  children: ReactNode;
+  className?: string;
+}
+
+const ModalRoot = ({
+  defaultOpen,
   open,
-  onClose,
+  onOpenChange,
   children,
-  closeOnBackdrop = true,
-  className,
-  portalTarget,
-}: ModalProps) => {
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [open, onClose]);
-
-  const handleBackdropClick = () => {
-    if (closeOnBackdrop) {
-      onClose();
-    }
-  };
-
-  if (!open) {
-    return null;
-  }
-
-  return createPortal(
-    <div
-      className={cn(
-        "fixed inset-0 z-(--z-modal)",
-        "flex items-center justify-center",
-        "bg-overlay-900-70",
-      )}
-      onClick={handleBackdropClick}
+}: ModalRootProps) => {
+  return (
+    <Dialog.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
     >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label="Modal"
-        className={cn(
-          "min-h-58 w-[33.6rem]",
-          "rounded-md",
-          "border-snapdeck-300 border",
-          "bg-snapdeck-000",
-          className,
-        )}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {children}
-      </div>
-    </div>,
-    portalTarget ?? document.body,
+      {children}
+    </Dialog.Root>
   );
 };
+
+const ModalTrigger = ({ children }: ModalTriggerProps) => {
+  return <Dialog.Trigger asChild>{children}</Dialog.Trigger>;
+};
+
+const ModalClose = ({ children }: ModalCloseProps) => {
+  return <Dialog.Close asChild>{children}</Dialog.Close>;
+};
+
+const ModalContent = ({ children, className }: ModalContentProps) => {
+  return (
+    <Dialog.Portal>
+      <Dialog.Overlay
+        className={cn("fixed inset-0 z-(--z-modal)", "bg-overlay-900-70")}
+      />
+
+      <div
+        className={cn(
+          "fixed inset-0 z-(--z-modal)",
+          "flex items-center justify-center",
+        )}
+      >
+        <Dialog.Content
+          className={cn(
+            "rounded-md",
+            "border-snapdeck-300 border",
+            "bg-snapdeck-000",
+            "outline-none",
+            className,
+          )}
+        >
+          {children}
+        </Dialog.Content>
+      </div>
+    </Dialog.Portal>
+  );
+};
+
+const Modal = Object.assign(ModalRoot, {
+  Trigger: ModalTrigger,
+  Close: ModalClose,
+  Content: ModalContent,
+});
 
 export default Modal;
