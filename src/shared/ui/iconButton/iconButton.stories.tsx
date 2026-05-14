@@ -4,18 +4,62 @@ import { ArrowUpIcon, CategoryIcon, DeleteIcon } from "@/assets";
 
 import IconButton from "./IconButton";
 
+const variantOptions = ["ghost", "primary"] as const;
+const toneOptions = ["weak", "neutral"] as const;
+const radiusOptions = ["sm", "md", "lg"] as const;
+const iconSizeOptions = ["sm", "lg"] as const;
+
 const meta = {
   title: "Shared/IconButton",
   component: IconButton,
   tags: ["autodocs"],
   args: {
-    variant: "category",
+    variant: "ghost",
+    tone: "weak",
+    radius: "md",
+    iconSize: "lg",
+    disabled: false,
     "aria-label": "아이콘 버튼",
+    children: <CategoryIcon />,
+  },
+  argTypes: {
+    variant: {
+      control: "select",
+      options: variantOptions,
+    },
+    tone: {
+      control: "select",
+      options: toneOptions,
+    },
+    radius: {
+      control: "select",
+      options: radiusOptions,
+    },
+    iconSize: {
+      control: "select",
+      options: iconSizeOptions,
+    },
+    disabled: {
+      control: "boolean",
+    },
+    "aria-label": {
+      control: "text",
+    },
+    children: {
+      control: false,
+    },
+    className: {
+      control: false,
+    },
   },
 } satisfies Meta<typeof IconButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  render: ({ ...args }) => <IconButton {...args} />,
+};
 
 export const Overview: Story = {
   render: () => (
@@ -25,17 +69,12 @@ export const Overview: Story = {
         <div className="flex items-center gap-20">
           <div className="ml-3 flex flex-col items-center gap-4">
             <span>Default</span>
-            <IconButton variant="category" aria-label="카테고리">
-              <CategoryIcon />
-            </IconButton>
-          </div>
-
-          <div className="flex flex-col items-center gap-4">
-            <span>Hover</span>
             <IconButton
-              variant="category"
-              aria-label="카테고리 hover"
-              className="bg-sub-blue-2 text-snapdeck-000"
+              variant="ghost"
+              tone="weak"
+              radius="lg"
+              iconSize="lg"
+              aria-label="카테고리"
             >
               <CategoryIcon />
             </IconButton>
@@ -48,17 +87,12 @@ export const Overview: Story = {
         <div className="flex items-center gap-20">
           <div className="ml-3 flex flex-col items-center gap-4">
             <span>Default</span>
-            <IconButton variant="delete" aria-label="삭제">
-              <DeleteIcon />
-            </IconButton>
-          </div>
-
-          <div className="flex flex-col items-center gap-4">
-            <span>Hover</span>
             <IconButton
-              variant="delete"
-              aria-label="삭제 hover"
-              className="bg-sub-blue-2 text-snapdeck-000"
+              variant="ghost"
+              tone="neutral"
+              radius="sm"
+              iconSize="sm"
+              aria-label="삭제"
             >
               <DeleteIcon />
             </IconButton>
@@ -71,14 +105,25 @@ export const Overview: Story = {
         <div className="ml-3 flex items-center gap-13">
           <div className="flex flex-col items-center gap-4">
             <span>Disabled</span>
-            <IconButton variant="send" aria-label="전송 비활성화" disabled>
+            <IconButton
+              variant="primary"
+              radius="md"
+              iconSize="lg"
+              aria-label="전송"
+              disabled
+            >
               <ArrowUpIcon />
             </IconButton>
           </div>
 
           <div className="flex flex-col items-center gap-4">
             <span>Enabled</span>
-            <IconButton variant="send" aria-label="전송">
+            <IconButton
+              variant="primary"
+              radius="md"
+              iconSize="lg"
+              aria-label="전송"
+            >
               <ArrowUpIcon />
             </IconButton>
           </div>
