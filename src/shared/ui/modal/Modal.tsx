@@ -24,6 +24,16 @@ interface ModalContentProps {
   className?: string;
 }
 
+interface ModalTitleProps {
+  children: ReactNode;
+  className?: string;
+}
+
+interface ModalDescriptionProps {
+  children: ReactNode;
+  className?: string;
+}
+
 const ModalRoot = ({
   defaultOpen,
   open,
@@ -55,26 +65,30 @@ const ModalContent = ({ children, className }: ModalContentProps) => {
       <Dialog.Overlay
         className={cn("fixed inset-0 z-(--z-modal)", "bg-overlay-900-70")}
       />
-
-      <div
+      <Dialog.Content
         className={cn(
-          "fixed inset-0 z-(--z-modal)",
-          "flex items-center justify-center",
+          "fixed top-1/2 left-1/2 z-(--z-modal)",
+          "-translate-x-1/2 -translate-y-1/2",
+          "rounded-md",
+          "border-snapdeck-300 border",
+          "bg-snapdeck-000",
+          "outline-none",
+          className,
         )}
       >
-        <Dialog.Content
-          className={cn(
-            "rounded-md",
-            "border-snapdeck-300 border",
-            "bg-snapdeck-000",
-            "outline-none",
-            className,
-          )}
-        >
-          {children}
-        </Dialog.Content>
-      </div>
+        {children}
+      </Dialog.Content>
     </Dialog.Portal>
+  );
+};
+
+const ModalTitle = ({ children, className }: ModalTitleProps) => {
+  return <Dialog.Title className={className}>{children}</Dialog.Title>;
+};
+
+const ModalDescription = ({ children, className }: ModalDescriptionProps) => {
+  return (
+    <Dialog.Description className={className}>{children}</Dialog.Description>
   );
 };
 
@@ -82,6 +96,8 @@ const Modal = Object.assign(ModalRoot, {
   Trigger: ModalTrigger,
   Close: ModalClose,
   Content: ModalContent,
+  Title: ModalTitle,
+  Description: ModalDescription,
 });
 
 export default Modal;
