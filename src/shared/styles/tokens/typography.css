@@ -3,6 +3,7 @@
   Root html uses font-size: 62.5% → 1rem ≈ 10px — sizes below are px÷10 as rem.
 */
 
+/*noinspection CssInvalidAtRule*/
 @theme {
   --font-sans:
     "Pretendard", ui-sans-serif, system-ui, sans-serif, "Apple SD Gothic Neo",

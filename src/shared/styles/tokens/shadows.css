@@ -2,6 +2,7 @@
   Elevation — card → raised / dropdown · modal.
 */
 
+/*noinspection CssInvalidAtRule*/
 @theme {
   --shadow-elevation-1:
     0 0.1rem 0.2rem rgb(0 0 0 / 0.06), 0 0.1rem 0.3rem rgb(0 0 0 / 0.08);
