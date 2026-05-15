@@ -1,25 +1,19 @@
-/** `TextFieldModal`의 `channel`과 동일 */
-export type UrlModalChannel = "notion" | "web";
+/** URL 가져오기(웹/노션) 플로우에서만 쓰는 채널 구분 */
+export type UrlImportChannel = "notion" | "web";
 
-/** `TextFieldModal`의 `status`와 동일 */
-export type UrlModalFieldStatus = "default" | "active" | "negative";
+/** URL 필드 UI용 status (`TextField`의 `default` | `success` | `error`와 동일) */
+export type UrlFieldStatus = "default" | "success" | "error";
 
-/**
- * `http:` / `https:` 스킴의 절대 URL인지 여부 (`URL` 파싱 기준).
- */
-export function isValidWebUrl(trimmed: string): boolean {
+export const isValidWebUrl = (trimmed: string): boolean => {
   try {
     const u = new URL(trimmed);
     return u.protocol === "http:" || u.protocol === "https:";
   } catch {
     return false;
   }
-}
+};
 
-/**
- * Notion 공유/사이트 호스트(`notion.so`, `notion.site`)를 쓰는 https URL인지 여부.
- */
-export function isValidNotionUrl(trimmed: string): boolean {
+export const isValidNotionUrl = (trimmed: string): boolean => {
   if (!isValidWebUrl(trimmed)) return false;
   try {
     const host = new URL(trimmed).hostname.toLowerCase();
@@ -27,29 +21,23 @@ export function isValidNotionUrl(trimmed: string): boolean {
   } catch {
     return false;
   }
-}
+};
 
-function isValidUrlForChannel(
+const isValidUrlForChannel = (
   trimmed: string,
-  channel: UrlModalChannel,
-): boolean {
-  return channel === "notion"
-    ? isValidNotionUrl(trimmed)
-    : isValidWebUrl(trimmed);
-}
+  channel: UrlImportChannel,
+): boolean =>
+  channel === "notion" ? isValidNotionUrl(trimmed) : isValidWebUrl(trimmed);
 
-/**
- * 모달용 `TextFieldModal`: 빈 값 + blur 여부 + 채널별 URL 형식으로 `status`를 계산합니다.
- * (비어 있고 아직 blur 전 → `default`, blur 후 비움 → `negative`, 유효 URL → `active`, 그 외 → `negative`)
- */
-export function deriveTextFieldModalStatus(
+/** 빈 값 + blur + 채널별 URL 형식 → 필드 `status` */
+export const deriveUrlFieldStatus = (
   value: string,
   blurred: boolean,
-  channel: UrlModalChannel,
-): UrlModalFieldStatus {
+  channel: UrlImportChannel,
+): UrlFieldStatus => {
   const v = value.trim();
   if (v.length === 0) {
-    return blurred ? "negative" : "default";
+    return blurred ? "error" : "default";
   }
-  return isValidUrlForChannel(v, channel) ? "active" : "negative";
-}
+  return isValidUrlForChannel(v, channel) ? "success" : "error";
+};
