@@ -2,6 +2,7 @@
   Z-index stack.
 */
 
+/*noinspection CssInvalidAtRule*/
 @theme {
   --z-dropdown: 1000;
   --z-modal: 2000;

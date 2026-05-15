@@ -40,21 +40,15 @@ jobs:
           REPOSITORY="${{ github.repository }}"
           REPO_API_URL="https://api.github.com/repos/$REPOSITORY"
 
-          get_discord_mention() {
+          get_github_mention() {
             if [ -z "$1" ] || [ "$1" = "없음" ] || [ "$1" = "리뷰어 정보 없음" ]; then
               echo "없음"
               return
             fi
 
-            case "$1" in
-              jyeon03) echo "<@1219518046163435544>" ;;
-              chungyo) echo "<@340668628867219456>" ;;
-              nyewon) echo "<@1016558289296830484>" ;;
-              gyeongbibin) echo "<@1502269805011406960>" ;;
-              seojin15) echo "<@952484462141259816>" ;;
-              *) echo "@$1" ;;
-            esac
+            echo "@$1"
           }
+
           build_user_list() {
             local users="$1"
             if [ -z "$users" ] || [ "$users" = "없음" ]; then
@@ -65,7 +59,7 @@ jobs:
             IFS=',' read -ra USER_ARRAY <<< "$users"
             for user in "${USER_ARRAY[@]}"; do
               trimmed_user=$(echo "$user" | xargs)
-              mention=$(get_discord_mention "$trimmed_user")
+              mention=$(get_github_mention "$trimmed_user")
               if [ -z "$result" ]; then
                 result="$mention"
               else
@@ -133,7 +127,7 @@ jobs:
               PR_NUMBER=$(echo "$pr" | jq -r '.number')
               PR_TITLE=$(echo "$pr" | jq -r '.title')
               PR_AUTHOR=$(echo "$pr" | jq -r '.user.login')
-              PR_AUTHOR_MENTION=$(get_discord_mention "$PR_AUTHOR")
+              PR_AUTHOR_MENTION=$(get_github_mention "$PR_AUTHOR")
               PR_UPDATED_AT=$(echo "$pr" | jq -r '.updated_at')
               PR_URL=$(echo "$pr" | jq -r '.html_url')
 
@@ -167,33 +161,27 @@ jobs:
             BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
             HEAD_BRANCH="${{ github.event.pull_request.head.ref }}"
             AUTHOR="${{ github.event.pull_request.user.login }}"
-            AUTHOR_MENTION=$(get_discord_mention "$AUTHOR")
+            AUTHOR_MENTION=$(get_github_mention "$AUTHOR")
 
             if [ "$IS_DRAFT" = "true" ] && [ "$ACTION" != "ready_for_review" ]; then
               echo "Draft PR notification is skipped."
               exit 0
             fi
 
-            REQUESTED_REVIEWERS=$(jq -r '
-              [.pull_request.requested_reviewers[].login]
-              | if length > 0 then join(", ") else "없음" end
-            ' "$GITHUB_EVENT_PATH")
-            REQUESTED_REVIEWER_MENTIONS=$(build_user_list "$REQUESTED_REVIEWERS")
-
             case "$ACTION" in
               opened)
                 TITLE="🚀 새로운 PR이 생성되었어요"
-                DESC=$'새로운 작업이 리뷰 대기 목록에 올라왔습니다. 리뷰어는 변경 범위와 요청 내용을 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"$'\n'"**리뷰어:** $REQUESTED_REVIEWER_MENTIONS"
+                DESC=$'새로운 작업이 리뷰 대기 목록에 올라왔습니다. 변경 범위와 요청 내용을 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"
                 COLOR=3066993
                 ;;
               reopened)
                 TITLE="🔄 PR이 다시 열렸어요"
-                DESC=$'닫혔던 PR이 다시 열렸습니다. 이전 논의 내용과 현재 변경사항을 함께 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"$'\n'"**리뷰어:** $REQUESTED_REVIEWER_MENTIONS"
+                DESC=$'닫혔던 PR이 다시 열렸습니다. 이전 논의 내용과 현재 변경사항을 함께 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"
                 COLOR=3447003
                 ;;
               ready_for_review)
                 TITLE="👀 Draft PR이 리뷰 가능한 상태가 되었어요"
-                DESC=$'이제 본격적인 리뷰가 가능한 상태입니다. 리뷰어는 구현 내용과 체크 포인트를 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"$'\n'"**리뷰어:** $REQUESTED_REVIEWER_MENTIONS"
+                DESC=$'이제 본격적인 리뷰가 가능한 상태입니다. 구현 내용과 체크 포인트를 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"
                 COLOR=3447003
                 ;;
               closed)
@@ -223,8 +211,8 @@ jobs:
             PR_AUTHOR="${{ github.event.pull_request.user.login }}"
             REVIEWER="${{ github.event.review.user.login }}"
             IS_DRAFT="${{ github.event.pull_request.draft }}"
-            REVIEWER_MENTION=$(get_discord_mention "$REVIEWER")
-            PR_AUTHOR_MENTION=$(get_discord_mention "$PR_AUTHOR")
+            REVIEWER_MENTION=$(get_github_mention "$REVIEWER")
+            PR_AUTHOR_MENTION=$(get_github_mention "$PR_AUTHOR")
 
             if [ "$IS_DRAFT" = "true" ]; then
               echo "Draft PR review notification is skipped."
@@ -278,7 +266,7 @@ jobs:
             ISSUE_TITLE="${{ github.event.issue.title }}"
             ISSUE_NUMBER="${{ github.event.issue.number }}"
             AUTHOR="${{ github.event.issue.user.login }}"
-            AUTHOR_MENTION=$(get_discord_mention "$AUTHOR")
+            AUTHOR_MENTION=$(get_github_mention "$AUTHOR")
 
             case "$ACTION" in
               opened)
