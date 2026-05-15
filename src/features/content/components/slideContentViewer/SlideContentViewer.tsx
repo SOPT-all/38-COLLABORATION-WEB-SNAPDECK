@@ -10,7 +10,7 @@ import SlideContentDragOverlay from "@/features/content/components/slideContentV
 import SortableSlideContentCard from "@/features/content/components/slideContentViewer/SortableSlideContentCard";
 import useSlideContentDnd, {
   SLIDE_CONTENT_DND_MODIFIERS,
-} from "@/features/content/hooks/useSlideContentDnd.ts";
+} from "@/features/content/hooks/useSlideContentDnd";
 import type {
   SlideContentItem,
   SlideReorderPayload,

@@ -1,6 +1,6 @@
 import SlideContentCard from "@/features/content/components/slideContentViewer/SlideContentCard";
 import SlideContentDragHandle from "@/features/content/components/slideContentViewer/SlideContentDragHandle";
-import { SLIDE_CONTENT_CARD_OVERLAY_WIDTH_CLASS_NAME } from "@/features/content/constants/slideContentViewer.constants.ts";
+import { SLIDE_CONTENT_CARD_OVERLAY_WIDTH_CLASS_NAME } from "@/features/content/components/slideContentViewer/slideContentViewer.constants";
 import type { SlideContentItem } from "@/features/content/types";
 import { cn } from "@/shared/utils/cn";
 

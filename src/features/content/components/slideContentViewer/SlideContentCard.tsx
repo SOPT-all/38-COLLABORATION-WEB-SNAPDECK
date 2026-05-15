@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { DeleteIcon } from "@/assets";
-import { SLIDE_CONTENT_CARD_WIDTH_CLASS_NAME } from "@/features/content/constants/slideContentViewer.constants.ts";
+import { SLIDE_CONTENT_CARD_WIDTH_CLASS_NAME } from "@/features/content/components/slideContentViewer/slideContentViewer.constants";
 import type { SlideContentItem } from "@/features/content/types";
 import IconButton from "@/shared/ui/iconButton/IconButton";
 import { cn } from "@/shared/utils/cn";

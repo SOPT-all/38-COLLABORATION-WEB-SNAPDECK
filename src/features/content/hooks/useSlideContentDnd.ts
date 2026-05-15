@@ -15,10 +15,7 @@ import type {
   SlideContentItem,
   SlideReorderPayload,
 } from "@/features/content/types";
-import {
-  reorderSlides,
-  sortSlidesByOrder,
-} from "@/features/content/utils/reorderSlides.ts";
+import { reorderSlides, sortSlidesByOrder } from "@/features/content/utils";
 
 interface UseSlideContentDndParams {
   slides: SlideContentItem[];
