@@ -37,7 +37,11 @@ const Toolbar = ({ sourceActions }: ToolbarProps) => {
         />
         {sourceActions}
       </div>
-      <TextButton variant="primary" className="typo-caption-m-10 h-[2rem]">
+      <TextButton
+        type="submit"
+        variant="primary"
+        className="typo-caption-m-10 h-[2rem]"
+      >
         생성
       </TextButton>
     </div>
