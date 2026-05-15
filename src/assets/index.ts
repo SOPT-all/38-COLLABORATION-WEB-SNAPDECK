@@ -23,3 +23,6 @@ export { default as ResearchIcon } from "./icons/research.svg?react";
 export { default as NotionIcon } from "./icons/notion.svg?react";
 export { default as ThunderIcon } from "./icons/thunder.svg?react";
 export { default as WebIcon } from "./icons/web.svg?react";
+
+// logo
+export { default as LogoImg } from "./images/logo.svg?react";
