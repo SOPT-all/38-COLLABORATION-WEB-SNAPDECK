@@ -28,7 +28,12 @@ const usePromptTextarea = ({
   };
 
   const handleTextareaKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.defaultPrevented || event.key !== "Tab" || value.trim()) {
+    if (
+      event.defaultPrevented ||
+      event.key !== "Tab" ||
+      event.shiftKey ||
+      value.trim()
+    ) {
       return;
     }
 
