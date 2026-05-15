@@ -1,22 +1,23 @@
-import { type ReactNode, useState } from "react";
+import type { ReactNode } from "react";
 
 import { ClipIcon } from "@/assets";
+import type { CounterValueProps } from "@/features/home/types/counter";
 import IconButton from "@/shared/ui/iconButton";
 import TextButton from "@/shared/ui/textButton";
 
 import Counter from "./Counter";
 
-interface ToolbarProps {
+interface ToolbarProps extends Omit<CounterValueProps, "className"> {
   sourceActions?: ReactNode;
 }
 
-const Toolbar = ({ sourceActions }: ToolbarProps) => {
-  const [slideCount, setSlideCount] = useState(5);
-
-  const handleSlideCountChange = (value: number) => {
-    setSlideCount(value);
-  };
-
+const Toolbar = ({
+  value,
+  min,
+  max,
+  handleChange,
+  sourceActions,
+}: ToolbarProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-[0.8rem]">
@@ -30,10 +31,10 @@ const Toolbar = ({ sourceActions }: ToolbarProps) => {
           <ClipIcon />
         </IconButton>
         <Counter
-          value={slideCount}
-          min={1}
-          max={5}
-          handleChange={handleSlideCountChange}
+          value={value}
+          min={min}
+          max={max}
+          handleChange={handleChange}
         />
         {sourceActions}
       </div>
