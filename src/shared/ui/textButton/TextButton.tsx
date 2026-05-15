@@ -3,16 +3,16 @@ import type { ComponentPropsWithRef, ReactNode } from "react";
 import { type VariantProps, cn, cva } from "@/shared/utils/cn";
 
 const textButtonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center border border-transparent text-center whitespace-nowrap transition-colors duration-150 ease-out disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-80",
+  "inline-flex shrink-0 items-center justify-center border border-transparent text-center whitespace-nowrap transition-colors duration-150 ease-out disabled:pointer-events-none disabled:cursor-not-allowed",
   {
     variants: {
       variant: {
         primary:
-          "bg-sub-blue-2 text-snapdeck-000 hover:bg-sub-blue-1 enabled:data-[state=active]:bg-sub-blue-1 disabled:bg-snapdeck-400 disabled:text-snapdeck-000",
+          "bg-sub-blue-2 text-snapdeck-000 enabled:hover:bg-sub-blue-1 enabled:data-[state=active]:bg-sub-blue-1 disabled:bg-snapdeck-400 disabled:text-snapdeck-000",
         neutral:
-          "border-snapdeck-300 bg-snapdeck-000 text-snapdeck-500 hover:bg-snapdeck-300 enabled:data-[state=active]:bg-snapdeck-300 disabled:border-snapdeck-300 disabled:bg-snapdeck-400 disabled:text-snapdeck-500",
+          "border-snapdeck-300 bg-snapdeck-000 text-snapdeck-500 enabled:hover:bg-snapdeck-300 enabled:data-[state=active]:bg-snapdeck-300 disabled:border-snapdeck-300 disabled:bg-snapdeck-400 disabled:text-snapdeck-500",
         danger:
-          "bg-snapdeck-400 text-snapdeck-000 hover:bg-sub-red enabled:data-[state=active]:bg-sub-red disabled:bg-snapdeck-400 disabled:text-snapdeck-000",
+          "bg-snapdeck-400 text-snapdeck-000 enabled:hover:bg-sub-red enabled:data-[state=active]:bg-sub-red disabled:bg-snapdeck-400 disabled:text-snapdeck-000",
       },
       size: {
         xs: "h-24 min-w-[4.1rem] gap-[1rem] rounded-sm px-[1rem] typo-body-r-14",
@@ -76,7 +76,7 @@ export interface TextButtonProps extends Omit<ButtonElementProps, "children"> {
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
   iconSize?: TextButtonIconSizeTypes;
-  iconClassName?: string;
+  iconSlotClassName?: string;
   children: ReactNode;
 }
 
@@ -89,7 +89,7 @@ const TextButton = ({
   leftIcon,
   rightIcon,
   iconSize,
-  iconClassName,
+  iconSlotClassName: iconSlotClassNameProp,
   className,
   children,
   type = "button",
@@ -100,7 +100,7 @@ const TextButton = ({
 
   const iconSlotClassName = cn(
     textButtonIconVariants({ iconSize: resolvedIconSize }),
-    iconClassName,
+    iconSlotClassNameProp,
   );
 
   return (
