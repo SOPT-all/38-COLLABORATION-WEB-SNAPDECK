@@ -1,6 +1,6 @@
 export interface DashBoardCardData {
   id: number;
-  imgName: string;
+  imageName: string;
   title: string;
   slideCount: number;
   createdAt: string;
