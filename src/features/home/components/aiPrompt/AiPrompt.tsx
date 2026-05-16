@@ -87,6 +87,8 @@ const AiPrompt = ({
     );
   }
 
+  const isDisabled = !promptValue.trim();
+
   return (
     <section className="flex flex-col items-center gap-[2.8rem]">
       <div className="border-snapdeck-300 bg-snapdeck-000 relative flex w-[60.2rem] flex-col rounded-[0.8rem] border">
@@ -127,6 +129,7 @@ const AiPrompt = ({
             max={maxSlideCount}
             handleChange={handleSlideCountChange}
             handleFileChange={handleFileChange}
+            disabled={isDisabled}
             sourceActions={selectedSourceActionButton}
           />
         </div>
