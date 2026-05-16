@@ -85,9 +85,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const shellClass = disabled ? shellDisabled : shellVariants({ status });
 
     return (
-      <div
-        className={cn("flex w-full flex-col gap-[0.5rem]", containerClassName)}
-      >
+      <div className={cn("relative flex w-full flex-col", containerClassName)}>
         <div className={cn(shellClass)}>
           <input
             ref={ref}
@@ -103,7 +101,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         {showHelperRow ? (
           <p
             id={helperId}
-            className={cn("typo-caption-r-8 flex items-center gap-[0.4rem]")}
+            className={cn("typo-caption-r-8 absolute top-full left-0")}
           >
             {showSuccessWithIcon ? (
               <>
