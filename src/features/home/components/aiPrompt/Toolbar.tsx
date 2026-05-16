@@ -5,7 +5,7 @@ import type { CounterValueProps } from "@/features/home/types/counter";
 import IconButton from "@/shared/ui/iconButton";
 import TextButton from "@/shared/ui/textButton";
 
-import Counter from "./Counter";
+import Counter from "./counter";
 
 interface ToolbarProps extends Omit<CounterValueProps, "className"> {
   sourceActions?: ReactNode;
