@@ -6,10 +6,16 @@ const MENU_ITEMS = ["블로그", "지원", "가격", "대시보드"];
 const HomeHeader = () => {
   return (
     <header
-      className={cn("bg-snapdeck-000", "z-(--z-header)", "h-[4.7rem] px-16")}
+      className={cn(
+        "bg-snapdeck-000",
+        "sticky top-0 z-(--z-header)",
+        "h-[4.7rem] px-16",
+      )}
     >
       <div className="flex h-full items-center justify-between pt-[0.9rem]">
-        <LogoImg className="size-[3rem]" />
+        <button type="button" aria-label="home" className="cursor-pointer">
+          <LogoImg className="size-[3rem]" />
+        </button>
 
         <div className="flex items-center gap-[2rem]">
           <ul

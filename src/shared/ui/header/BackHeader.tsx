@@ -10,7 +10,7 @@ const BackHeader = ({ onBack }: BackHeaderProps) => {
     <header
       className={cn(
         "bg-snapdeck-000 border-snapdeck-300",
-        "z-(--z-header)",
+        "sticky top-0 z-(--z-header)",
         "flex h-[4.7rem] w-full items-center border-b px-[1rem]",
       )}
     >
