@@ -18,8 +18,7 @@ const ChatHistoryTurn = ({
   const isAssistantLoading = turn.assistantStatus === "loading";
   const hasStatus = Boolean(turn.statusLabel);
   const hasAssistant = Boolean(turn.assistantMessage);
-  const showAssistantSection =
-    isAssistantLoading || hasStatus || hasAssistant;
+  const showAssistantSection = isAssistantLoading || hasStatus || hasAssistant;
 
   return (
     <div className="flex flex-col gap-[1rem]">

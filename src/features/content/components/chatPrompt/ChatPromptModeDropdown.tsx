@@ -23,7 +23,7 @@ const ChatPromptModeDropdown = ({
       role="listbox"
       aria-label="프롬프트 모드 선택"
       className={cn(
-        "border-snapdeck-300 bg-snapdeck-000 flex w-[11.7rem] shrink-0 flex-col overflow-hidden rounded-[0.6rem] border border-solid shadow-elevation-2",
+        "shadow-elevation-2 border-snapdeck-300 bg-snapdeck-000 flex w-[11.7rem] shrink-0 flex-col overflow-hidden rounded-[0.6rem] border border-solid",
         className,
       )}
     >

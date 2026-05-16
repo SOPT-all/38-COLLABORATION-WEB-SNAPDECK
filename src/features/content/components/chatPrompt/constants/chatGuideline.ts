@@ -1,9 +1,6 @@
 import { cn } from "@/shared/utils/cn";
 
-import type {
-  ChatGuidelineChip,
-  ContentChatTurn,
-} from "../types/chatPrompt";
+import type { ChatGuidelineChip, ContentChatTurn } from "../types/chatPrompt";
 
 export const CHAT_GUIDELINE_ADD_PAGE_ID = "add-page-ai";
 

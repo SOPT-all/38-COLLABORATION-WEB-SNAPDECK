@@ -124,7 +124,7 @@ const ChatPrompt = ({
           {isOpen ? (
             <ChatPromptModeDropdown
               value={mode}
-              className="absolute bottom-full left-0 mb-[0.4rem] shadow-elevation-2"
+              className="shadow-elevation-2 absolute bottom-full left-0 mb-[0.4rem]"
               onSelect={handleModeSelect}
             />
           ) : null}

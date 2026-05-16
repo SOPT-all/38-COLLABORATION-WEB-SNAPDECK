@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import {
   AI_RESPONSE_MOCK_DELAY_MS,
@@ -21,12 +21,8 @@ import ChatThemeButton from "./ChatThemeButton";
 const createTurnId = () =>
   globalThis.crypto?.randomUUID?.() ?? String(Date.now());
 
-const createExpandedTurnIds = (turns: ContentChatTurn[]) =>
-  new Set(
-    turns
-      .filter((turn) => turn.assistantStatus === "complete" && turn.assistantMessage)
-      .map((turn) => turn.id),
-  );
+const isAutoExpandableTurn = (turn: ContentChatTurn) =>
+  turn.assistantStatus === "complete" && Boolean(turn.assistantMessage);
 
 type ChatSectionProps = {
   className?: string;
@@ -59,8 +55,8 @@ const ChatSection = ({
 }: ChatSectionProps) => {
   const [internalTurns, setInternalTurns] =
     useState<ContentChatTurn[]>(initialTurns);
-  const [expandedTurnIds, setExpandedTurnIds] = useState<Set<string>>(() =>
-    createExpandedTurnIds(initialTurns),
+  const [collapsedTurnIds, setCollapsedTurnIds] = useState<Set<string>>(
+    () => new Set(),
   );
   const [promptValue, setPromptValue] = useState(initialPromptValue);
   const [promptMode, setPromptMode] =
@@ -69,35 +65,31 @@ const ChatSection = ({
 
   const turns = turnsProp ?? internalTurns;
 
-  useEffect(() => {
-    setExpandedTurnIds((prev) => {
-      const next = new Set(prev);
-      let changed = false;
+  const expandedTurnIds = useMemo(() => {
+    const expanded = new Set<string>();
 
-      for (const turn of turns) {
-        if (
-          turn.assistantStatus === "complete" &&
-          turn.assistantMessage &&
-          !next.has(turn.id)
-        ) {
-          next.add(turn.id);
-          changed = true;
-        }
+    for (const turn of turns) {
+      if (isAutoExpandableTurn(turn) && !collapsedTurnIds.has(turn.id)) {
+        expanded.add(turn.id);
       }
+    }
 
-      return changed ? next : prev;
-    });
-  }, [turns]);
+    return expanded;
+  }, [turns, collapsedTurnIds]);
 
   useEffect(() => {
+    const timeouts = responseTimeoutsRef.current;
+
     return () => {
-      responseTimeoutsRef.current.forEach((timeoutId) => {
+      timeouts.forEach((timeoutId) => {
         window.clearTimeout(timeoutId);
       });
     };
   }, []);
 
-  const setTurns = (getNext: (prev: ContentChatTurn[]) => ContentChatTurn[]) => {
+  const setTurns = (
+    getNext: (prev: ContentChatTurn[]) => ContentChatTurn[],
+  ) => {
     if (turnsProp !== undefined) {
       onTurnsChange?.(getNext(turnsProp));
       return;
@@ -127,7 +119,6 @@ const ChatSection = ({
             : turn,
         ),
       );
-      setExpandedTurnIds((prev) => new Set(prev).add(turnId));
     }, AI_RESPONSE_MOCK_DELAY_MS);
 
     responseTimeoutsRef.current.push(timeoutId);
@@ -162,7 +153,7 @@ const ChatSection = ({
   };
 
   const toggleTurnExpanded = (turnId: string) => {
-    setExpandedTurnIds((prev) => {
+    setCollapsedTurnIds((prev) => {
       const next = new Set(prev);
 
       if (next.has(turnId)) {
