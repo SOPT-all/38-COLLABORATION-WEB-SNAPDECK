@@ -1,5 +1,8 @@
 import { useEffect, useRef } from "react";
 
+import { cn } from "@/shared/utils/cn";
+import { scrollbarHideYClassName } from "@/shared/utils/scrollbar";
+
 import ChatHistoryTurn from "./ChatHistoryTurn";
 import type { ContentChatTurn } from "./types/chatPrompt";
 
@@ -36,7 +39,10 @@ const ChatHistory = ({
   return (
     <section
       ref={scrollContainerRef}
-      className="flex min-h-0 flex-1 flex-col gap-[1rem] overflow-y-auto"
+      className={cn(
+        scrollbarHideYClassName,
+        "flex min-h-0 flex-1 flex-col gap-[1rem]",
+      )}
     >
       {turns.map((turn) => (
         <ChatHistoryTurn
