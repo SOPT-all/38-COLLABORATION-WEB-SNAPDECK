@@ -1,18 +1,12 @@
 import { useState } from "react";
 
-import type { SourceActionValue } from "@/features/home/constants/sourceActions";
+import {
+  URL_MODAL_SOURCE_ACTION_CHANNEL,
+  type UrlImportChannel,
+  type UrlModalSourceActionValue,
+} from "@/features/home/constants/sourceActions";
 
-export type UrlModalType = Extract<
-  SourceActionValue,
-  "webScrap" | "importNotion"
->;
-type UrlImportChannel = "notion" | "web";
 type UrlFieldStatus = "default" | "success" | "error";
-
-const URL_MODAL_CHANNEL: Record<UrlModalType, UrlImportChannel> = {
-  webScrap: "web",
-  importNotion: "notion",
-};
 
 const URL_FIELD_MESSAGE: Record<
   UrlImportChannel,
@@ -80,18 +74,20 @@ const getUrlFieldStatus = (
 };
 
 const useUrlModal = () => {
-  const [urlModalType, setUrlModalType] = useState<UrlModalType | null>(null);
+  const [urlModalType, setUrlModalType] =
+    useState<UrlModalSourceActionValue | null>(null);
   const [url, setUrl] = useState("");
   const [isFieldBlurred, setIsFieldBlurred] = useState(false);
 
-  const channel = urlModalType ? URL_MODAL_CHANNEL[urlModalType] : "web";
+  const channel = urlModalType
+    ? URL_MODAL_SOURCE_ACTION_CHANNEL[urlModalType]
+    : "web";
   const fieldStatus = getUrlFieldStatus(url, isFieldBlurred, channel);
   const helperText =
     fieldStatus === "default"
       ? undefined
       : URL_FIELD_MESSAGE[channel][fieldStatus];
-  const isUrlValid = fieldStatus === "success";
-  const isConfirmDisabled = !isUrlValid;
+  const isConfirmDisabled = fieldStatus !== "success";
 
   const resetUrlModal = () => {
     setUrlModalType(null);
@@ -99,7 +95,7 @@ const useUrlModal = () => {
     setIsFieldBlurred(false);
   };
 
-  const handleUrlModalOpen = (type: UrlModalType) => {
+  const handleUrlModalOpen = (type: UrlModalSourceActionValue) => {
     resetUrlModal();
     setUrlModalType(type);
   };
@@ -123,7 +119,6 @@ const useUrlModal = () => {
     url,
     fieldStatus,
     helperText,
-    isUrlValid,
     isConfirmDisabled,
     resetUrlModal,
     handleUrlModalOpen,
