@@ -1,7 +1,7 @@
 import { cn } from "@/shared/utils/cn";
 import { scrollbarHideXClassName } from "@/shared/utils/scrollbar";
 
-import { chatGuidelineChipClassName } from "./constants/chatGuideline";
+import ChatChip from "./ChatChip";
 import type { ChatGuidelineChip } from "./types/chatPrompt";
 
 type ChatGuidelineProps = {
@@ -26,14 +26,12 @@ const ChatGuideline = ({
       >
         <div className="flex w-max gap-[1rem]">
           {guidelines.map((chip) => (
-            <button
+            <ChatChip
               key={chip.id}
-              type="button"
-              className={chatGuidelineChipClassName}
               onClick={() => handleGuidelineChipClick(chip)}
             >
               {chip.label}
-            </button>
+            </ChatChip>
           ))}
         </div>
       </div>

@@ -1,5 +1,3 @@
-import { cn } from "@/shared/utils/cn";
-
 import type { ChatGuidelineChip } from "../types/chatPrompt";
 
 export const CHAT_GUIDELINE_ADD_PAGE_ID = "add-page-ai";
@@ -30,10 +28,3 @@ export const GUIDELINE_INSTANT_SEND_DEMO = {
   assistantMessage:
     "Apple의 생태계 전략 보고서에 6번째 섹션을 추가하고 상세 콘텐츠를 생성하겠습니다. 6번 슬라이드에는 향후 전망 및 결론을 담아 마무리하면 좋을 것 같네요. 바로 진행할까요?",
 } as const;
-
-export const chatGuidelineChipClassName = cn(
-  "border-snapdeck-300 bg-snapdeck-000 text-snapdeck-400 typo-caption-r-10 shrink-0",
-  "rounded-[0.8rem] border border-solid px-[1.2rem] py-[0.6rem]",
-  "tracking-[0.01rem] whitespace-nowrap transition-colors",
-  "hover:border-snapdeck-400 hover:text-snapdeck-500",
-);
