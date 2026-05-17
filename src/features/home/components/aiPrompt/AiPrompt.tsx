@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { RightSmallIcon } from "@/assets";
 import {
@@ -45,6 +45,7 @@ const AiPrompt = ({
   maxSlideCount = 5,
   handleFileChange,
 }: AiPromptProps) => {
+  const categoryPanelId = useId();
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const categoryLabel =
     CATEGORY_OPTIONS.find(({ value }) => value === categoryValue)?.label ??
@@ -93,7 +94,10 @@ const AiPrompt = ({
     <section className="flex flex-col items-center gap-[2.8rem]">
       <div className="border-snapdeck-300 bg-snapdeck-000 relative flex w-[60.2rem] flex-col rounded-[0.8rem] border">
         {isCategoryOpen ? (
-          <div className="bg-snapdeck-000 animate-category-panel-enter absolute bottom-full left-0 mb-[1.4rem] rounded-[0.4rem]">
+          <div
+            id={categoryPanelId}
+            className="bg-snapdeck-000 animate-category-panel-enter absolute bottom-full left-0 mb-[1.4rem] rounded-[0.4rem]"
+          >
             <Category
               value={categoryValue}
               handleChange={handleCategorySelect}
@@ -109,6 +113,8 @@ const AiPrompt = ({
             iconSize="sm"
             state={isCategoryOpen ? "active" : "default"}
             className="typo-caption-r-10 h-[2.3rem] min-w-[5.5rem] gap-[0.2rem] rounded-[0.6rem] px-[0.8rem]"
+            aria-controls={categoryPanelId}
+            aria-expanded={isCategoryOpen}
             onClick={handleCategoryButtonClick}
           >
             {categoryLabel}
