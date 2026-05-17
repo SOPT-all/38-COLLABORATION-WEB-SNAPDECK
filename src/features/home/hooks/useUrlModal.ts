@@ -2,7 +2,10 @@ import { useState } from "react";
 
 import type { SourceActionValue } from "@/features/home/constants/sourceActions";
 
-type UrlModalType = Extract<SourceActionValue, "webScrap" | "importNotion">;
+export type UrlModalType = Extract<
+  SourceActionValue,
+  "webScrap" | "importNotion"
+>;
 type UrlImportChannel = "notion" | "web";
 type UrlFieldStatus = "default" | "success" | "error";
 
@@ -97,9 +100,8 @@ const useUrlModal = () => {
   };
 
   const handleUrlModalOpen = (type: UrlModalType) => {
+    resetUrlModal();
     setUrlModalType(type);
-    setUrl("");
-    setIsFieldBlurred(false);
   };
 
   const handleUrlModalOpenChange = (open: boolean) => {

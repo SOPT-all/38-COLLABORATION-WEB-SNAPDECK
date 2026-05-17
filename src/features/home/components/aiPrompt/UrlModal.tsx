@@ -1,15 +1,13 @@
 import { type ChangeEvent } from "react";
 
 import { NotionIcon, WebIcon } from "@/assets";
-import type { SourceActionValue } from "@/features/home/constants/sourceActions";
+import type { UrlModalType } from "@/features/home/hooks/useUrlModal";
 import Modal from "@/shared/ui/modal/Modal";
 import TextButton from "@/shared/ui/textButton";
 import {
   TextField,
   type TextFieldStatus,
 } from "@/shared/ui/textField/TextField";
-
-type UrlModalType = Extract<SourceActionValue, "webScrap" | "importNotion">;
 
 interface UrlModalProps {
   type: UrlModalType;
