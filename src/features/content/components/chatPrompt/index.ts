@@ -17,6 +17,17 @@ export type {
 export {
   AI_RESPONSE_MOCK_DELAY_MS,
   DEFAULT_CHAT_GUIDELINES,
-  HOME_ENTRY_CHAT_TURNS,
   GUIDELINE_INSTANT_SEND_DEMO,
 } from "./constants/chatGuideline";
+export {
+  HOME_ENTRY_CHAT_MESSAGES,
+  HOME_ENTRY_CHAT_TURNS,
+  STATE_B_CHAT_MESSAGES,
+  STATE_B_CHAT_TURNS,
+} from "@/features/content/constants/chatMessageMocks";
+export { mapChatMessagesToTurns } from "@/features/content/utils/mapChatMessagesToTurns";
+export type {
+  ChatMessage,
+  ChatMessageRole,
+  ChatMessagesResponse,
+} from "@/features/content/types/chatMessage";
