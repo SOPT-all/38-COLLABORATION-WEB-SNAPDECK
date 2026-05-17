@@ -27,3 +27,5 @@ export { default as ClipIcon } from "./icons/clip.svg?react";
 
 // logo
 export { default as LogoImg } from "./images/logo.svg?react";
+
+export * from "./images";
