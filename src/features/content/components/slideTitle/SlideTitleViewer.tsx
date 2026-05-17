@@ -29,7 +29,7 @@ const SlideTitleViewer = ({
         제목
       </h2>
 
-      <div className="flex w-full flex-col items-start gap-[0.6rem]">
+      <div className="flex w-full flex-col items-start gap-[1.4rem]">
         <SlideTitleInput
           value={title}
           onChange={onTitleChange}
