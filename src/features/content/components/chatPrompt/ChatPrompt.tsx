@@ -3,6 +3,7 @@ import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
   type FormEvent,
+  type KeyboardEvent,
   useState,
 } from "react";
 
@@ -70,14 +71,26 @@ const ChatPrompt = ({
     CHAT_PROMPT_MODE_OPTIONS.find((option) => option.value === mode)?.label ??
     "Agent";
 
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const submitPrompt = () => {
     if (!hasValue) {
       return;
     }
 
     onSubmit?.({ value: value.trim(), mode });
+  };
+
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    submitPrompt();
+  };
+
+  const handleTextareaKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key !== "Enter" || event.shiftKey) {
+      return;
+    }
+
+    event.preventDefault();
+    submitPrompt();
   };
 
   const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -118,6 +131,7 @@ const ChatPrompt = ({
           placeholder={placeholder}
           value={value}
           onChange={handleTextareaChange}
+          onKeyDown={handleTextareaKeyDown}
           onFocus={handleTextareaFocus}
           onBlur={handleTextareaBlur}
         />
