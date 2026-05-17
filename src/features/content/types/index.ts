@@ -10,3 +10,4 @@ export type {
   ContentChatTurn,
   GuidelineChipBehavior,
 } from "./chat";
+export type { SlideContentItem, SlideReorderPayload } from "./slideContent";

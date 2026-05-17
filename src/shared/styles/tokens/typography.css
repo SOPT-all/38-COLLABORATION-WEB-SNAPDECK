@@ -13,6 +13,7 @@
   /* --typo-* (not --text-*) avoids Tailwind text-* size utilities colliding with text-* colors in cn()/tailwind-merge */
   --typo-head-b-20: 2rem;
   --typo-head-b-17: 1.7rem;
+  --typo-head-b-14: 1.4rem;
   --typo-head-sb-16: 1.6rem;
   --typo-head-sb-14: 1.4rem;
 
