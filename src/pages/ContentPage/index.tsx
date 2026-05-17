@@ -11,9 +11,17 @@ import BackHeader from "@/shared/ui/header/BackHeader";
 
 type ContentPageProps = {
   turns?: ComponentProps<typeof ChatSection>["turns"];
+  onTurnsChange?: ComponentProps<typeof ChatSection>["onTurnsChange"];
+  initialSlides?: NonNullable<
+    Parameters<typeof useContentPageSlides>[0]
+  >["initialSlides"];
 };
 
-const ContentPage = ({ turns }: ContentPageProps) => {
+const ContentPage = ({
+  turns,
+  onTurnsChange,
+  initialSlides,
+}: ContentPageProps) => {
   const navigate = useNavigate();
   const titleLabelId = useId();
   const {
@@ -23,7 +31,7 @@ const ContentPage = ({ turns }: ContentPageProps) => {
     slidePreviews,
     handleSlideDelete,
     handleSlideReorder,
-  } = useContentPageSlides();
+  } = useContentPageSlides({ initialSlides });
 
   return (
     <div className="bg-snapdeck-000 flex h-dvh flex-col overflow-hidden">
@@ -53,7 +61,11 @@ const ContentPage = ({ turns }: ContentPageProps) => {
           </div>
         </main>
 
-        <ChatSection className="h-full shrink-0" turns={turns} />
+        <ChatSection
+          className="h-full shrink-0"
+          turns={turns}
+          onTurnsChange={onTurnsChange}
+        />
       </div>
     </div>
   );
