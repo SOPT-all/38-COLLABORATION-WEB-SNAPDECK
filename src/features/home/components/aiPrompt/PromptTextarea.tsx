@@ -52,7 +52,7 @@ const PromptTextarea = ({
       aria-label={ariaLabel}
       className={cn(
         "bg-snapdeck-000 text-snapdeck-700 placeholder:text-snapdeck-400 typo-caption-m-10",
-        "h-[10rem] w-[60rem] resize-none p-[1.4rem]",
+        "h-full w-full resize-none",
         "outline-none",
         className,
       )}

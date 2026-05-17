@@ -27,10 +27,7 @@ const Category = ({ value, handleChange, className }: CategoryProps) => {
 
   return (
     <div
-      className={cn(
-        "grid grid-cols-[repeat(auto-fit,13.5rem)] gap-[2rem]",
-        className,
-      )}
+      className={cn("flex items-center gap-[2rem]", className)}
       aria-label="Category"
       role="group"
     >
