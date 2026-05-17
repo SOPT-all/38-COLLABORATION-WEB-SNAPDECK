@@ -6,4 +6,5 @@
 @import "./tokens/z-index.css";
 @import "./reset.css" layer(base);
 @import "tailwindcss";
+@import "./utilities.css";
 @import "./tokens/fontstyles.css";
