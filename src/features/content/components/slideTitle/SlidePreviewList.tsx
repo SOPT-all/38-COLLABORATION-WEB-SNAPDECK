@@ -12,7 +12,7 @@ const SlidePreviewList = ({ slides, className }: SlidePreviewListProps) => {
   return (
     <section
       className={cn(
-        "scrollbar-hide flex gap-[1rem] overflow-x-auto",
+        "scrollbar-hide flex w-full min-w-0 gap-[1rem] overflow-x-auto",
         className,
       )}
     >
