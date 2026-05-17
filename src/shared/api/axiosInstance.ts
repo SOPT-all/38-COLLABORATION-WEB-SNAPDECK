@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { createApiError } from "./apiError";
+
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 5000,
@@ -9,18 +11,9 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(
-  (response) => {
-    const body = response.data;
-
-    if (!body.success) {
-      return Promise.reject(body);
-    }
-
-    return body.data;
-  },
-
+  (response) => response,
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(createApiError(error));
   },
 );
 
