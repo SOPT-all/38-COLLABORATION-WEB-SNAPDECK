@@ -4,6 +4,13 @@
 */
 
 @layer fontstyles {
+  .typo-head-b-14 {
+    font-size: var(--typo-head-b-14);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.03em;
+  }
+
   .typo-head-b-20 {
     font-size: var(--typo-head-b-20);
     font-weight: 700;
