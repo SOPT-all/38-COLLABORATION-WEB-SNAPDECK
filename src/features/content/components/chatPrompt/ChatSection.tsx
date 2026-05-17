@@ -1,4 +1,5 @@
 import { DEFAULT_CHAT_GUIDELINES } from "@/features/content/components/chatPrompt/constants/chatGuideline";
+import { HOME_ENTRY_CHAT_TURNS } from "@/features/content/constants/chatMessageMocks";
 import useContentChatSection from "@/features/content/hooks/useContentChatSection";
 import type {
   ChatGuidelineChip,
@@ -35,7 +36,7 @@ const ChatSection = ({
   turns: turnsProp,
   onTurnsChange,
   guidelines = DEFAULT_CHAT_GUIDELINES,
-  initialTurns = [],
+  initialTurns = HOME_ENTRY_CHAT_TURNS,
   initialPromptValue = "",
   initialPromptMode = "agent",
   onGuidelineClick,
