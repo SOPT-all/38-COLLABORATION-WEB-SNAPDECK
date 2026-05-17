@@ -11,6 +11,7 @@ interface SlideContentDragOverlayProps {
 const SlideContentDragOverlay = ({ slide }: SlideContentDragOverlayProps) => {
   return (
     <div
+      aria-hidden
       className={cn(SLIDE_CONTENT_CARD_OVERLAY_WIDTH_CLASS_NAME, "opacity-40")}
     >
       <SlideContentCard

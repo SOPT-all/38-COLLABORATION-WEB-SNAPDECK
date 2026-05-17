@@ -28,7 +28,7 @@ export const reorderSlides = (
     fromIndex >= slides.length ||
     toIndex >= slides.length
   ) {
-    return normalizeSlideOrders(slides);
+    return [...slides];
   }
 
   return normalizeSlideOrders(arrayMove([...slides], fromIndex, toIndex));
