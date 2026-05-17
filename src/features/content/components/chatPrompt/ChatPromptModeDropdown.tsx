@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { cn } from "@/shared/utils/cn";
 
 import { CHAT_PROMPT_MODE_OPTIONS } from "./constants/chatPrompt";
@@ -16,16 +14,6 @@ const ChatPromptModeDropdown = ({
   handleOptionClick,
   className,
 }: ChatPromptModeDropdownProps) => {
-  const [hoveredMode, setHoveredMode] = useState<ChatPromptMode | null>(null);
-
-  const handleOptionMouseEnter = (mode: ChatPromptMode) => {
-    setHoveredMode(mode);
-  };
-
-  const handleOptionMouseLeave = () => {
-    setHoveredMode(null);
-  };
-
   return (
     <div
       role="listbox"
@@ -37,7 +25,6 @@ const ChatPromptModeDropdown = ({
     >
       {CHAT_PROMPT_MODE_OPTIONS.map((option) => {
         const isSelected = value === option.value;
-        const isHovered = hoveredMode === option.value;
 
         return (
           <button
@@ -47,12 +34,10 @@ const ChatPromptModeDropdown = ({
             aria-selected={isSelected}
             className={cn(
               "flex h-[3.5rem] w-full shrink-0 flex-col items-start justify-center gap-0 overflow-hidden px-[1rem] py-0 text-left transition-colors",
-              isHovered && "bg-snapdeck-100",
-              option.value === "agent" && isHovered && "rounded-t-[0.6rem]",
-              option.value === "ask" && isHovered && "rounded-b-[0.6rem]",
+              "hover:bg-snapdeck-100",
+              option.value === "agent" && "hover:rounded-t-[0.6rem]",
+              option.value === "ask" && "hover:rounded-b-[0.6rem]",
             )}
-            onMouseEnter={() => handleOptionMouseEnter(option.value)}
-            onMouseLeave={handleOptionMouseLeave}
             onClick={() => handleOptionClick(option.value)}
           >
             <span
