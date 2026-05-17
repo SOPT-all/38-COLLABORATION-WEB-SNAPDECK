@@ -1,7 +1,7 @@
+import type { ChatPromptMode } from "@/features/content/types/chat";
 import { cn } from "@/shared/utils/cn";
 
 import { CHAT_PROMPT_MODE_OPTIONS } from "./constants/chatPrompt";
-import type { ChatPromptMode } from "./types/chatPrompt";
 
 type ChatPromptModeDropdownProps = {
   value: ChatPromptMode;

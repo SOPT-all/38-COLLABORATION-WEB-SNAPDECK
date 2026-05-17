@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 
+import type { ContentChatTurn } from "@/features/content/types/chat";
 import { cn } from "@/shared/utils/cn";
 import { scrollbarHideYClassName } from "@/shared/utils/scrollbar";
 
 import ChatHistoryTurn from "./ChatHistoryTurn";
-import type { ContentChatTurn } from "./types/chatPrompt";
 
 type ChatHistoryProps = {
   turns: ContentChatTurn[];

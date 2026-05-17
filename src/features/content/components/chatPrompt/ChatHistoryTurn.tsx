@@ -1,8 +1,8 @@
 import { DownIcon } from "@/assets";
+import type { ContentChatTurn } from "@/features/content/types/chat";
 import { cn } from "@/shared/utils/cn";
 
 import ChatAssistantLoading from "./ChatAssistantLoading";
-import type { ContentChatTurn } from "./types/chatPrompt";
 
 type ChatHistoryTurnProps = {
   turn: ContentChatTurn;

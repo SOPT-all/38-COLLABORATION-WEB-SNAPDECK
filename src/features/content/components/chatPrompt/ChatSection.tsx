@@ -9,7 +9,7 @@ import type {
   ChatGuidelineChip,
   ChatPromptMode,
   ContentChatTurn,
-} from "@/features/content/components/chatPrompt/types/chatPrompt";
+} from "@/features/content/types/chat";
 import { cn } from "@/shared/utils/cn";
 
 import ChatGuideline from "./ChatGuideline";

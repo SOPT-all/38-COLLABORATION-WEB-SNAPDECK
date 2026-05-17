@@ -9,6 +9,7 @@ import {
 
 import { DropdownIcon } from "@/assets";
 import useChatPromptModeMenu from "@/features/content/hooks/useChatPromptModeMenu";
+import type { ChatPromptMode } from "@/features/content/types/chat";
 import { cn } from "@/shared/utils/cn";
 
 import ChatPromptModeDropdown from "./ChatPromptModeDropdown";
@@ -17,7 +18,6 @@ import {
   CHAT_PROMPT_MODE_OPTIONS,
   CHAT_PROMPT_PLACEHOLDER,
 } from "./constants/chatPrompt";
-import type { ChatPromptMode } from "./types/chatPrompt";
 
 type ChatPromptProps = Omit<ComponentPropsWithoutRef<"form">, "onSubmit"> & {
   initialMode?: ChatPromptMode;

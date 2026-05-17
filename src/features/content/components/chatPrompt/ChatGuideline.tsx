@@ -1,8 +1,8 @@
+import type { ChatGuidelineChip } from "@/features/content/types/chat";
 import { cn } from "@/shared/utils/cn";
 import { scrollbarHideXClassName } from "@/shared/utils/scrollbar";
 
 import ChatChip from "./ChatChip";
-import type { ChatGuidelineChip } from "./types/chatPrompt";
 
 type ChatGuidelineProps = {
   guidelines: readonly ChatGuidelineChip[];

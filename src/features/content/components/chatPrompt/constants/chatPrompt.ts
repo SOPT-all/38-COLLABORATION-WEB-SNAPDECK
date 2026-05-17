@@ -1,4 +1,4 @@
-import type { ChatPromptMode } from "@/features/content/components/chatPrompt/types/chatPrompt";
+import type { ChatPromptMode } from "@/features/content/types/chat";
 
 export const CHAT_PROMPT_PLACEHOLDER = "원하는 내용을 입력하세요...";
 

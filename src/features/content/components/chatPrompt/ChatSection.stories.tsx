@@ -6,13 +6,13 @@ import {
   HOME_ENTRY_CHAT_TURNS,
   STATE_B_CHAT_TURNS,
 } from "@/features/content/constants/chatMessageMocks";
+import type { ChatPromptMode } from "@/features/content/types/chat";
 import "@/shared/styles/global.css";
 import "@/shared/styles/theme.css";
 
 import ChatPrompt from "./ChatPrompt";
 import ChatPromptModeDropdown from "./ChatPromptModeDropdown";
 import ChatSection from "./ChatSection";
-import type { ChatPromptMode } from "./types/chatPrompt";
 
 const panelDecorator = (Story: () => React.JSX.Element) => (
   <div className="bg-snapdeck-100 flex h-[68.3rem] justify-end">

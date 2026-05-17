@@ -1,4 +1,4 @@
-import type { ContentChatTurn } from "@/features/content/components/chatPrompt/types/chatPrompt";
+import type { ContentChatTurn } from "@/features/content/types/chat";
 import type { ChatMessage } from "@/features/content/types/chatMessage";
 
 const sortByOrder = (messages: ChatMessage[]) =>

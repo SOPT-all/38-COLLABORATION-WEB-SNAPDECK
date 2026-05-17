@@ -1,4 +1,4 @@
-import type { ChatGuidelineChip } from "../types/chatPrompt";
+import type { ChatGuidelineChip } from "@/features/content/types/chat";
 
 export const CHAT_GUIDELINE_ADD_PAGE_ID = "add-page-ai";
 

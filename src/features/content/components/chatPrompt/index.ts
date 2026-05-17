@@ -8,13 +8,6 @@ export { default as ChatHistoryTurn } from "./ChatHistoryTurn";
 export { default as ChatChip } from "./ChatChip";
 export { default as ChatGuideline } from "./ChatGuideline";
 export { default as ChatThemeButton } from "./ChatThemeButton";
-export type {
-  AssistantStatus,
-  ChatGuidelineChip,
-  ChatPromptMode,
-  ContentChatTurn,
-  GuidelineChipBehavior,
-} from "./types/chatPrompt";
 export {
   AI_RESPONSE_MOCK_DELAY_MS,
   DEFAULT_CHAT_GUIDELINES,
@@ -28,7 +21,12 @@ export {
 } from "@/features/content/constants/chatMessageMocks";
 export { mapChatMessagesToTurns } from "@/features/content/utils/mapChatMessagesToTurns";
 export type {
+  AssistantStatus,
+  ChatGuidelineChip,
   ChatMessage,
   ChatMessageRole,
   ChatMessagesResponse,
-} from "@/features/content/types/chatMessage";
+  ChatPromptMode,
+  ContentChatTurn,
+  GuidelineChipBehavior,
+} from "@/features/content/types";
