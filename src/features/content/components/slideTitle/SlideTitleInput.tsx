@@ -1,13 +1,15 @@
 import { cn } from "@/shared/utils/cn";
 
 interface ContentTitleInputProps {
+  labelId: string;
   value: string;
-  onChange?: (value: string) => void;
+  onChange: (value: string) => void;
   onBlur?: () => void;
   className?: string;
 }
 
 const SlideTitleInput = ({
+  labelId,
   value,
   onChange,
   onBlur,
@@ -15,6 +17,7 @@ const SlideTitleInput = ({
 }: ContentTitleInputProps) => {
   return (
     <input
+      aria-labelledby={labelId}
       value={value}
       onChange={(e) => onChange?.(e.target.value)}
       onBlur={onBlur}

@@ -7,7 +7,7 @@ interface SlideTitleViewerProps {
   labelId: string;
   title: string;
   slides: SlidePreview[];
-  onTitleChange?: (value: string) => void;
+  onTitleChange: (value: string) => void;
   onTitleBlur?: () => void;
   className?: string;
 }
@@ -31,6 +31,7 @@ const SlideTitleViewer = ({
 
       <div className="flex w-full flex-col items-start gap-[1.4rem]">
         <SlideTitleInput
+          labelId={labelId}
           value={title}
           onChange={onTitleChange}
           onBlur={onTitleBlur}
