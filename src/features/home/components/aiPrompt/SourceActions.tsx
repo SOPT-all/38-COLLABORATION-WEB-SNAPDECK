@@ -18,7 +18,7 @@ const SourceActions = ({ handleSourceActionClick }: SourceActionsProps) => {
           iconSize="sm"
           className="typo-caption-r-8 rounded-[0.6rem] px-[0.8rem]"
           key={value}
-          leftIcon={<Icon className="[--icon-stroke-width:1.5]" />}
+          leftIcon={<Icon className="[--icon-stroke-width:1]" />}
           onClick={() => handleSourceActionClick(value)}
         >
           {label}

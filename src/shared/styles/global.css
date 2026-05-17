@@ -60,6 +60,24 @@
 }
 
 @layer utilities {
+  @keyframes category-panel-enter {
+    from {
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      transform: translateX(-0.8rem);
+    }
+
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+      transform: translateX(0);
+    }
+  }
+
+  .animate-category-panel-enter {
+    animation: category-panel-enter 180ms ease-out;
+  }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
