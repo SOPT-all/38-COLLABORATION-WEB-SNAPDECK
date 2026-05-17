@@ -106,7 +106,8 @@ export const EmptyChatHistory: Story = {
   parameters: {
     docs: {
       description: {
-        story: "채팅 턴이 없을 때 우측 패널 레이아웃(가이드라인·프롬프트만 표시).",
+        story:
+          "채팅 턴이 없을 때 우측 패널 레이아웃(가이드라인·프롬프트만 표시).",
       },
     },
   },
