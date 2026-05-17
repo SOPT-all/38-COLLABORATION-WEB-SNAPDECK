@@ -12,7 +12,7 @@ const SlidePreviewCard = ({
   alt = "slide preview",
   className,
 }: SlidePreviewCardProps) => {
-  const Svg = SLIDE_IMAGE_MAP[imageName];
+  const imageSrc = SLIDE_IMAGE_MAP[imageName];
 
   return (
     <div
@@ -21,7 +21,7 @@ const SlidePreviewCard = ({
         className,
       )}
     >
-      <Svg aria-label={alt} className="h-full w-full" />
+      <img src={imageSrc} alt={alt} className="h-full w-full object-cover" />
     </div>
   );
 };
