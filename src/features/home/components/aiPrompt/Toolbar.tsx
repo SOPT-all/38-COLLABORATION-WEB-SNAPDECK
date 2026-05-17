@@ -5,9 +5,10 @@ import type { CounterValueProps } from "@/features/home/types/counter";
 import IconButton from "@/shared/ui/iconButton";
 import TextButton from "@/shared/ui/textButton";
 
-import Counter from "./Counter";
+import Counter from "./counter";
 
 interface ToolbarProps extends Omit<CounterValueProps, "className"> {
+  disabled: boolean;
   sourceActions?: ReactNode;
   handleFileChange?: (files: FileList) => void;
 }
@@ -17,6 +18,7 @@ const Toolbar = ({
   min,
   max,
   handleChange,
+  disabled,
   sourceActions,
   handleFileChange,
 }: ToolbarProps) => {
@@ -68,6 +70,7 @@ const Toolbar = ({
         type="submit"
         variant="primary"
         className="typo-caption-m-10 h-[2rem]"
+        disabled={disabled}
       >
         생성
       </TextButton>
