@@ -1,15 +1,27 @@
-import bgGradient from "@/assets/images/bgGradient.webp";
+import HomeHeader from "@/features/home/components/HomeHeader";
+import AiPrompt from "@/features/home/components/aiPrompt";
+import UrlModal from "@/features/home/components/aiPrompt/UrlModal";
+import DashBoard from "@/features/home/components/dashBoard/DashBoard";
+import HomeTitle from "@/features/home/components/homeTitle/HomeTitle";
+import useHomePrompt from "@/features/home/hooks/useHomePrompt";
 
 const HomePage = () => {
+  const { aiPromptProps, urlModalProps } = useHomePrompt();
+
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      <img
-        src={bgGradient}
+    <div className="relative h-screen overflow-hidden">
+      <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 h-[82.9rem] w-[85.5rem] -translate-x-1/2 -translate-y-1/2"
+        className="bg-sub-blue-0/50 pointer-events-none absolute top-[calc(4.7rem+(100vh-4.7rem)/2)] left-1/2 size-[63.2rem] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[5rem]"
       />
-      <div className="relative z-10" />
-    </main>
+      <HomeHeader />
+      <main className="relative z-10 flex h-[calc(100vh-4.7rem)] flex-col items-center justify-center gap-[3.1rem]">
+        <HomeTitle />
+        <AiPrompt {...aiPromptProps} />
+        <DashBoard />
+      </main>
+      {urlModalProps ? <UrlModal {...urlModalProps} /> : null}
+    </div>
   );
 };
 
