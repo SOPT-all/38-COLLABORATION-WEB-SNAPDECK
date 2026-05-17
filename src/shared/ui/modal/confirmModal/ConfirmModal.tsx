@@ -11,6 +11,7 @@ interface ConfirmModalProps {
   handleConfirm: () => void;
   cancelText: string;
   confirmText: string;
+  confirmAriaLabel: string;
 }
 
 const ConfirmModal = ({
@@ -21,6 +22,7 @@ const ConfirmModal = ({
   handleConfirm,
   cancelText,
   confirmText,
+  confirmAriaLabel,
 }: ConfirmModalProps) => {
   return (
     <Modal open={isOpen} onOpenChange={handleOpenChange}>
@@ -66,6 +68,7 @@ const ConfirmModal = ({
               size="xs"
               className="typo-caption-r-10"
               onClick={handleConfirm}
+              aria-label={confirmAriaLabel}
             >
               {confirmText}
             </TextButton>
