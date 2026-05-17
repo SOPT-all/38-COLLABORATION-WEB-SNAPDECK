@@ -31,7 +31,6 @@ export const GUIDELINE_INSTANT_SEND_DEMO = {
     "Apple의 생태계 전략 보고서에 6번째 섹션을 추가하고 상세 콘텐츠를 생성하겠습니다. 6번 슬라이드에는 향후 전망 및 결론을 담아 마무리하면 좋을 것 같네요. 바로 진행할까요?",
 } as const;
 
-/** 홈 #3-5 생성 → 목차 진입 시 주입 예정 (명세 상태 A). 현재 화면 미구현으로 앱 기본값에는 사용하지 않음. */
 export const HOME_ENTRY_CHAT_TURNS: ContentChatTurn[] = [
   {
     id: "home-entry-turn-state-a",

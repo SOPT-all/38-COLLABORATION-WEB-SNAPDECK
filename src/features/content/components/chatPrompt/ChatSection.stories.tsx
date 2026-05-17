@@ -36,13 +36,11 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/** 현재 앱 기본 — 빈 채팅, Guideline·입력만 노출 */
 export const Default: Story = {
   parameters: { layout: "fullscreen" },
   decorators: [panelDecorator],
 };
 
-/** 명세 상태 A — 홈 진입 연동 후 `turns` prop으로 주입할 데이터 미리보기 */
 export const StateAOnHomeEntry: Story = {
   parameters: { layout: "fullscreen" },
   decorators: [panelDecorator],
@@ -51,7 +49,6 @@ export const StateAOnHomeEntry: Story = {
   },
 };
 
-/** 명세 상태 B — 빈 진입 후 "AI로 페이지 추가" 칩 클릭 결과 */
 export const StateBAfterGuidelineChip: Story = {
   parameters: { layout: "fullscreen" },
   decorators: [panelDecorator],

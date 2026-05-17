@@ -186,24 +186,23 @@ const ChatSection = ({
   return (
     <aside
       className={cn(
-        "border-snapdeck-300 bg-snapdeck-000 flex h-full w-[35.3rem] shrink-0 flex-col border-t border-l border-solid",
+        "border-snapdeck-300 bg-snapdeck-000 flex h-full min-h-0 w-[35.3rem] shrink-0 flex-col overflow-hidden border-t border-l border-solid",
         className,
       )}
     >
       <ChatHeader />
 
       <div className="flex min-h-0 flex-1 flex-col px-[2.6rem] py-[2.4rem]">
-        <div
-          className={cn(
-            "flex min-h-0 flex-1 flex-col gap-[2rem]",
-            hasTurns ? "justify-between" : "justify-end",
+        <div className="flex min-h-0 flex-1 flex-col gap-[2rem]">
+          {hasTurns ? (
+            <ChatHistory
+              turns={turns}
+              expandedTurnIds={expandedTurnIds}
+              handleTurnExpandedToggleClick={handleTurnExpandedToggleClick}
+            />
+          ) : (
+            <div className="min-h-0 flex-1" aria-hidden />
           )}
-        >
-          <ChatHistory
-            turns={turns}
-            expandedTurnIds={expandedTurnIds}
-            handleTurnExpandedToggleClick={handleTurnExpandedToggleClick}
-          />
 
           <section className="relative flex w-full shrink-0 flex-col gap-[1rem] overflow-visible">
             <ChatGuideline
