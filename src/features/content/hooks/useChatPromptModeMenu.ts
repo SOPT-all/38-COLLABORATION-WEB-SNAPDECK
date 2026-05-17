@@ -4,8 +4,8 @@ const useChatPromptModeMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const closeMenu = () => setIsOpen(false);
-  const toggleMenu = () => setIsOpen((prev) => !prev);
+  const handleMenuClose = () => setIsOpen(false);
+  const handleModeMenuToggleClick = () => setIsOpen((prev) => !prev);
 
   useEffect(() => {
     if (!isOpen) {
@@ -14,13 +14,13 @@ const useChatPromptModeMenu = () => {
 
     const handlePointerDown = (event: PointerEvent) => {
       if (!containerRef.current?.contains(event.target as Node)) {
-        closeMenu();
+        handleMenuClose();
       }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        closeMenu();
+        handleMenuClose();
       }
     };
 
@@ -33,7 +33,7 @@ const useChatPromptModeMenu = () => {
     };
   }, [isOpen]);
 
-  return { containerRef, isOpen, closeMenu, toggleMenu };
+  return { containerRef, isOpen, handleMenuClose, handleModeMenuToggleClick };
 };
 
 export default useChatPromptModeMenu;

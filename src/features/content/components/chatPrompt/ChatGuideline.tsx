@@ -3,12 +3,12 @@ import type { ChatGuidelineChip } from "./types/chatPrompt";
 
 type ChatGuidelineProps = {
   guidelines: readonly ChatGuidelineChip[];
-  onGuidelineClick: (chip: ChatGuidelineChip) => void;
+  handleGuidelineChipClick: (chip: ChatGuidelineChip) => void;
 };
 
 const ChatGuideline = ({
   guidelines,
-  onGuidelineClick,
+  handleGuidelineChipClick,
 }: ChatGuidelineProps) => {
   return (
     <div className="flex w-full flex-col gap-[1rem]">
@@ -22,7 +22,7 @@ const ChatGuideline = ({
               key={chip.id}
               type="button"
               className={chatGuidelineChipClassName}
-              onClick={() => onGuidelineClick(chip)}
+              onClick={() => handleGuidelineChipClick(chip)}
             >
               {chip.label}
             </button>

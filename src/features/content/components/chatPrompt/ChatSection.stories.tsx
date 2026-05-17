@@ -102,7 +102,7 @@ const ModeDropdownStory = ({
 }) => {
   const [mode, setMode] = useState<ChatPromptMode>(initialMode);
 
-  return <ChatPromptModeDropdown value={mode} onSelect={setMode} />;
+  return <ChatPromptModeDropdown value={mode} handleOptionClick={setMode} />;
 };
 
 export const ModeDropdown: Story = {

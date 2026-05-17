@@ -4,13 +4,13 @@ import type { ContentChatTurn } from "./types/chatPrompt";
 type ChatHistoryProps = {
   turns: ContentChatTurn[];
   expandedTurnIds: Set<string>;
-  onToggleTurnExpanded: (turnId: string) => void;
+  handleTurnExpandedToggleClick: (turnId: string) => void;
 };
 
 const ChatHistory = ({
   turns,
   expandedTurnIds,
-  onToggleTurnExpanded,
+  handleTurnExpandedToggleClick,
 }: ChatHistoryProps) => {
   if (!turns.length) {
     return null;
@@ -23,7 +23,9 @@ const ChatHistory = ({
           key={turn.id}
           turn={turn}
           isExpanded={expandedTurnIds.has(turn.id)}
-          onToggleExpanded={() => onToggleTurnExpanded(turn.id)}
+          handleTurnExpandedToggleClick={() =>
+            handleTurnExpandedToggleClick(turn.id)
+          }
         />
       ))}
     </section>

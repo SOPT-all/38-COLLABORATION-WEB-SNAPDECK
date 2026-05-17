@@ -1,4 +1,10 @@
-import { type ComponentPropsWithoutRef, type FormEvent, useState } from "react";
+import {
+  type ChangeEvent,
+  type ComponentPropsWithoutRef,
+  type FocusEvent,
+  type FormEvent,
+  useState,
+} from "react";
 
 import { DropdownIcon } from "@/assets";
 import useChatPromptModeMenu from "@/features/content/hooks/useChatPromptModeMenu";
@@ -38,7 +44,7 @@ const ChatPrompt = ({
   const [internalValue, setInternalValue] = useState(initialValue);
   const [internalMode, setInternalMode] = useState<ChatPromptMode>(initialMode);
   const [isFocused, setIsFocused] = useState(false);
-  const { containerRef, isOpen, closeMenu, toggleMenu } =
+  const { containerRef, isOpen, handleMenuClose, handleModeMenuToggleClick } =
     useChatPromptModeMenu();
 
   const value = valueProp ?? internalValue;
@@ -64,7 +70,7 @@ const ChatPrompt = ({
     CHAT_PROMPT_MODE_OPTIONS.find((option) => option.value === mode)?.label ??
     "Agent";
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!hasValue) {
@@ -74,9 +80,21 @@ const ChatPrompt = ({
     onSubmit?.({ value: value.trim(), mode });
   };
 
-  const handleModeSelect = (nextMode: ChatPromptMode) => {
+  const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleTextareaFocus = (_event: FocusEvent<HTMLTextAreaElement>) => {
+    setIsFocused(true);
+  };
+
+  const handleTextareaBlur = (_event: FocusEvent<HTMLTextAreaElement>) => {
+    setIsFocused(false);
+  };
+
+  const handleModeOptionClick = (nextMode: ChatPromptMode) => {
     setMode(nextMode);
-    closeMenu();
+    handleMenuClose();
   };
 
   return (
@@ -85,7 +103,7 @@ const ChatPrompt = ({
         "border-snapdeck-300 bg-snapdeck-000 relative flex h-[10rem] w-full flex-col justify-between overflow-visible rounded-[1rem] border border-solid p-[1.6rem]",
         className,
       )}
-      onSubmit={handleSubmit}
+      onSubmit={handleFormSubmit}
       {...props}
     >
       <div className="min-h-0 flex-1 overflow-hidden">
@@ -99,9 +117,9 @@ const ChatPrompt = ({
           )}
           placeholder={placeholder}
           value={value}
-          onChange={(event) => setValue(event.target.value)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onChange={handleTextareaChange}
+          onFocus={handleTextareaFocus}
+          onBlur={handleTextareaBlur}
         />
       </div>
 
@@ -116,7 +134,7 @@ const ChatPrompt = ({
               "typo-caption-m-11 inline-flex items-center gap-0 transition-colors",
               isBottomRowActive ? "text-snapdeck-400" : "text-snapdeck-300",
             )}
-            onClick={toggleMenu}
+            onClick={handleModeMenuToggleClick}
           >
             <span>{modeLabel}</span>
             <DropdownIcon aria-hidden className="size-[1.6rem] shrink-0" />
@@ -125,7 +143,7 @@ const ChatPrompt = ({
             <ChatPromptModeDropdown
               value={mode}
               className="shadow-elevation-2 absolute bottom-full left-0 mb-[0.4rem]"
-              onSelect={handleModeSelect}
+              handleOptionClick={handleModeOptionClick}
             />
           ) : null}
         </div>

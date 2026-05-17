@@ -7,13 +7,13 @@ import type { ContentChatTurn } from "./types/chatPrompt";
 type ChatHistoryTurnProps = {
   turn: ContentChatTurn;
   isExpanded: boolean;
-  onToggleExpanded: () => void;
+  handleTurnExpandedToggleClick: () => void;
 };
 
 const ChatHistoryTurn = ({
   turn,
   isExpanded,
-  onToggleExpanded,
+  handleTurnExpandedToggleClick,
 }: ChatHistoryTurnProps) => {
   const isAssistantLoading = turn.assistantStatus === "loading";
   const hasStatus = Boolean(turn.statusLabel);
@@ -42,7 +42,7 @@ const ChatHistoryTurn = ({
               type="button"
               aria-expanded={isExpanded}
               className="text-snapdeck-400 inline-flex h-[1.6rem] items-center gap-[0.2rem]"
-              onClick={onToggleExpanded}
+              onClick={handleTurnExpandedToggleClick}
             >
               <span className="typo-caption-r-10 tracking-[0.01rem]">
                 {turn.statusLabel}

@@ -7,16 +7,24 @@ import type { ChatPromptMode } from "./types/chatPrompt";
 
 type ChatPromptModeDropdownProps = {
   value: ChatPromptMode;
-  onSelect: (value: ChatPromptMode) => void;
+  handleOptionClick: (value: ChatPromptMode) => void;
   className?: string;
 };
 
 const ChatPromptModeDropdown = ({
   value,
-  onSelect,
+  handleOptionClick,
   className,
 }: ChatPromptModeDropdownProps) => {
   const [hoveredMode, setHoveredMode] = useState<ChatPromptMode | null>(null);
+
+  const handleOptionMouseEnter = (mode: ChatPromptMode) => {
+    setHoveredMode(mode);
+  };
+
+  const handleOptionMouseLeave = () => {
+    setHoveredMode(null);
+  };
 
   return (
     <div
@@ -43,9 +51,9 @@ const ChatPromptModeDropdown = ({
               option.value === "agent" && isHovered && "rounded-t-[0.6rem]",
               option.value === "ask" && isHovered && "rounded-b-[0.6rem]",
             )}
-            onMouseEnter={() => setHoveredMode(option.value)}
-            onMouseLeave={() => setHoveredMode(null)}
-            onClick={() => onSelect(option.value)}
+            onMouseEnter={() => handleOptionMouseEnter(option.value)}
+            onMouseLeave={handleOptionMouseLeave}
+            onClick={() => handleOptionClick(option.value)}
           >
             <span
               className={cn(

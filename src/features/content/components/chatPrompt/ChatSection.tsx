@@ -141,7 +141,7 @@ const ChatSection = ({
     return turnId;
   };
 
-  const handleGuidelineClick = (chip: ChatGuidelineChip) => {
+  const handleGuidelineChipClick = (chip: ChatGuidelineChip) => {
     onGuidelineClick?.(chip);
 
     if (chip.behavior === "fill-input") {
@@ -152,7 +152,7 @@ const ChatSection = ({
     appendUserTurnWithLoading(GUIDELINE_INSTANT_SEND_DEMO.userMessage);
   };
 
-  const toggleTurnExpanded = (turnId: string) => {
+  const handleTurnExpandedToggleClick = (turnId: string) => {
     setCollapsedTurnIds((prev) => {
       const next = new Set(prev);
 
@@ -166,7 +166,7 @@ const ChatSection = ({
     });
   };
 
-  const handlePromptSubmit = (payload: {
+  const handlePromptFormSubmit = (payload: {
     value: string;
     mode: ChatPromptMode;
   }) => {
@@ -202,13 +202,13 @@ const ChatSection = ({
           <ChatHistory
             turns={turns}
             expandedTurnIds={expandedTurnIds}
-            onToggleTurnExpanded={toggleTurnExpanded}
+            handleTurnExpandedToggleClick={handleTurnExpandedToggleClick}
           />
 
           <section className="relative flex w-full shrink-0 flex-col gap-[1rem] overflow-visible">
             <ChatGuideline
               guidelines={guidelines}
-              onGuidelineClick={handleGuidelineClick}
+              handleGuidelineChipClick={handleGuidelineChipClick}
             />
 
             <ChatPrompt
@@ -216,10 +216,10 @@ const ChatSection = ({
               mode={promptMode}
               onValueChange={setPromptValue}
               onModeChange={setPromptMode}
-              onSubmit={handlePromptSubmit}
+              onSubmit={handlePromptFormSubmit}
             />
 
-            <ChatThemeButton onClick={onThemeSelect} />
+            <ChatThemeButton handleThemeSelectClick={onThemeSelect} />
           </section>
         </div>
       </div>
