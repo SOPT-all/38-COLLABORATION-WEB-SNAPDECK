@@ -1,10 +1,10 @@
-import { GUIDELINE_INSTANT_SEND_DEMO } from "@/features/content/demo/chatAssistantMock";
+import { GUIDELINE_INSTANT_SEND_MOCK } from "@/features/content/mocks/chatAssistantMock";
 import type { ContentChatTurn } from "@/features/content/types/chat";
 import { createTurnId } from "@/features/content/utils/createTurnId";
 
 import type { MockAssistantCompletion } from "./chatAssistantMock";
 
-type RunGuidelineInstantSendDemoParams = {
+type RunGuidelineInstantSendMockParams = {
   appendTurn: (turn: ContentChatTurn) => void;
   scheduleMockAssistantCompletion: (
     turnId: string,
@@ -12,20 +12,20 @@ type RunGuidelineInstantSendDemoParams = {
   ) => void;
 };
 
-export const runGuidelineInstantSendDemo = ({
+export const runGuidelineInstantSendMock = ({
   appendTurn,
   scheduleMockAssistantCompletion,
-}: RunGuidelineInstantSendDemoParams) => {
+}: RunGuidelineInstantSendMockParams) => {
   const turnId = createTurnId();
 
   appendTurn({
     id: turnId,
-    userMessage: GUIDELINE_INSTANT_SEND_DEMO.userMessage,
+    userMessage: GUIDELINE_INSTANT_SEND_MOCK.userMessage,
     assistantStatus: "loading",
   });
 
   scheduleMockAssistantCompletion(turnId, {
-    statusLabel: GUIDELINE_INSTANT_SEND_DEMO.statusLabel,
-    assistantMessage: GUIDELINE_INSTANT_SEND_DEMO.assistantMessage,
+    statusLabel: GUIDELINE_INSTANT_SEND_MOCK.statusLabel,
+    assistantMessage: GUIDELINE_INSTANT_SEND_MOCK.assistantMessage,
   });
 };

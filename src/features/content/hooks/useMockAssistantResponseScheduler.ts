@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from "react";
 import {
   AI_RESPONSE_MOCK_DELAY_MS,
   type MockAssistantCompletion,
-} from "@/features/content/demo/chatAssistantMock";
+} from "@/features/content/mocks/chatAssistantMock";
 import type { ContentChatTurn } from "@/features/content/types/chat";
 
 type UseMockAssistantResponseSchedulerParams = {

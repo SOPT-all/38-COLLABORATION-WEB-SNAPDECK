@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 
-import { runGuidelineInstantSendDemo } from "@/features/content/demo/runGuidelineInstantSendDemo";
 import useContentChatTurns from "@/features/content/hooks/useContentChatTurns";
 import useMockAssistantResponseScheduler from "@/features/content/hooks/useMockAssistantResponseScheduler";
+import { runGuidelineInstantSendMock } from "@/features/content/mocks/runGuidelineInstantSendMock";
 import type {
   ChatGuidelineChip,
   ChatPromptMode,
@@ -64,7 +64,7 @@ const useContentChatSection = ({
         return;
       }
 
-      runGuidelineInstantSendDemo({
+      runGuidelineInstantSendMock({
         appendTurn,
         scheduleMockAssistantCompletion,
       });

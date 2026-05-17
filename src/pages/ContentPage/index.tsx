@@ -1,6 +1,6 @@
-import { ChatSection } from "@/features/content/components/chatPrompt";
 import { useState } from "react";
 
+import { ChatSection } from "@/features/content/components/chatPrompt";
 import { SlideContentViewer } from "@/features/content/components/slideContentViewer";
 import { SLIDE_CONTENT_EXAMPLES } from "@/features/content/constants";
 import { normalizeSlideOrders } from "@/features/content/utils";
@@ -17,20 +17,21 @@ const ContentPage = () => {
   };
 
   return (
-    <div className="bg-snapdeck-100 flex h-dvh justify-end overflow-hidden">
-      <ChatSection className="h-full" />
+    <div className="bg-snapdeck-100 flex h-dvh overflow-hidden">
+      <main className="min-h-0 min-w-0 flex-1 overflow-hidden">
+        <section className="h-full">
+          <SlideContentViewer
+            slides={slides}
+            onDelete={handleDelete}
+            onReorder={({ nextSlides }) => {
+              setSlides(nextSlides);
+            }}
+          />
+        </section>
+      </main>
+
+      <ChatSection className="h-full shrink-0" />
     </div>
-    <main>
-      <section>
-        <SlideContentViewer
-          slides={slides}
-          onDelete={handleDelete}
-          onReorder={({ nextSlides }) => {
-            setSlides(nextSlides);
-          }}
-        />
-      </section>
-    </main>
   );
 };
 

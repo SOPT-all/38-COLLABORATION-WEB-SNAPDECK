@@ -1,6 +1,6 @@
 export const AI_RESPONSE_MOCK_DELAY_MS = 1500;
 
-export const GUIDELINE_INSTANT_SEND_DEMO = {
+export const GUIDELINE_INSTANT_SEND_MOCK = {
   userMessage: "섹션 6에 대한 콘텐츠를 생성해줘",
   statusLabel: "프로젝트 분석 완료",
   assistantMessage:

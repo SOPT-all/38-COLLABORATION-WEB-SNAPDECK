@@ -11,8 +11,8 @@ export { default as ChatThemeButton } from "./ChatThemeButton";
 export { DEFAULT_CHAT_GUIDELINES } from "./constants/chatGuideline";
 export {
   AI_RESPONSE_MOCK_DELAY_MS,
-  GUIDELINE_INSTANT_SEND_DEMO,
-} from "@/features/content/demo/chatAssistantMock";
+  GUIDELINE_INSTANT_SEND_MOCK,
+} from "@/features/content/mocks/chatAssistantMock";
 export {
   HOME_ENTRY_CHAT_MESSAGES,
   HOME_ENTRY_CHAT_TURNS,
