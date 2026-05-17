@@ -8,11 +8,11 @@ export { default as ChatHistoryTurn } from "./ChatHistoryTurn";
 export { default as ChatChip } from "./ChatChip";
 export { default as ChatGuideline } from "./ChatGuideline";
 export { default as ChatThemeButton } from "./ChatThemeButton";
+export { DEFAULT_CHAT_GUIDELINES } from "./constants/chatGuideline";
 export {
   AI_RESPONSE_MOCK_DELAY_MS,
-  DEFAULT_CHAT_GUIDELINES,
   GUIDELINE_INSTANT_SEND_DEMO,
-} from "./constants/chatGuideline";
+} from "@/features/content/demo/chatAssistantMock";
 export {
   HOME_ENTRY_CHAT_MESSAGES,
   HOME_ENTRY_CHAT_TURNS,
