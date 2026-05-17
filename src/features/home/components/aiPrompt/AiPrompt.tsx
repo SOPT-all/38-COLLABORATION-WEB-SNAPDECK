@@ -1,5 +1,3 @@
-import { useId, useState } from "react";
-
 import { RightSmallIcon } from "@/assets";
 import {
   CATEGORY_OPTIONS,
@@ -9,6 +7,7 @@ import {
   SOURCE_ACTION_OPTIONS,
   type SourceActionValue,
 } from "@/features/home/constants/sourceActions";
+import useCategoryPanel from "@/features/home/hooks/useCategoryPanel";
 import TextButton from "@/shared/ui/textButton";
 
 import PromptTextarea from "./PromptTextarea";
@@ -45,23 +44,19 @@ const AiPrompt = ({
   maxSlideCount = 5,
   handleFileChange,
 }: AiPromptProps) => {
-  const categoryPanelId = useId();
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const {
+    categoryPanelId,
+    handleCategoryButtonClick,
+    handleCategorySelect,
+    isCategoryOpen,
+    promptContainerRef,
+  } = useCategoryPanel({ handleCategoryChange });
   const categoryLabel =
     CATEGORY_OPTIONS.find(({ value }) => value === categoryValue)?.label ??
     "Styles";
   const selectedSourceActionOption = SOURCE_ACTION_OPTIONS.find(
     ({ value }) => value === selectedSourceAction,
   );
-
-  const handleCategoryButtonClick = () => {
-    setIsCategoryOpen((prev) => !prev);
-  };
-
-  const handleCategorySelect = (value: CategoryValue | undefined) => {
-    handleCategoryChange(value);
-    setIsCategoryOpen(false);
-  };
 
   const handleSelectedSourceActionClick = () => {
     handleSourceActionChange(undefined);
@@ -92,7 +87,10 @@ const AiPrompt = ({
 
   return (
     <section className="flex flex-col items-center gap-[2.8rem]">
-      <div className="border-snapdeck-300 bg-snapdeck-000 relative flex w-[60.2rem] flex-col rounded-[0.8rem] border">
+      <div
+        ref={promptContainerRef}
+        className="border-snapdeck-300 bg-snapdeck-000 relative flex w-[60.2rem] flex-col rounded-[0.8rem] border"
+      >
         {isCategoryOpen ? (
           <div
             id={categoryPanelId}
