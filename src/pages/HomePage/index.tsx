@@ -1,7 +1,9 @@
+import DashBoard from "@/features/home/components/dashBoard/DashBoard";
+
 const HomePage = () => {
   return (
     <div>
-      <h1>Home Page</h1>
+      <DashBoard />
     </div>
   );
 };

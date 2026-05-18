@@ -1,7 +1,7 @@
 import { UserIcon } from "@/assets";
-import explore1 from "@/assets/images/explore1.webp";
-import explore2 from "@/assets/images/explore2.webp";
-import explore3 from "@/assets/images/explore3.webp";
+import img_explore1 from "@/assets/images/img_explore1.webp";
+import img_explore2 from "@/assets/images/img_explore2.webp";
+import img_explore3 from "@/assets/images/img_explore3.webp";
 import TextButton from "@/shared/ui/textButton";
 import { getDate } from "@/shared/utils/getDate";
 
@@ -12,9 +12,9 @@ interface DashBoardCardProps {
 }
 
 const DASHBOARD_IMAGE_MAP: Record<string, string> = {
-  explore1,
-  explore2,
-  explore3,
+  img_explore1,
+  img_explore2,
+  img_explore3,
 };
 
 const DashBoardCard = ({ card }: DashBoardCardProps) => {
