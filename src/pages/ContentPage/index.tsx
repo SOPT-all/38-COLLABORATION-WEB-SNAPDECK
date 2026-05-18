@@ -12,6 +12,7 @@ import ConfirmModal from "@/shared/ui/modal/confirmModal";
 
 export type ContentPageProps = {
   turns?: ComponentProps<typeof ChatSection>["turns"];
+  /** Storybook 스냅샷용 — 이탈 확인 모달 초기 오픈 */
   initialLeaveModalOpen?: boolean;
 };
 
