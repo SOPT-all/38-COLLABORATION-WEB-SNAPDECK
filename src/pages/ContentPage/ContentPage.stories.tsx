@@ -41,7 +41,7 @@ const meta = {
           "",
           "| 스토리 | 용도 |",
           "| --- | --- |",
-          "| Default | `/content` 기본 — 채팅 State A는 `ContentPage`가 `initialTurns`로 주입 |",
+          "| Default | `/content` 기본 — 채팅은 API `data` 1~2번(첫 USER+AI 턴) 초기 렌더 |",
           "| StateAOnHomeEntry | 홈 진입 직후 채팅 스냅샷 |",
           "| StateBAfterGuidelineChip | 가이드라인 칩 전송 후 채팅 스냅샷 |",
           "| EmptyChatHistory | 채팅 히스토리 없음 |",
@@ -65,7 +65,7 @@ const meta = {
   argTypes: {
     turns: {
       description:
-        "채팅 턴 목록. 전달 시 제어 모드(스냅샷용). 미전달 시 `CONTENT_PAGE_INITIAL_CHAT_TURNS`를 `initialTurns`로 넘깁니다.",
+        "채팅 턴 목록. 전달 시 제어 모드(스냅샷용). 미전달 시 GET /decks/{deckId}/chats 응답 data 1~2번(첫 턴)만 초기 렌더합니다.",
       control: false,
     },
     initialLeaveModalOpen: {
@@ -79,10 +79,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/** `/content` 라우트 기본 화면. 채팅·슬라이드 모두 인터랙션 가능. */
 export const Default: Story = {};
 
-/** 홈에서 진입한 직후 — 채팅 State A 고정 스냅샷. */
 export const StateAOnHomeEntry: Story = {
   args: {
     turns: HOME_ENTRY_CHAT_TURNS,
@@ -97,7 +95,6 @@ export const StateAOnHomeEntry: Story = {
   },
 };
 
-/** 가이드라인 칩(예: 섹션 6 생성) 즉시 전송 후 — 채팅 State B 고정 스냅샷. */
 export const StateBAfterGuidelineChip: Story = {
   args: {
     turns: STATE_B_CHAT_TURNS,

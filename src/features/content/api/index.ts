@@ -1,1 +1,1 @@
-export { getDeckSlides } from "./contentApi";
+export { getDeckChats, getDeckSlides } from "./contentApi";

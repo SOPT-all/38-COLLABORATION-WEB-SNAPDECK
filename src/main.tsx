@@ -16,7 +16,6 @@ async function enableMocking() {
         onUnhandledRequest: "warn",
       });
     } catch (error) {
-      // MSW는 개발 편의 기능이므로 실패해도 앱 실행은 계속합니다.
       void error;
     }
   }

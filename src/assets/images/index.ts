@@ -1,4 +1,3 @@
-// slide
 export { default as Apple1 } from "./apple1.webp";
 export { default as Apple2 } from "./apple2.webp";
 export { default as Apple3 } from "./apple3.webp";

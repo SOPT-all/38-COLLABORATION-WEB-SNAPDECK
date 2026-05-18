@@ -1,3 +1,7 @@
 export { contentQueryKeys } from "./contentQueryKeys";
-export { deckSlidesQueryOptions } from "./contentQueryOptions";
+export {
+  deckChatsQueryOptions,
+  deckSlidesQueryOptions,
+} from "./contentQueryOptions";
+export { useDeckChatsQuery } from "./useDeckChatsQuery";
 export { useDeckSlidesQuery } from "./useDeckSlidesQuery";
