@@ -30,7 +30,7 @@ const ContentPage = ({ turns }: ContentPageProps) => {
       <BackHeader onBack={() => navigate(PATHS.home)} />
 
       <div className="flex min-h-0 flex-1 overflow-hidden">
-        <main className="bg-snapdeck-000 flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden px-[7.2rem] pt-[2.5rem]">
+        <main className="bg-snapdeck-000 flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden px-[7.2rem] py-[2.5rem]">
           <h1 className="text-snapdeck-800 typo-head-b-20 w-full shrink-0 text-center">
             Content structure
           </h1>
