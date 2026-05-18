@@ -53,7 +53,7 @@ const SlideContentViewer = ({
         내용
       </h2>
 
-      <div className="flex min-h-0 w-full flex-1 flex-col items-start gap-10 overflow-y-auto pr-12">
+      <div className="flex min-h-0 w-full flex-1 flex-col items-start gap-10 overflow-y-auto">
         <DndContext
           collisionDetection={closestCenter}
           modifiers={SLIDE_CONTENT_DND_MODIFIERS}

@@ -5,7 +5,7 @@ export const SLIDE_CONTENT_EXAMPLES: SlideContentItem[] = [
     id: 1,
     deckId: 1,
     order: 1,
-    imageName: "image1",
+    imageName: "img_apple_1",
     title: "Apple의 생태계 전략과 모바일 기술 분야의 경쟁 우위",
     content: "",
     footer: "발표자: [발표자명] 소속: [회사명] 직책: [직책] 날짜: [YYYY-MM-DD]",
@@ -16,7 +16,7 @@ export const SLIDE_CONTENT_EXAMPLES: SlideContentItem[] = [
     id: 2,
     deckId: 1,
     order: 2,
-    imageName: "image2",
+    imageName: "img_apple_2",
     title: "불릿 리스트 예시: 하드웨어와 소프트웨어의 수직적 통합",
     content:
       "• Apple은 자체 설계한 A-시리즈 및 M-시리즈 칩을 통해 하드웨어 성능을 극대화합니다.\n• 독자적인 iOS와 macOS 운영체제는 하드웨어와 완벽하게 맞물려 끊김 없는 사용자 경험을 제공합니다.\n• 이러한 수직적 통합은 타사 대비 월등한 전력 효율성과 연산 속도를 보장합니다.\n• 사용자는 기기 간의 이질감 없는 인터페이스를 통해 높은 만족도를 유지합니다.\n• 독점적 하드웨어-소프트웨어 구조는 강력한 진입 장벽을 구축하는 핵심 요소입니다.\n• 정기적인 보안 업데이트와 최적화는 기기의 잔존 가치를 높여 브랜드 충성도를 강화합니다.",
@@ -28,7 +28,7 @@ export const SLIDE_CONTENT_EXAMPLES: SlideContentItem[] = [
     id: 3,
     deckId: 1,
     order: 3,
-    imageName: "image3",
+    imageName: "img_apple_3",
     title: "일반 문장 예시: AI 통합을 통한 업무 방식 변화",
     content:
       "생성형 AI는 단순한 도구를 넘어 기업 운영의 핵심 인터페이스로 진화하고 있습니다.\n기존의 복잡한 UI/UX 대신 자연어 기반의 인터페이스가 표준으로 자리 잡고 있습니다.\n데이터 분석과 보고서 작성이 자동화되어 의사결정 속도가 획기적으로 향상됩니다.",
@@ -41,7 +41,7 @@ export const SLIDE_CONTENT_EXAMPLES: SlideContentItem[] = [
     id: 4,
     deckId: 1,
     order: 4,
-    imageName: "image4",
+    imageName: "img_apple_4",
     title: "Apple Silicon 전환이 만든 성능 우위",
     content:
       "• Apple Silicon으로의 전환을 통해 노트북과 모바일 간의 기술적 경계를 허물었습니다.\n• 머신러닝 전용 뉴럴 엔진(Neural Engine) 탑재로 온디바이스 AI 분야에서 우위를 점하고 있습니다.\n• 타사 플래그십 모델 대비 긱벤치(Geekbench) 등 성능 지표에서 압도적인 수치를 기록합니다.",
@@ -53,7 +53,7 @@ export const SLIDE_CONTENT_EXAMPLES: SlideContentItem[] = [
     id: 5,
     deckId: 1,
     order: 5,
-    imageName: "image5",
+    imageName: "img_apple_5",
     title: "서비스 번들 전략을 통한 반복 매출 확대",
     content:
       "• Apple One 번들을 통해 음악, TV, 클라우드, 게임 서비스를 하나의 구독 경험으로 묶었습니다.\n• 하드웨어 판매 이후에도 서비스 매출이 지속적으로 발생하는 구조를 만들었습니다.\n• 기기 생태계와 서비스 경험이 결합되면서 사용자의 이탈 가능성을 낮춥니다.",
