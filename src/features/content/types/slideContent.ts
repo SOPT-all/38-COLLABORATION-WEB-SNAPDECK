@@ -12,7 +12,6 @@ export interface SlideContentItem {
 
 export interface SlideReorderPayload {
   slideId: number;
-  fromOrder: number;
   toOrder: number;
   nextSlides: SlideContentItem[];
 }
