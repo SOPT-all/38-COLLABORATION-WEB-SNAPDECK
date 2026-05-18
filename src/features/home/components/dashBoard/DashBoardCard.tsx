@@ -41,7 +41,7 @@ const DashBoardCard = ({ card }: DashBoardCardProps) => {
         <TextButton
           variant="primary"
           size="xs"
-          className="typo-caption-r-8 h-[2rem] w-[3rem] rounded-sm"
+          className="typo-caption-r-8 mr-[0.6rem] h-[2rem] min-w-[3rem] rounded-sm px-[0.7rem]"
         >
           열기
         </TextButton>
