@@ -86,7 +86,10 @@ const AiPrompt = ({
   const isDisabled = !promptValue.trim();
 
   return (
-    <section className="flex flex-col items-center gap-[2.8rem]">
+    <section
+      aria-label="프롬프트 입력"
+      className="flex flex-col items-center gap-[2.8rem]"
+    >
       <div
         ref={promptContainerRef}
         className="border-snapdeck-300 bg-snapdeck-000 relative flex w-[60.2rem] flex-col rounded-[0.8rem] border"
@@ -94,7 +97,7 @@ const AiPrompt = ({
         {isCategoryOpen ? (
           <div
             id={categoryPanelId}
-            className="bg-snapdeck-000 animate-category-panel-enter absolute bottom-full left-0 mb-[1.4rem] rounded-[0.4rem]"
+            className="animate-category-panel-enter bg-snapdeck-300/10 absolute bottom-full left-0 mb-[1.4rem] rounded-[0.4rem] backdrop-blur-[0.4rem]"
           >
             <Category
               value={categoryValue}
