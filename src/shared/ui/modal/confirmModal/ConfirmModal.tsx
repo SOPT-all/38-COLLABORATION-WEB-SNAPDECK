@@ -68,7 +68,7 @@ const ConfirmModal = ({
               </TextButton>
             </Modal.Close>
 
-            <Modal.Close asChild>
+            <Modal.Close>
               <TextButton
                 type="button"
                 variant="danger"
