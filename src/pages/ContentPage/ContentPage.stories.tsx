@@ -1,18 +1,25 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter, Route, Routes } from "react-router";
 
+import { PATHS } from "@/app/router/paths";
 import {
   HOME_ENTRY_CHAT_TURNS,
   STATE_B_CHAT_TURNS,
 } from "@/features/content/constants/chatMessageMocks";
+import HomePage from "@/pages/HomePage";
 import "@/shared/styles/global.css";
 import "@/shared/styles/theme.css";
 
 import ContentPage from "./index";
 
 const withRouter = (Story: () => React.JSX.Element) => (
-  <MemoryRouter initialEntries={["/content"]}>
-    <Story />
+  <MemoryRouter initialEntries={[PATHS.content]}>
+    <div className="relative h-[90rem] w-full overflow-hidden">
+      <Routes>
+        <Route path={PATHS.home} element={<HomePage />} />
+        <Route path={PATHS.content} element={<Story />} />
+      </Routes>
+    </div>
   </MemoryRouter>
 );
 
@@ -34,10 +41,13 @@ const meta = {
           "",
           "| 스토리 | 용도 |",
           "| --- | --- |",
-          "| Default | `/content` 기본 — 채팅 State A는 `ChatSection` 내부 기본값 |",
+          "| Default | `/content` 기본 — 채팅 State A는 `ContentPage`가 `initialTurns`로 주입 |",
           "| StateAOnHomeEntry | 홈 진입 직후 채팅 스냅샷 |",
           "| StateBAfterGuidelineChip | 가이드라인 칩 전송 후 채팅 스냅샷 |",
           "| EmptyChatHistory | 채팅 히스토리 없음 |",
+          "| LeaveConfirmModal | 백헤더 뒤로가기 → 이탈 확인 모달 (Figma `2424:5585`) |",
+          "",
+          "모든 스토리에서 **뒤로가기**를 누르면 `ConfirmModal`이 열립니다.",
         ].join("\n"),
       },
     },
@@ -55,7 +65,11 @@ const meta = {
   argTypes: {
     turns: {
       description:
-        "채팅 턴 목록. 전달 시 제어 모드(스냅샷용). 미전달 시 `ChatSection`이 `HOME_ENTRY_CHAT_TURNS`로 비제어 초기화.",
+        "채팅 턴 목록. 전달 시 제어 모드(스냅샷용). 미전달 시 `CONTENT_PAGE_INITIAL_CHAT_TURNS`를 `initialTurns`로 넘깁니다.",
+      control: false,
+    },
+    initialLeaveModalOpen: {
+      description: "이탈 확인 모달 초기 오픈 ",
       control: false,
     },
   },
@@ -98,7 +112,20 @@ export const StateBAfterGuidelineChip: Story = {
   },
 };
 
-/** 채팅 히스토리가 비어 있는 레이아웃. */
+export const LeaveConfirmModal: Story = {
+  args: {
+    initialLeaveModalOpen: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "뒤로가기 클릭 시 표시되는 확인 모달 스냅샷. 실제 앱에서는 `initialLeaveModalOpen` 없이 뒤로가기로 열립니다.",
+      },
+    },
+  },
+};
+
 export const EmptyChatHistory: Story = {
   args: {
     turns: [],

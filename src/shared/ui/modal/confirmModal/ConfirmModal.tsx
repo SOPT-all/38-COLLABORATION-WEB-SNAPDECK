@@ -12,6 +12,7 @@ interface ConfirmModalProps {
   cancelText: string;
   confirmText: string;
   confirmAriaLabel: string;
+  container?: HTMLElement | null;
 }
 
 const ConfirmModal = ({
@@ -23,10 +24,14 @@ const ConfirmModal = ({
   cancelText,
   confirmText,
   confirmAriaLabel,
+  container,
 }: ConfirmModalProps) => {
   return (
     <Modal open={isOpen} onOpenChange={handleOpenChange}>
-      <Modal.Content className="w-[33.6rem] px-[1.8rem] pt-[2.1rem] pb-[1.1rem]">
+      <Modal.Content
+        container={container}
+        className="w-[33.6rem] px-[1.8rem] pt-[2.1rem] pb-[1.1rem]"
+      >
         <div className="flex flex-col gap-[2.25rem]">
           <div>
             <div className="mb-[1.25rem] flex items-center justify-between">
@@ -63,15 +68,18 @@ const ConfirmModal = ({
               </TextButton>
             </Modal.Close>
 
-            <TextButton
-              variant="danger"
-              size="xs"
-              className="typo-caption-r-10"
-              onClick={handleConfirm}
-              aria-label={confirmAriaLabel}
-            >
-              {confirmText}
-            </TextButton>
+            <Modal.Close asChild>
+              <TextButton
+                type="button"
+                variant="danger"
+                size="xs"
+                className="typo-caption-r-10"
+                onClick={handleConfirm}
+                aria-label={confirmAriaLabel}
+              >
+                {confirmText}
+              </TextButton>
+            </Modal.Close>
           </div>
         </div>
       </Modal.Content>

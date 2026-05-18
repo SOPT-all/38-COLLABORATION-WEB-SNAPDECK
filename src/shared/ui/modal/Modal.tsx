@@ -22,6 +22,8 @@ interface ModalCloseProps {
 interface ModalContentProps {
   children: ReactNode;
   className?: string;
+  /** 지정 시 해당 요소 안에만 overlay·content를 렌더링합니다. */
+  container?: HTMLElement | null;
 }
 
 interface ModalTitleProps {
@@ -59,15 +61,27 @@ const ModalClose = ({ children }: ModalCloseProps) => {
   return <Dialog.Close asChild>{children}</Dialog.Close>;
 };
 
-const ModalContent = ({ children, className }: ModalContentProps) => {
+const ModalContent = ({
+  children,
+  className,
+  container,
+}: ModalContentProps) => {
+  const isContained = Boolean(container);
+  const positionClass = isContained ? "absolute" : "fixed";
+
   return (
-    <Dialog.Portal>
+    <Dialog.Portal container={container ?? undefined}>
       <Dialog.Overlay
-        className={cn("fixed inset-0 z-(--z-modal)", "bg-overlay-900-70")}
+        className={cn(
+          positionClass,
+          "inset-0 z-(--z-modal)",
+          "bg-overlay-900-70",
+        )}
       />
       <Dialog.Content
         className={cn(
-          "fixed top-1/2 left-1/2 z-(--z-modal)",
+          positionClass,
+          "top-1/2 left-1/2 z-(--z-modal)",
           "-translate-x-1/2 -translate-y-1/2",
           "rounded-md",
           "border-snapdeck-300 border",

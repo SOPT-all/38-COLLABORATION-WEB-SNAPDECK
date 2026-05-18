@@ -1,21 +1,28 @@
 import { type ComponentProps, useId } from "react";
 
-import { useNavigate } from "react-router";
-
-import { PATHS } from "@/app/router/paths";
 import { ChatSection } from "@/features/content/components/chatPrompt";
 import { SlideContentViewer } from "@/features/content/components/slideContentViewer";
 import { SlideTitleViewer } from "@/features/content/components/slideTitle";
+import { CONTENT_PAGE_INITIAL_CHAT_TURNS } from "@/features/content/constants/contentPage";
+import { CONTENT_PAGE_LEAVE_CONFIRM } from "@/features/content/constants/contentPageLeaveConfirm";
+import useContentPageLeaveConfirm from "@/features/content/hooks/useContentPageLeaveConfirm";
 import useContentPageSlides from "@/features/content/hooks/useContentPageSlides";
 import BackHeader from "@/shared/ui/header/BackHeader";
+import ConfirmModal from "@/shared/ui/modal/confirmModal";
 
-type ContentPageProps = {
+export type ContentPageProps = {
   turns?: ComponentProps<typeof ChatSection>["turns"];
+  /** Storybook 스냅샷용 — 이탈 확인 모달 초기 오픈 */
+  initialLeaveModalOpen?: boolean;
 };
 
-const ContentPage = ({ turns }: ContentPageProps) => {
-  const navigate = useNavigate();
+const ContentPage = ({
+  turns,
+  initialLeaveModalOpen = false,
+}: ContentPageProps) => {
   const titleLabelId = useId();
+  const { pageContainerRef, leaveConfirmModal, handleBackClick } =
+    useContentPageLeaveConfirm({ initialOpen: initialLeaveModalOpen });
   const {
     slides,
     deckTitle,
@@ -26,8 +33,13 @@ const ContentPage = ({ turns }: ContentPageProps) => {
   } = useContentPageSlides();
 
   return (
-    <div className="bg-snapdeck-000 flex h-dvh flex-col overflow-hidden">
-      <BackHeader onBack={() => navigate(PATHS.home)} />
+    <div
+      ref={pageContainerRef}
+      className="bg-snapdeck-000 relative flex h-dvh max-h-full flex-col overflow-hidden"
+    >
+      <BackHeader onBack={handleBackClick} />
+
+      <ConfirmModal {...CONTENT_PAGE_LEAVE_CONFIRM} {...leaveConfirmModal} />
 
       <div className="flex min-h-0 flex-1 overflow-hidden">
         <main className="bg-snapdeck-000 flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden px-[7.2rem] py-[2.5rem]">
@@ -53,7 +65,11 @@ const ContentPage = ({ turns }: ContentPageProps) => {
           </div>
         </main>
 
-        <ChatSection className="h-full shrink-0" turns={turns} />
+        <ChatSection
+          className="h-full shrink-0"
+          turns={turns}
+          initialTurns={CONTENT_PAGE_INITIAL_CHAT_TURNS}
+        />
       </div>
     </div>
   );

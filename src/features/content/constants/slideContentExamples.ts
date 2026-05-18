@@ -1,8 +1,5 @@
 import type { SlideContentItem } from "@/features/content/types";
 
-/** SlideTitleViewer 미리보기에 표시할 슬라이드 수 (Figma 기준) */
-export const SLIDE_PREVIEW_COUNT = 5;
-
 export const SLIDE_CONTENT_EXAMPLES: SlideContentItem[] = [
   {
     id: 1,
