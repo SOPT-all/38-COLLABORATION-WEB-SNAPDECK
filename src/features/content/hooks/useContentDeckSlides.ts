@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   contentQueryKeys,
   useDeckSlidesQuery,
+  useUpdateSlideOrderMutation,
 } from "@/features/content/queries";
 import type {
   SlideContentItem,
@@ -12,8 +13,6 @@ import type {
 } from "@/features/content/types";
 import { normalizeSlideOrders } from "@/features/content/utils";
 import { isApiError } from "@/shared/api";
-
-import { useUpdateSlideOrderMutation } from "./useUpdateSlideOrderMutation";
 
 const DEFAULT_DECK_ERROR_MESSAGE = "덱 정보를 불러오지 못했습니다.";
 const EMPTY_SLIDES: SlideContentItem[] = [];
