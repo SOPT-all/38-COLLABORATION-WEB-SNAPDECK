@@ -1,7 +1,7 @@
 export const mockContentSlides = [
   {
     id: 7,
-    deckId: 2,
+    deckId: 1,
     order: 1,
     imageName: "img_yc_1",
     title: "Y Combinator와 A16Z의 투자 전략 및 포트폴리오 성과 비교",
@@ -13,7 +13,7 @@ export const mockContentSlides = [
   },
   {
     id: 8,
-    deckId: 2,
+    deckId: 1,
     order: 2,
     imageName: "img_yc_2",
     title: "극초기 액셀러레이팅 vs 대형 벤처 캐피털의 전략적 차이",
@@ -27,7 +27,7 @@ export const mockContentSlides = [
   },
   {
     id: 9,
-    deckId: 2,
+    deckId: 1,
     order: 3,
     imageName: "img_yc_3",
     title: "시드 투자의 표준 YC vs 플랫폼 VC의 선구자 A16Z",
@@ -40,7 +40,7 @@ export const mockContentSlides = [
   },
   {
     id: 10,
-    deckId: 2,
+    deckId: 1,
     order: 4,
     imageName: "img_yc_4",
     title: "엑시트 성과 및 유니콘 배출을 통한 시장 지배력 확인",
@@ -54,7 +54,7 @@ export const mockContentSlides = [
   },
   {
     id: 11,
-    deckId: 2,
+    deckId: 1,
     order: 5,
     imageName: "img_yc_5",
     title: "미래 투자 환경의 주도권 확보를 위한 핵심 전략 제언",

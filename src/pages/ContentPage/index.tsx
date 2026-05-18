@@ -5,14 +5,13 @@ import { SlideContentViewer } from "@/features/content/components/slideContentVi
 import { SlideTitleViewer } from "@/features/content/components/slideTitle";
 import { CONTENT_PAGE_INITIAL_CHAT_TURNS } from "@/features/content/constants/contentPage";
 import { CONTENT_PAGE_LEAVE_CONFIRM } from "@/features/content/constants/contentPageLeaveConfirm";
+import useContentPageDeck from "@/features/content/hooks/useContentPageDeck";
 import useContentPageLeaveConfirm from "@/features/content/hooks/useContentPageLeaveConfirm";
-import useContentPageSlides from "@/features/content/hooks/useContentPageSlides";
 import BackHeader from "@/shared/ui/header/BackHeader";
 import ConfirmModal from "@/shared/ui/modal/confirmModal";
 
 export type ContentPageProps = {
   turns?: ComponentProps<typeof ChatSection>["turns"];
-  /** Storybook 스냅샷용 — 이탈 확인 모달 초기 오픈 */
   initialLeaveModalOpen?: boolean;
 };
 
@@ -30,7 +29,55 @@ const ContentPage = ({
     slidePreviews,
     handleSlideDelete,
     handleSlideReorder,
-  } = useContentPageSlides();
+    isPending,
+    isError,
+    errorMessage,
+  } = useContentPageDeck();
+
+  const renderSlidePanel = () => {
+    if (isPending) {
+      return (
+        <div className="text-snapdeck-400 typo-body-m-15 flex min-h-0 flex-1 items-center justify-center">
+          덱 정보를 불러오는 중입니다.
+        </div>
+      );
+    }
+
+    if (isError) {
+      return (
+        <div className="text-sub-red typo-body-m-15 flex min-h-0 flex-1 items-center justify-center">
+          {errorMessage}
+        </div>
+      );
+    }
+
+    if (slides.length === 0) {
+      return (
+        <div className="text-snapdeck-400 typo-body-m-15 flex min-h-0 flex-1 items-center justify-center">
+          표시할 슬라이드가 없습니다.
+        </div>
+      );
+    }
+
+    return (
+      <>
+        <SlideTitleViewer
+          labelId={titleLabelId}
+          title={deckTitle}
+          slides={slidePreviews}
+          onTitleChange={setDeckTitle}
+          className="w-full shrink-0"
+        />
+
+        <SlideContentViewer
+          slides={slides}
+          onDelete={handleSlideDelete}
+          onReorder={handleSlideReorder}
+          className="min-h-0 w-full flex-1"
+        />
+      </>
+    );
+  };
 
   return (
     <div
@@ -48,20 +95,7 @@ const ContentPage = ({
           </h1>
 
           <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-[1.4rem] pr-12">
-            <SlideTitleViewer
-              labelId={titleLabelId}
-              title={deckTitle}
-              slides={slidePreviews}
-              onTitleChange={setDeckTitle}
-              className="w-full shrink-0"
-            />
-
-            <SlideContentViewer
-              slides={slides}
-              onDelete={handleSlideDelete}
-              onReorder={handleSlideReorder}
-              className="min-h-0 w-full flex-1"
-            />
+            {renderSlidePanel()}
           </div>
         </main>
 
