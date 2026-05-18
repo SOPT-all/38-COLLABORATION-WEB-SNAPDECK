@@ -13,6 +13,8 @@ import type {
 import { normalizeSlideOrders } from "@/features/content/utils";
 import { isApiError } from "@/shared/api";
 
+import { useUpdateSlideOrderMutation } from "./useUpdateSlideOrderMutation";
+
 const DEFAULT_DECK_ERROR_MESSAGE = "덱 정보를 불러오지 못했습니다.";
 const EMPTY_SLIDES: SlideContentItem[] = [];
 
@@ -27,6 +29,8 @@ const getDeckErrorMessage = (error: Error | null) => {
 const useContentDeckSlides = (deckId: number) => {
   const queryClient = useQueryClient();
   const query = useDeckSlidesQuery(deckId);
+  const { mutate: updateSlideOrder, isPending: isReordering } =
+    useUpdateSlideOrderMutation();
   const slides = query.data ?? EMPTY_SLIDES;
 
   const updateDeckSlides = useCallback(
@@ -52,10 +56,19 @@ const useContentDeckSlides = (deckId: number) => {
   );
 
   const handleReorder = useCallback(
-    ({ nextSlides }: SlideReorderPayload) => {
-      updateDeckSlides(() => nextSlides);
+    ({ slideId, toOrder, nextSlides }: SlideReorderPayload) => {
+      if (isReordering) {
+        return;
+      }
+
+      updateSlideOrder({
+        deckId,
+        slideId,
+        toOrder,
+        nextSlides,
+      });
     },
-    [updateDeckSlides],
+    [deckId, isReordering, updateSlideOrder],
   );
 
   return {
