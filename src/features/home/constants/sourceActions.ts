@@ -8,3 +8,18 @@ export const SOURCE_ACTION_OPTIONS = [
 ] as const;
 
 export type SourceActionValue = (typeof SOURCE_ACTION_OPTIONS)[number]["value"];
+
+export type UrlImportChannel = "notion" | "web";
+
+export type UrlModalSourceActionValue = "webScrap" | "importNotion";
+
+export const URL_MODAL_SOURCE_ACTION_CHANNEL = {
+  webScrap: "web",
+  importNotion: "notion",
+} as const satisfies Record<UrlModalSourceActionValue, UrlImportChannel>;
+
+export const isUrlModalSourceAction = (
+  value: SourceActionValue,
+): value is UrlModalSourceActionValue => {
+  return value in URL_MODAL_SOURCE_ACTION_CHANNEL;
+};

@@ -101,7 +101,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         {showHelperRow ? (
           <p
             id={helperId}
-            className={cn("typo-caption-r-8 absolute top-full left-0")}
+            className={cn(
+              "typo-caption-r-8 absolute top-full left-0 whitespace-nowrap",
+            )}
           >
             {showSuccessWithIcon ? (
               <>

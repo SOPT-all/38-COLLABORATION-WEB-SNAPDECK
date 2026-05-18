@@ -1,7 +1,7 @@
 import { type ChangeEvent } from "react";
 
 import { NotionIcon, WebIcon } from "@/assets";
-import type { UrlModalType } from "@/features/home/hooks/useUrlModal";
+import type { UrlModalSourceActionValue } from "@/features/home/constants/sourceActions";
 import Modal from "@/shared/ui/modal/Modal";
 import TextButton from "@/shared/ui/textButton";
 import {
@@ -10,7 +10,7 @@ import {
 } from "@/shared/ui/textField/TextField";
 
 interface UrlModalProps {
-  type: UrlModalType;
+  type: UrlModalSourceActionValue;
   isOpen: boolean;
   value: string;
   fieldStatus: TextFieldStatus;
