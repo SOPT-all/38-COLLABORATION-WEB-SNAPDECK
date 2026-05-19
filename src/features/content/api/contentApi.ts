@@ -18,3 +18,7 @@ export const updateSlideOrder = (
     data,
   );
 };
+
+export const deleteSlide = (slideId: number) => {
+  return http.delete(`/api/v1/slides/${slideId}`);
+};

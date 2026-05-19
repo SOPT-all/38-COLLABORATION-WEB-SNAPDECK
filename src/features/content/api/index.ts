@@ -1,1 +1,1 @@
-export { getDeckSlides, updateSlideOrder } from "./contentApi";
+export { deleteSlide, getDeckSlides, updateSlideOrder } from "./contentApi";

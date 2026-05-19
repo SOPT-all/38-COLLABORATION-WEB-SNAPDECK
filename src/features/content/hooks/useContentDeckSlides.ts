@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   contentQueryKeys,
   useDeckSlidesQuery,
+  useDeleteSlideMutation,
   useUpdateSlideOrderMutation,
 } from "@/features/content/queries";
 import type {
@@ -30,6 +31,7 @@ const useContentDeckSlides = (deckId: number) => {
   const query = useDeckSlidesQuery(deckId);
   const { mutate: updateSlideOrder, isPending: isReordering } =
     useUpdateSlideOrderMutation();
+  const { mutate: deleteSlide } = useDeleteSlideMutation();
   const slides = query.data ?? EMPTY_SLIDES;
 
   const updateDeckSlides = useCallback(
@@ -45,13 +47,27 @@ const useContentDeckSlides = (deckId: number) => {
 
   const handleDelete = useCallback(
     (slideId: number) => {
+      const previousSlides =
+        queryClient.getQueryData<SlideContentItem[]>(
+          contentQueryKeys.deckSlides(deckId),
+        ) ?? slides;
+
       updateDeckSlides((currentSlides) =>
         normalizeSlideOrders(
           currentSlides.filter((slide) => slide.id !== slideId),
         ),
       );
+
+      deleteSlide(slideId, {
+        onError: () => {
+          queryClient.setQueryData(
+            contentQueryKeys.deckSlides(deckId),
+            previousSlides,
+          );
+        },
+      });
     },
-    [updateDeckSlides],
+    [deckId, deleteSlide, queryClient, slides, updateDeckSlides],
   );
 
   const handleReorder = useCallback(
