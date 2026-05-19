@@ -6,5 +6,5 @@ export const getDeckSlides = (deckId: number) => {
 };
 
 export const deleteSlide = (slideId: number) => {
-  return http.delete<Record<string, never>>(`/api/v1/slides/${slideId}`);
+  return http.delete(`/api/v1/slides/${slideId}`);
 };

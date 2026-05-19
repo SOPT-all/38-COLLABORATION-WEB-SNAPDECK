@@ -44,15 +44,27 @@ const useContentDeckSlides = (deckId: number) => {
 
   const handleDelete = useCallback(
     (slideId: number) => {
+      const previousSlides =
+        queryClient.getQueryData<SlideContentItem[]>(
+          contentQueryKeys.deckSlides(deckId),
+        ) ?? slides;
+
       updateDeckSlides((currentSlides) =>
         normalizeSlideOrders(
           currentSlides.filter((slide) => slide.id !== slideId),
         ),
       );
 
-      deleteSlide(slideId);
+      deleteSlide(slideId, {
+        onError: () => {
+          queryClient.setQueryData(
+            contentQueryKeys.deckSlides(deckId),
+            previousSlides,
+          );
+        },
+      });
     },
-    [deleteSlide, updateDeckSlides],
+    [deckId, deleteSlide, queryClient, slides, updateDeckSlides],
   );
 
   const handleReorder = useCallback(

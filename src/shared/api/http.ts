@@ -1,19 +1,37 @@
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
-import { type BaseResponse } from "@/shared/types/api";
+import type { BaseEmptyResponse, BaseResponse } from "@/shared/types/api";
 
 import { createApiError } from "./apiError";
-import { isBaseSuccess } from "./apiResponse";
+import { isBaseEmptySuccess, isBaseSuccess } from "./apiResponse";
 import axiosInstance from "./axiosInstance";
 
 type HttpRequestConfig<D = unknown> = AxiosRequestConfig<D>;
 type ApiAxiosResponse<T> = AxiosResponse<BaseResponse<T>>;
+type EmptyApiAxiosResponse = AxiosResponse<BaseEmptyResponse>;
 
 const unwrapApiResponse = <T>(response: ApiAxiosResponse<T>): T => {
   const body = response.data;
 
   if (isBaseSuccess<T>(body)) {
     return body.data;
+  }
+
+  throw createApiError(body, {
+    status: response.status,
+    path: response.config.url,
+  });
+};
+
+const unwrapEmptyApiResponse = (response: EmptyApiAxiosResponse): void => {
+  if (response.status === 204) {
+    return;
+  }
+
+  const body = response.data;
+
+  if (isBaseEmptySuccess(body)) {
+    return;
   }
 
   throw createApiError(body, {
@@ -71,16 +89,13 @@ export const http = {
 
     return unwrapApiResponse(response);
   },
-  delete: async <T, D = unknown>(
-    url: string,
-    config?: HttpRequestConfig<D>,
-  ) => {
+  delete: async <D = unknown>(url: string, config?: HttpRequestConfig<D>) => {
     const response = await axiosInstance.delete<
-      BaseResponse<T>,
-      ApiAxiosResponse<T>,
+      BaseEmptyResponse,
+      EmptyApiAxiosResponse,
       D
     >(url, config);
 
-    return unwrapApiResponse(response);
+    return unwrapEmptyApiResponse(response);
   },
 };

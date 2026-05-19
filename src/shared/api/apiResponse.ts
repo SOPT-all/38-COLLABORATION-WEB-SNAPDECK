@@ -1,4 +1,8 @@
-import type { BaseFail, BaseSuccess } from "@/shared/types/api";
+import type {
+  BaseEmptySuccess,
+  BaseFail,
+  BaseSuccess,
+} from "@/shared/types/api";
 
 const isRecord = (value: unknown): value is Record<string, unknown> => {
   return typeof value === "object" && value !== null;
@@ -13,6 +17,17 @@ export const isBaseSuccess = <T = unknown>(
     typeof value.code === "string" &&
     typeof value.message === "string" &&
     "data" in value
+  );
+};
+
+export const isBaseEmptySuccess = (
+  value: unknown,
+): value is BaseEmptySuccess => {
+  return (
+    isRecord(value) &&
+    value.success === true &&
+    typeof value.code === "string" &&
+    typeof value.message === "string"
   );
 };
 
