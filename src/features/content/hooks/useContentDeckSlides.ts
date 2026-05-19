@@ -55,7 +55,7 @@ const useContentDeckSlides = (deckId: number) => {
   );
 
   const handleReorder = useCallback(
-    ({ slideId, toOrder, nextSlides }: SlideReorderPayload) => {
+    ({ slideId, toOrder }: SlideReorderPayload) => {
       if (isReordering) {
         return;
       }
@@ -64,7 +64,6 @@ const useContentDeckSlides = (deckId: number) => {
         deckId,
         slideId,
         toOrder,
-        nextSlides,
       });
     },
     [deckId, isReordering, updateSlideOrder],
