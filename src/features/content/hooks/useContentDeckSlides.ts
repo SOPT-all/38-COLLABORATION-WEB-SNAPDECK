@@ -6,6 +6,7 @@ import {
   contentQueryKeys,
   useDeckSlidesQuery,
   useDeleteSlideMutation,
+  useUpdateSlideOrderMutation,
 } from "@/features/content/queries";
 import type {
   SlideContentItem,
@@ -28,6 +29,8 @@ const getDeckErrorMessage = (error: Error | null) => {
 const useContentDeckSlides = (deckId: number) => {
   const queryClient = useQueryClient();
   const query = useDeckSlidesQuery(deckId);
+  const { mutate: updateSlideOrder, isPending: isReordering } =
+    useUpdateSlideOrderMutation();
   const { mutate: deleteSlide } = useDeleteSlideMutation();
   const slides = query.data ?? EMPTY_SLIDES;
 
@@ -68,10 +71,18 @@ const useContentDeckSlides = (deckId: number) => {
   );
 
   const handleReorder = useCallback(
-    ({ nextSlides }: SlideReorderPayload) => {
-      updateDeckSlides(() => nextSlides);
+    ({ slideId, toOrder }: SlideReorderPayload) => {
+      if (isReordering) {
+        return;
+      }
+
+      updateSlideOrder({
+        deckId,
+        slideId,
+        toOrder,
+      });
     },
-    [updateDeckSlides],
+    [deckId, isReordering, updateSlideOrder],
   );
 
   return {
