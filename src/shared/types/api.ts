@@ -5,6 +5,12 @@ export interface BaseSuccess<T> {
   data: T;
 }
 
+export interface BaseEmptySuccess {
+  success: true;
+  code: string;
+  message: string;
+}
+
 export interface BaseFail {
   success: false;
   code: string;
@@ -14,3 +20,4 @@ export interface BaseFail {
 }
 
 export type BaseResponse<T> = BaseSuccess<T> | BaseFail;
+export type BaseEmptyResponse = BaseEmptySuccess | BaseFail;
