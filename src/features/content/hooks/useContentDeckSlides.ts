@@ -2,10 +2,10 @@ import { useCallback } from "react";
 
 import { useQueryClient } from "@tanstack/react-query";
 
-import { usePostDeckSlideMutation } from "@/features/content/hooks/usePostDeckSlideMutation";
 import {
   contentQueryKeys,
   useDeckSlidesQuery,
+  usePostDeckSlideMutation,
 } from "@/features/content/queries";
 import type {
   SlideContentItem,
