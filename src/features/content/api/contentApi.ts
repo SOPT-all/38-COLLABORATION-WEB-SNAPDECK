@@ -1,4 +1,7 @@
-import type { DeckChatMessageDto, SlideContentItem } from "@/features/content/types";
+import type {
+  DeckChatMessageDto,
+  SlideContentItem,
+} from "@/features/content/types";
 import { http } from "@/shared/api";
 
 export const getDeckSlides = (deckId: number) => {

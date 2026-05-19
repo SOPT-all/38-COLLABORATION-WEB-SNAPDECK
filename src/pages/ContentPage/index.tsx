@@ -8,9 +8,9 @@ import { CONTENT_PAGE_LEAVE_CONFIRM } from "@/features/content/constants/content
 import useContentPageChats from "@/features/content/hooks/useContentPageChats";
 import useContentPageDeck from "@/features/content/hooks/useContentPageDeck";
 import useContentPageLeaveConfirm from "@/features/content/hooks/useContentPageLeaveConfirm";
-import { cn } from "@/shared/utils/cn";
 import BackHeader from "@/shared/ui/header/BackHeader";
 import ConfirmModal from "@/shared/ui/modal/confirmModal";
+import { cn } from "@/shared/utils/cn";
 
 export type ContentPageProps = {
   turns?: ComponentProps<typeof ChatSection>["turns"];

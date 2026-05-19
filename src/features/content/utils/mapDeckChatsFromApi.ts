@@ -1,8 +1,8 @@
+import type { ContentChatTurn } from "@/features/content/types/chat";
 import type {
   ChatMessage,
   DeckChatMessageDto,
 } from "@/features/content/types/chatMessage";
-import type { ContentChatTurn } from "@/features/content/types/chat";
 
 import { mapChatMessagesToTurns } from "./mapChatMessagesToTurns";
 
@@ -26,7 +26,5 @@ export const mapDeckChatToInitialTurns = (
     return [];
   }
 
-  return mapChatMessagesToTurns(
-    defaultMessages.map(mapDeckChatFromApi),
-  );
+  return mapChatMessagesToTurns(defaultMessages.map(mapDeckChatFromApi));
 };
