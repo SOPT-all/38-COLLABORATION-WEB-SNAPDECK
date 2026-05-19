@@ -30,6 +30,7 @@ const ContentPage = ({
     slidePreviews,
     handleSlideDelete,
     handleSlideReorder,
+    handleSlideAdd,
     isPending,
     isError,
     errorMessage,
@@ -104,6 +105,7 @@ const ContentPage = ({
           className="h-full shrink-0"
           turns={turns}
           initialTurns={CONTENT_PAGE_INITIAL_CHAT_TURNS}
+          onSubmit={handleSlideAdd}
         />
       </div>
     </div>

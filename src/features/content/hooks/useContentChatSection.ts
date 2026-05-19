@@ -64,12 +64,20 @@ const useContentChatSection = ({
         return;
       }
 
-      runGuidelineInstantSendMock({
-        appendTurn,
-        scheduleMockAssistantCompletion,
-      });
+      if (chip.behavior === "instant-send") {
+        runGuidelineInstantSendMock({
+          appendTurn,
+          scheduleMockAssistantCompletion,
+        });
+
+        onSubmit?.({
+          value: chip.label,
+          mode: "agent",
+          turnId: createTurnId(),
+        });
+      }
     },
-    [appendTurn, onGuidelineClick, scheduleMockAssistantCompletion],
+    [appendTurn, onGuidelineClick, onSubmit, scheduleMockAssistantCompletion],
   );
 
   const handlePromptFormSubmit = useCallback(

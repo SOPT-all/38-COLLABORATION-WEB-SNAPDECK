@@ -2,6 +2,7 @@ import { useCallback } from "react";
 
 import { useQueryClient } from "@tanstack/react-query";
 
+import { usePostDeckSlideMutation } from "@/features/content/hooks/usePostDeckSlideMutation";
 import {
   contentQueryKeys,
   useDeckSlidesQuery,
@@ -27,6 +28,10 @@ const getDeckErrorMessage = (error: Error | null) => {
 const useContentDeckSlides = (deckId: number) => {
   const queryClient = useQueryClient();
   const query = useDeckSlidesQuery(deckId);
+
+  const { mutate: postDeckSlide, isPending: isAddingSlide } =
+    usePostDeckSlideMutation();
+
   const slides = query.data ?? EMPTY_SLIDES;
 
   const updateDeckSlides = useCallback(
@@ -39,6 +44,14 @@ const useContentDeckSlides = (deckId: number) => {
     },
     [deckId, queryClient, slides],
   );
+
+  const handleAdd = useCallback(() => {
+    if (isAddingSlide) {
+      return;
+    }
+
+    postDeckSlide(deckId);
+  }, [deckId, isAddingSlide, postDeckSlide]);
 
   const handleDelete = useCallback(
     (slideId: number) => {
@@ -60,6 +73,7 @@ const useContentDeckSlides = (deckId: number) => {
 
   return {
     errorMessage: getDeckErrorMessage(query.error),
+    handleAdd,
     handleDelete,
     handleReorder,
     isError: query.isError,
