@@ -1,0 +1,43 @@
+/*
+  Color tokens — Figma `redesign` (node 2427:3835).
+  Scale names follow the board (`snapdeck_*`); subcolors + blues from the Color section.
+*/
+
+/*noinspection CssInvalidAtRule*/
+@theme {
+  /* Snapdeck grayscale */
+  --color-snapdeck-000: #ffffff;
+  --color-snapdeck-100: #f2f2f2;
+  --color-snapdeck-300: #d9d9d9;
+  --color-snapdeck-400: #b3b3b3;
+  --color-snapdeck-500: #4d4d4d;
+  --color-snapdeck-600: #2c2c2c;
+  --color-snapdeck-700: #282828;
+  --color-snapdeck-800: #1b1b1b;
+  --color-snapdeck-900: #1a1a1a;
+
+  /* Sub palette */
+  --color-sub-blue-0: #e0e9ff;
+  --color-sub-blue-1: #336cff;
+  --color-sub-blue-2: #80a3ff;
+  --color-sub-blue-3: #f3f6ff;
+  --color-sub-red: #bf4444;
+  --color-sub-green: #4dd943;
+
+  /* Semantic overlays — snapdeck base + Figma alpha (900_50 / 900_70 / 700_30) */
+  --color-overlay-900-50: color-mix(
+    in srgb,
+    var(--color-snapdeck-900) 50%,
+    transparent
+  );
+  --color-overlay-900-70: color-mix(
+    in srgb,
+    var(--color-snapdeck-900) 70%,
+    transparent
+  );
+  --color-overlay-700-30: color-mix(
+    in srgb,
+    var(--color-snapdeck-700) 30%,
+    transparent
+  );
+}

@@ -1,0 +1,282 @@
+name: Automated Discord Notification
+
+on:
+  pull_request:
+    types: [opened, reopened, closed, ready_for_review]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened]
+  schedule:
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Discord notification
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          REVIEW_BODY: ${{ github.event.review.body }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL is not set."
+            exit 1
+          fi
+
+          EVENT_NAME="${{ github.event_name }}"
+          ACTION="${{ github.event.action }}"
+          REPOSITORY="${{ github.repository }}"
+          REPO_API_URL="https://api.github.com/repos/$REPOSITORY"
+
+          get_github_mention() {
+            if [ -z "$1" ] || [ "$1" = "없음" ] || [ "$1" = "리뷰어 정보 없음" ]; then
+              echo "없음"
+              return
+            fi
+
+            echo "@$1"
+          }
+
+          build_user_list() {
+            local users="$1"
+            if [ -z "$users" ] || [ "$users" = "없음" ]; then
+              echo "없음"
+              return
+            fi
+            local result=""
+            IFS=',' read -ra USER_ARRAY <<< "$users"
+            for user in "${USER_ARRAY[@]}"; do
+              trimmed_user=$(echo "$user" | xargs)
+              mention=$(get_github_mention "$trimmed_user")
+              if [ -z "$result" ]; then
+                result="$mention"
+              else
+                result="$result, $mention"
+              fi
+            done
+            echo "$result"
+          }
+          send_discord_message() {
+            jq -n \
+              --arg title "$TITLE" \
+              --arg url "$URL" \
+              --arg desc "$DESC" \
+              --arg author "$AUTHOR" \
+              --arg timestamp "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+              --argjson color "$COLOR" \
+              '{
+                embeds: [
+                  {
+                    title: $title,
+                    url: $url,
+                    description: $desc,
+                    color: $color,
+                    author: {
+                      name: $author,
+                      icon_url: ("https://github.com/" + $author + ".png")
+                    },
+                    footer: {
+                      text: "SnapDeck GitHub Automation"
+                    },
+                    timestamp: $timestamp
+                  }
+                ]
+              }' > payload.json
+            curl -f \
+              -H "Content-Type: application/json" \
+              -X POST \
+              -d @payload.json \
+              "$DISCORD_WEBHOOK_URL"
+          }
+
+          if [ "$EVENT_NAME" = "schedule" ] || [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            OPEN_PRS=$(curl -s \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "$REPO_API_URL/pulls?state=open&per_page=100")
+
+            STALE_PRS=$(echo "$OPEN_PRS" | jq -c '
+              [
+                .[]
+                | select(.draft == false)
+                | select(((now - (.updated_at | fromdateiso8601)) / 3600) >= 24)
+              ]
+            ')
+
+            STALE_COUNT=$(echo "$STALE_PRS" | jq 'length')
+
+            if [ "$STALE_COUNT" -eq 0 ]; then
+              echo "No stale PRs found."
+              exit 0
+            fi
+
+            PR_LIST=""
+            while IFS= read -r pr; do
+              PR_NUMBER=$(echo "$pr" | jq -r '.number')
+              PR_TITLE=$(echo "$pr" | jq -r '.title')
+              PR_AUTHOR=$(echo "$pr" | jq -r '.user.login')
+              PR_AUTHOR_MENTION=$(get_github_mention "$PR_AUTHOR")
+              PR_UPDATED_AT=$(echo "$pr" | jq -r '.updated_at')
+              PR_URL=$(echo "$pr" | jq -r '.html_url')
+
+              PR_LIST+="#${PR_NUMBER} ${PR_TITLE}"$'\n'
+              PR_LIST+="작성자: ${PR_AUTHOR_MENTION}"$'\n'
+              PR_LIST+="마지막 업데이트: ${PR_UPDATED_AT}"$'\n'
+              PR_LIST+="링크: ${PR_URL}"$'\n\n'
+            done < <(echo "$STALE_PRS" | jq -c '.[]')
+
+            PR_LIST=$(echo "$PR_LIST" | head -c 900)
+
+            TITLE="⏰ 24시간 이상 업데이트되지 않은 PR이 있어요"
+            URL="https://github.com/$REPOSITORY/pulls"
+            DESC=$'리뷰가 지연되었거나 작업이 멈춘 PR이 있는지 확인해주세요. Draft PR은 제외했습니다.\n\n'"$PR_LIST"
+            AUTHOR="github-actions"
+            COLOR=15844367
+
+            send_discord_message
+            exit 0
+          fi
+
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            if [ "$ACTION" = "opened" ]; then
+              sleep 10
+            fi
+
+            PR_TITLE="${{ github.event.pull_request.title }}"
+            IS_MERGED="${{ github.event.pull_request.merged }}"
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+            IS_DRAFT="${{ github.event.pull_request.draft }}"
+            BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+            HEAD_BRANCH="${{ github.event.pull_request.head.ref }}"
+            AUTHOR="${{ github.event.pull_request.user.login }}"
+            AUTHOR_MENTION=$(get_github_mention "$AUTHOR")
+
+            if [ "$IS_DRAFT" = "true" ] && [ "$ACTION" != "ready_for_review" ]; then
+              echo "Draft PR notification is skipped."
+              exit 0
+            fi
+
+            case "$ACTION" in
+              opened)
+                TITLE="🚀 새로운 PR이 생성되었어요"
+                DESC=$'새로운 작업이 리뷰 대기 목록에 올라왔습니다. 변경 범위와 요청 내용을 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"
+                COLOR=3066993
+                ;;
+              reopened)
+                TITLE="🔄 PR이 다시 열렸어요"
+                DESC=$'닫혔던 PR이 다시 열렸습니다. 이전 논의 내용과 현재 변경사항을 함께 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"
+                COLOR=3447003
+                ;;
+              ready_for_review)
+                TITLE="👀 Draft PR이 리뷰 가능한 상태가 되었어요"
+                DESC=$'이제 본격적인 리뷰가 가능한 상태입니다. 구현 내용과 체크 포인트를 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"
+                COLOR=3447003
+                ;;
+              closed)
+                if [ "$IS_MERGED" = "true" ]; then
+                  TITLE="🎉 PR이 머지되었어요"
+                  DESC=$'작업이 성공적으로 반영되었습니다. 관련 이슈나 후속 작업이 있다면 함께 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"$'\n'"**브랜치:** $HEAD_BRANCH → $BASE_BRANCH"
+                  COLOR=5763719
+                else
+                  TITLE="🗑️ PR이 닫혔어요"
+                  DESC=$'PR이 머지되지 않고 닫혔습니다. 작업 중단, 중복 PR, 방향 변경 등의 이유가 있는지 확인해주세요.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"
+                  COLOR=15158332
+                fi
+                ;;
+              *)
+                TITLE="📣 PR 이벤트가 발생했어요"
+                DESC=$'PR 상태가 변경되었습니다.\n\n'"**PR:** #$PR_NUMBER $PR_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"
+                COLOR=9807270
+                ;;
+            esac
+
+            URL="${{ github.event.pull_request.html_url }}"
+
+          elif [ "$EVENT_NAME" = "pull_request_review" ]; then
+            REVIEW_STATE="${{ github.event.review.state }}"
+            PR_TITLE="${{ github.event.pull_request.title }}"
+            PR_NUMBER="${{ github.event.pull_request.number }}"
+            PR_AUTHOR="${{ github.event.pull_request.user.login }}"
+            REVIEWER="${{ github.event.review.user.login }}"
+            IS_DRAFT="${{ github.event.pull_request.draft }}"
+            REVIEWER_MENTION=$(get_github_mention "$REVIEWER")
+            PR_AUTHOR_MENTION=$(get_github_mention "$PR_AUTHOR")
+
+            if [ "$IS_DRAFT" = "true" ]; then
+              echo "Draft PR review notification is skipped."
+              exit 0
+            fi
+
+            case "$REVIEW_STATE" in
+              approved)
+                REVIEWS=$(curl -s \
+                  -H "Authorization: Bearer $GITHUB_TOKEN" \
+                  -H "Accept: application/vnd.github+json" \
+                  "$REPO_API_URL/pulls/$PR_NUMBER/reviews?per_page=100")
+
+                APPROVED_REVIEW_COUNT=$(echo "$REVIEWS" | jq '
+                  group_by(.user.login)
+                  | map(max_by(.submitted_at))
+                  | map(select(.state == "APPROVED"))
+                  | length
+                ')
+
+                if [ "$APPROVED_REVIEW_COUNT" -ne 2 ]; then
+                  echo "Current approved review count is $APPROVED_REVIEW_COUNT. Notification is skipped."
+                  exit 0
+                fi
+
+                TITLE="✅ PR 머지 가능 상태가 되었어요"
+                DESC="**#$PR_NUMBER $PR_TITLE** PR이 2명 이상의 Approve를 받아 머지 가능 상태가 되었습니다."$'\n\n'"**PR 작성자:** $PR_AUTHOR_MENTION"
+                COLOR=5763719
+                ;;
+              changes_requested)
+                TITLE="🛠️ 수정 요청이 남겨졌어요"
+                DESC="$REVIEWER_MENTION 님이 **#$PR_NUMBER $PR_TITLE** PR에 변경 요청을 남겼습니다."$'\n\n'"**PR 작성자:** $PR_AUTHOR_MENTION"
+                COLOR=15158332
+                ;;
+              commented)
+                TITLE="💬 PR 리뷰 코멘트가 등록되었어요"
+                DESC="$REVIEWER_MENTION 님이 **#$PR_NUMBER $PR_TITLE** PR에 리뷰 코멘트를 남겼습니다."$'\n\n'"**PR 작성자:** $PR_AUTHOR_MENTION"
+                COLOR=3447003
+                ;;
+              *)
+                TITLE="📣 PR 리뷰 이벤트가 발생했어요"
+                DESC="$REVIEWER_MENTION 님이 **#$PR_NUMBER $PR_TITLE** PR에 리뷰를 제출했습니다."$'\n\n'"**PR 작성자:** $PR_AUTHOR_MENTION"
+                COLOR=9807270
+                ;;
+            esac
+
+            URL="${{ github.event.pull_request.html_url }}"
+            AUTHOR="$REVIEWER"
+
+          elif [ "$EVENT_NAME" = "issues" ]; then
+            ISSUE_TITLE="${{ github.event.issue.title }}"
+            ISSUE_NUMBER="${{ github.event.issue.number }}"
+            AUTHOR="${{ github.event.issue.user.login }}"
+            AUTHOR_MENTION=$(get_github_mention "$AUTHOR")
+
+            case "$ACTION" in
+              opened)
+                TITLE="📌 새로운 이슈가 등록되었어요"
+                DESC=$'새로운 작업이 등록되었습니다. 라벨을 확인하고 작업 범위를 정리해주세요.\n\n'"**Issue:** #$ISSUE_NUMBER $ISSUE_TITLE"$'\n'"**작성자:** $AUTHOR_MENTION"
+                COLOR=15105570
+                ;;
+            esac
+
+            URL="${{ github.event.issue.html_url }}"
+          fi
+
+          send_discord_message

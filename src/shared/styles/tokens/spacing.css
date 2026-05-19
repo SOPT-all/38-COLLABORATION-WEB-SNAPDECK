@@ -1,0 +1,17 @@
+/*
+  Spacing scale — 4px grid @ html 62.5% → 1rem ≈ 10px (px÷10 as rem).
+*/
+
+/*noinspection CssInvalidAtRule*/
+@theme {
+  --spacing-4: 0.4rem;
+  --spacing-8: 0.8rem;
+  --spacing-10: 1rem;
+  --spacing-12: 1.2rem;
+  --spacing-16: 1.6rem;
+  --spacing-20: 2rem;
+  --spacing-24: 2.4rem;
+  --spacing-32: 3.2rem;
+  --spacing-48: 4.8rem;
+  --spacing-64: 6.4rem;
+}

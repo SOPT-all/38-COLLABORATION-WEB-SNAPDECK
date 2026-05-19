@@ -1,0 +1,41 @@
+import {
+  Apple1,
+  Apple2,
+  Apple3,
+  Apple4,
+  Apple5,
+  Apple6,
+  Gpt1,
+  Gpt2,
+  Gpt3,
+  Gpt4,
+  Gpt5,
+  Gpt6,
+  Yc1,
+  Yc2,
+  Yc3,
+  Yc4,
+  Yc5,
+} from "@/assets";
+
+export const SLIDE_IMAGE_MAP = {
+  img_apple_1: Apple1,
+  img_apple_2: Apple2,
+  img_apple_3: Apple3,
+  img_apple_4: Apple4,
+  img_apple_5: Apple5,
+  img_apple_6: Apple6,
+
+  img_gpt_1: Gpt1,
+  img_gpt_2: Gpt2,
+  img_gpt_3: Gpt3,
+  img_gpt_4: Gpt4,
+  img_gpt_5: Gpt5,
+  img_gpt_6: Gpt6,
+
+  img_yc_1: Yc1,
+  img_yc_2: Yc2,
+  img_yc_3: Yc3,
+  img_yc_4: Yc4,
+  img_yc_5: Yc5,
+} as const;

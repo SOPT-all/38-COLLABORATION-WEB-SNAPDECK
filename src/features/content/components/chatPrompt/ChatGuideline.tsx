@@ -1,0 +1,42 @@
+import type { ChatGuidelineChip } from "@/features/content/types/chat";
+import { cn } from "@/shared/utils/cn";
+import { scrollbarHideXClassName } from "@/shared/utils/scrollbar";
+
+import ChatChip from "./ChatChip";
+
+type ChatGuidelineProps = {
+  guidelines: readonly ChatGuidelineChip[];
+  handleGuidelineChipClick: (chip: ChatGuidelineChip) => void;
+};
+
+const ChatGuideline = ({
+  guidelines,
+  handleGuidelineChipClick,
+}: ChatGuidelineProps) => {
+  return (
+    <div className="flex w-full flex-col gap-[1rem]">
+      <p className="typo-caption-m-10 text-snapdeck-500 tracking-[-0.02rem]">
+        Guideline
+      </p>
+      <div
+        className={cn(
+          scrollbarHideXClassName,
+          "-mx-[0.1rem] px-[0.1rem] pb-[0.2rem]",
+        )}
+      >
+        <div className="flex w-max gap-[1rem]">
+          {guidelines.map((chip) => (
+            <ChatChip
+              key={chip.id}
+              onClick={() => handleGuidelineChipClick(chip)}
+            >
+              {chip.label}
+            </ChatChip>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ChatGuideline;
