@@ -23,6 +23,6 @@ export const deleteSlide = (slideId: number) => {
   return http.delete(`/api/v1/slides/${slideId}`);
 };
 
-export const postDeckSlide = async (deckId: number) => {
+export const postDeckSlide = (deckId: number) => {
   return http.post<SlideContentItem[]>(`/api/v1/decks/${deckId}/slides`);
 };
