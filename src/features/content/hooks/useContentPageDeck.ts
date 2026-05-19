@@ -13,6 +13,7 @@ const useContentPageDeck = ({
 }: UseContentPageDeckParams = {}) => {
   const {
     slides,
+    handleAdd,
     handleDelete,
     handleReorder,
     isPending,
@@ -31,6 +32,7 @@ const useContentPageDeck = ({
     slidePreviews,
     deckTitle,
     setDeckTitle: setDeckTitleOverride,
+    handleSlideAdd: handleAdd,
     handleSlideDelete: handleDelete,
     handleSlideReorder: handleReorder,
     isPending,

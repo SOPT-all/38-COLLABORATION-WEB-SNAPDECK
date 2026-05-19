@@ -5,6 +5,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   contentQueryKeys,
   useDeckSlidesQuery,
+  useDeleteSlideMutation,
+  usePostDeckSlideMutation,
+  useUpdateSlideOrderMutation,
 } from "@/features/content/queries";
 import type {
   SlideContentItem,
@@ -27,6 +30,13 @@ const getDeckErrorMessage = (error: Error | null) => {
 const useContentDeckSlides = (deckId: number) => {
   const queryClient = useQueryClient();
   const query = useDeckSlidesQuery(deckId);
+
+  const { mutate: updateSlideOrder, isPending: isReordering } =
+    useUpdateSlideOrderMutation();
+  const { mutate: deleteSlide } = useDeleteSlideMutation();
+  const { mutate: postDeckSlide, isPending: isAddingSlide } =
+    usePostDeckSlideMutation();
+
   const slides = query.data ?? EMPTY_SLIDES;
 
   const updateDeckSlides = useCallback(
@@ -42,24 +52,55 @@ const useContentDeckSlides = (deckId: number) => {
 
   const handleDelete = useCallback(
     (slideId: number) => {
+      const previousSlides =
+        queryClient.getQueryData<SlideContentItem[]>(
+          contentQueryKeys.deckSlides(deckId),
+        ) ?? slides;
+
       updateDeckSlides((currentSlides) =>
         normalizeSlideOrders(
           currentSlides.filter((slide) => slide.id !== slideId),
         ),
       );
+
+      deleteSlide(slideId, {
+        onError: () => {
+          queryClient.setQueryData(
+            contentQueryKeys.deckSlides(deckId),
+            previousSlides,
+          );
+        },
+      });
     },
-    [updateDeckSlides],
+    [deckId, deleteSlide, queryClient, slides, updateDeckSlides],
   );
 
   const handleReorder = useCallback(
-    ({ nextSlides }: SlideReorderPayload) => {
-      updateDeckSlides(() => nextSlides);
+    ({ slideId, toOrder }: SlideReorderPayload) => {
+      if (isReordering) {
+        return;
+      }
+
+      updateSlideOrder({
+        deckId,
+        slideId,
+        toOrder,
+      });
     },
-    [updateDeckSlides],
+    [deckId, isReordering, updateSlideOrder],
   );
+
+  const handleAdd = useCallback(() => {
+    if (isAddingSlide) {
+      return;
+    }
+
+    postDeckSlide(deckId);
+  }, [deckId, isAddingSlide, postDeckSlide]);
 
   return {
     errorMessage: getDeckErrorMessage(query.error),
+    handleAdd,
     handleDelete,
     handleReorder,
     isError: query.isError,

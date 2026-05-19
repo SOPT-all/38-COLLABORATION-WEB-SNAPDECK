@@ -76,7 +76,6 @@ const useSlideContentDnd = ({
 
       onReorder({
         slideId: movedSlide.id,
-        fromOrder: movedSlide.order,
         toOrder: toIndex + 1,
         nextSlides,
       });

@@ -10,7 +10,6 @@ import useContentPageDeck from "@/features/content/hooks/useContentPageDeck";
 import useContentPageLeaveConfirm from "@/features/content/hooks/useContentPageLeaveConfirm";
 import BackHeader from "@/shared/ui/header/BackHeader";
 import ConfirmModal from "@/shared/ui/modal/confirmModal";
-import { cn } from "@/shared/utils/cn";
 
 export type ContentPageProps = {
   turns?: ComponentProps<typeof ChatSection>["turns"];
@@ -31,6 +30,7 @@ const ContentPage = ({
     slidePreviews,
     handleSlideDelete,
     handleSlideReorder,
+    handleSlideAdd,
     isPending,
     isError,
     errorMessage,
@@ -42,6 +42,16 @@ const ContentPage = ({
     isError: isChatError,
     errorMessage: chatErrorMessage,
   } = useContentPageChats(CONTENT_DEFAULT_DECK_ID);
+
+  const handleChatSubmit: ComponentProps<typeof ChatSection>["onSubmit"] = ({
+    action,
+  }) => {
+    if (action !== "add-slide") {
+      return;
+    }
+
+    handleSlideAdd();
+  };
 
   const renderSlidePanel = () => {
     if (isPending) {
@@ -90,16 +100,18 @@ const ContentPage = ({
 
   const renderChatSection = () => {
     if (turns !== undefined) {
-      return <ChatSection className="h-full shrink-0" turns={turns} />;
+      return (
+        <ChatSection
+          className="h-full shrink-0"
+          turns={turns}
+          onSubmit={handleChatSubmit}
+        />
+      );
     }
 
     if (isChatPending) {
       return (
-        <aside
-          className={cn(
-            "border-snapdeck-300 bg-snapdeck-000 text-snapdeck-400 typo-body-m-15 flex h-full w-[35.3rem] shrink-0 items-center justify-center border-t border-l border-solid",
-          )}
-        >
+        <aside className="border-snapdeck-300 bg-snapdeck-000 text-snapdeck-400 typo-body-m-15 flex h-full w-[35.3rem] shrink-0 items-center justify-center border-t border-l border-solid">
           채팅을 불러오는 중입니다.
         </aside>
       );
@@ -107,11 +119,7 @@ const ContentPage = ({
 
     if (isChatError) {
       return (
-        <aside
-          className={cn(
-            "border-snapdeck-300 bg-snapdeck-000 text-sub-red typo-body-m-15 flex h-full w-[35.3rem] shrink-0 items-center justify-center border-t border-l border-solid px-[2.6rem] text-center",
-          )}
-        >
+        <aside className="border-snapdeck-300 bg-snapdeck-000 text-sub-red typo-body-m-15 flex h-full w-[35.3rem] shrink-0 items-center justify-center border-t border-l border-solid px-[2.6rem] text-center">
           {chatErrorMessage}
         </aside>
       );
@@ -121,6 +129,7 @@ const ContentPage = ({
       <ChatSection
         className="h-full shrink-0"
         initialTurns={chatInitialTurns}
+        onSubmit={handleChatSubmit}
       />
     );
   };
