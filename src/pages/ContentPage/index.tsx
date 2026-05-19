@@ -105,7 +105,13 @@ const ContentPage = ({
           className="h-full shrink-0"
           turns={turns}
           initialTurns={CONTENT_PAGE_INITIAL_CHAT_TURNS}
-          onSubmit={handleSlideAdd}
+          onSubmit={({ action }) => {
+            if (action !== "add-slide") {
+              return;
+            }
+
+            handleSlideAdd();
+          }}
         />
       </div>
     </div>

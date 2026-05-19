@@ -21,6 +21,7 @@ type UseContentChatSectionParams = {
     value: string;
     mode: ChatPromptMode;
     turnId: string;
+    action: "chat" | "add-slide";
   }) => void;
 };
 
@@ -65,7 +66,7 @@ const useContentChatSection = ({
       }
 
       if (chip.behavior === "instant-send") {
-        runGuidelineInstantSendMock({
+        const turnId = runGuidelineInstantSendMock({
           appendTurn,
           scheduleMockAssistantCompletion,
         });
@@ -73,7 +74,8 @@ const useContentChatSection = ({
         onSubmit?.({
           value: chip.label,
           mode: "agent",
-          turnId: createTurnId(),
+          turnId,
+          action: "add-slide",
         });
       }
     },
@@ -89,7 +91,11 @@ const useContentChatSection = ({
         userMessage: payload.value,
       });
       setPromptValue("");
-      onSubmit?.({ ...payload, turnId });
+      onSubmit?.({
+        ...payload,
+        turnId,
+        action: "chat",
+      });
     },
     [appendTurn, onSubmit],
   );

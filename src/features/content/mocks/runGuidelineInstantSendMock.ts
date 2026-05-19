@@ -28,4 +28,6 @@ export const runGuidelineInstantSendMock = ({
     statusLabel: GUIDELINE_INSTANT_SEND_MOCK.statusLabel,
     assistantMessage: GUIDELINE_INSTANT_SEND_MOCK.assistantMessage,
   });
+
+  return turnId;
 };

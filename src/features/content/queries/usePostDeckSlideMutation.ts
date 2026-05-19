@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { postDeckSlide } from "@/features/content/api/contentApi";
+import { postDeckSlide } from "@/features/content/api";
 import { contentQueryKeys } from "@/features/content/queries";
 
 export const usePostDeckSlideMutation = () => {
