@@ -3,8 +3,9 @@ import { type ComponentProps, useId } from "react";
 import { ChatSection } from "@/features/content/components/chatPrompt";
 import { SlideContentViewer } from "@/features/content/components/slideContentViewer";
 import { SlideTitleViewer } from "@/features/content/components/slideTitle";
-import { CONTENT_PAGE_INITIAL_CHAT_TURNS } from "@/features/content/constants/contentPage";
+import { CONTENT_DEFAULT_DECK_ID } from "@/features/content/constants/contentDeck";
 import { CONTENT_PAGE_LEAVE_CONFIRM } from "@/features/content/constants/contentPageLeaveConfirm";
+import useContentPageChats from "@/features/content/hooks/useContentPageChats";
 import useContentPageDeck from "@/features/content/hooks/useContentPageDeck";
 import useContentPageLeaveConfirm from "@/features/content/hooks/useContentPageLeaveConfirm";
 import BackHeader from "@/shared/ui/header/BackHeader";
@@ -12,7 +13,6 @@ import ConfirmModal from "@/shared/ui/modal/confirmModal";
 
 export type ContentPageProps = {
   turns?: ComponentProps<typeof ChatSection>["turns"];
-  /** Storybook 스냅샷용 — 이탈 확인 모달 초기 오픈 */
   initialLeaveModalOpen?: boolean;
 };
 
@@ -34,7 +34,24 @@ const ContentPage = ({
     isPending,
     isError,
     errorMessage,
-  } = useContentPageDeck();
+  } = useContentPageDeck({ deckId: CONTENT_DEFAULT_DECK_ID });
+
+  const {
+    initialTurns: chatInitialTurns,
+    isPending: isChatPending,
+    isError: isChatError,
+    errorMessage: chatErrorMessage,
+  } = useContentPageChats(CONTENT_DEFAULT_DECK_ID);
+
+  const handleChatSubmit: ComponentProps<typeof ChatSection>["onSubmit"] = ({
+    action,
+  }) => {
+    if (action !== "add-slide") {
+      return;
+    }
+
+    handleSlideAdd();
+  };
 
   const renderSlidePanel = () => {
     if (isPending) {
@@ -81,6 +98,42 @@ const ContentPage = ({
     );
   };
 
+  const renderChatSection = () => {
+    if (turns !== undefined) {
+      return (
+        <ChatSection
+          className="h-full shrink-0"
+          turns={turns}
+          onSubmit={handleChatSubmit}
+        />
+      );
+    }
+
+    if (isChatPending) {
+      return (
+        <aside className="border-snapdeck-300 bg-snapdeck-000 text-snapdeck-400 typo-body-m-15 flex h-full w-[35.3rem] shrink-0 items-center justify-center border-t border-l border-solid">
+          채팅을 불러오는 중입니다.
+        </aside>
+      );
+    }
+
+    if (isChatError) {
+      return (
+        <aside className="border-snapdeck-300 bg-snapdeck-000 text-sub-red typo-body-m-15 flex h-full w-[35.3rem] shrink-0 items-center justify-center border-t border-l border-solid px-[2.6rem] text-center">
+          {chatErrorMessage}
+        </aside>
+      );
+    }
+
+    return (
+      <ChatSection
+        className="h-full shrink-0"
+        initialTurns={chatInitialTurns}
+        onSubmit={handleChatSubmit}
+      />
+    );
+  };
+
   return (
     <div
       ref={pageContainerRef}
@@ -101,18 +154,7 @@ const ContentPage = ({
           </div>
         </main>
 
-        <ChatSection
-          className="h-full shrink-0"
-          turns={turns}
-          initialTurns={CONTENT_PAGE_INITIAL_CHAT_TURNS}
-          onSubmit={({ action }) => {
-            if (action !== "add-slide") {
-              return;
-            }
-
-            handleSlideAdd();
-          }}
-        />
+        {renderChatSection()}
       </div>
     </div>
   );

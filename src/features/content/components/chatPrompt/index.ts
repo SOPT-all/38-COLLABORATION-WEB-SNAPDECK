@@ -25,7 +25,7 @@ export type {
   ChatGuidelineChip,
   ChatMessage,
   ChatMessageRole,
-  ChatMessagesResponse,
+  DeckChatMessageDto,
   ChatPromptMode,
   ContentChatTurn,
   GuidelineChipBehavior,
