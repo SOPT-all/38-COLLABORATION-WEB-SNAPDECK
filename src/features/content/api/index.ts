@@ -1,6 +1,7 @@
 export {
   deleteSlide,
+  getDeckChats,
   getDeckSlides,
-  updateSlideOrder,
   postDeckSlide,
+  updateSlideOrder,
 } from "./contentApi";

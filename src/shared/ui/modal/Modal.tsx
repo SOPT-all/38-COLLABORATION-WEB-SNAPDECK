@@ -22,7 +22,6 @@ interface ModalCloseProps {
 interface ModalContentProps {
   children: ReactNode;
   className?: string;
-  /** 지정 시 해당 요소 안에만 overlay·content를 렌더링합니다. */
   container?: HTMLElement | null;
 }
 
