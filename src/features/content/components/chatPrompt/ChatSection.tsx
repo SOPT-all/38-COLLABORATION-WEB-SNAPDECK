@@ -27,6 +27,7 @@ type ChatSectionProps = {
     value: string;
     mode: ChatPromptMode;
     turnId: string;
+    action: "chat" | "add-slide";
   }) => void;
 };
 

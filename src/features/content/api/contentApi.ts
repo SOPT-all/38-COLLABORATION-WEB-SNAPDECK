@@ -22,3 +22,7 @@ export const updateSlideOrder = (
 export const deleteSlide = (slideId: number) => {
   return http.delete(`/api/v1/slides/${slideId}`);
 };
+
+export const postDeckSlide = (deckId: number) => {
+  return http.post<SlideContentItem[]>(`/api/v1/decks/${deckId}/slides`);
+};
