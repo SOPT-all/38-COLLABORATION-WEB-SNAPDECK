@@ -1,14 +1,16 @@
 import { useCallback, useState } from "react";
 
+import { CHAT_SUBMIT_FALLBACK_RESPONSE } from "@/features/content/constants/chatAssistant";
+import useAssistantResponseScheduler from "@/features/content/hooks/useAssistantResponseScheduler";
 import useContentChatTurns from "@/features/content/hooks/useContentChatTurns";
-import useMockAssistantResponseScheduler from "@/features/content/hooks/useMockAssistantResponseScheduler";
-import { runGuidelineInstantSendMock } from "@/features/content/mocks/runGuidelineInstantSendMock";
 import type {
+  AssistantCompletion,
   ChatGuidelineChip,
   ChatPromptMode,
   ContentChatTurn,
 } from "@/features/content/types/chat";
 import { createTurnId } from "@/features/content/utils/createTurnId";
+import { runGuidelineInstantSend } from "@/features/content/utils/runGuidelineInstantSend";
 
 type UseContentChatSectionParams = {
   turns?: ContentChatTurn[];
@@ -21,7 +23,9 @@ type UseContentChatSectionParams = {
     value: string;
     mode: ChatPromptMode;
     turnId: string;
+    action: "chat" | "add-slide";
   }) => void;
+  getAssistantCompletion?: () => AssistantCompletion | undefined;
 };
 
 const useContentChatSection = ({
@@ -32,6 +36,7 @@ const useContentChatSection = ({
   initialPromptMode = "agent",
   onGuidelineClick,
   onSubmit,
+  getAssistantCompletion,
 }: UseContentChatSectionParams) => {
   const {
     turns,
@@ -45,11 +50,9 @@ const useContentChatSection = ({
     initialTurns,
   });
 
-  const { scheduleMockAssistantCompletion } = useMockAssistantResponseScheduler(
-    {
-      updateTurnById,
-    },
-  );
+  const { scheduleAssistantCompletion } = useAssistantResponseScheduler({
+    updateTurnById,
+  });
 
   const [promptValue, setPromptValue] = useState(initialPromptValue);
   const [promptMode, setPromptMode] =
@@ -64,12 +67,21 @@ const useContentChatSection = ({
         return;
       }
 
-      runGuidelineInstantSendMock({
-        appendTurn,
-        scheduleMockAssistantCompletion,
-      });
+      if (chip.behavior === "instant-send") {
+        const turnId = runGuidelineInstantSend({
+          appendTurn,
+          scheduleAssistantCompletion,
+        });
+
+        onSubmit?.({
+          value: chip.label,
+          mode: "agent",
+          turnId,
+          action: "add-slide",
+        });
+      }
     },
-    [appendTurn, onGuidelineClick, scheduleMockAssistantCompletion],
+    [appendTurn, onGuidelineClick, onSubmit, scheduleAssistantCompletion],
   );
 
   const handlePromptFormSubmit = useCallback(
@@ -79,11 +91,20 @@ const useContentChatSection = ({
       appendTurn({
         id: turnId,
         userMessage: payload.value,
+        assistantStatus: "loading",
       });
+      scheduleAssistantCompletion(
+        turnId,
+        getAssistantCompletion?.() ?? CHAT_SUBMIT_FALLBACK_RESPONSE,
+      );
       setPromptValue("");
-      onSubmit?.({ ...payload, turnId });
+      onSubmit?.({
+        ...payload,
+        turnId,
+        action: "chat",
+      });
     },
-    [appendTurn, onSubmit],
+    [appendTurn, getAssistantCompletion, onSubmit, scheduleAssistantCompletion],
   );
 
   return {

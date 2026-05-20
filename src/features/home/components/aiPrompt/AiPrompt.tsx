@@ -1,3 +1,5 @@
+import type { FormEvent } from "react";
+
 import { RightSmallIcon } from "@/assets";
 import {
   CATEGORY_OPTIONS,
@@ -25,6 +27,7 @@ interface AiPromptProps {
   selectedSourceAction?: SourceActionValue;
   handleSourceActionChange: (value: SourceActionValue | undefined) => void;
   handleSourceActionClick: (value: SourceActionValue) => void;
+  handleSubmit: () => void;
   minSlideCount?: number;
   maxSlideCount?: number;
   handleFileChange?: (files: FileList) => void;
@@ -40,6 +43,7 @@ const AiPrompt = ({
   selectedSourceAction,
   handleSourceActionChange,
   handleSourceActionClick,
+  handleSubmit,
   minSlideCount = 1,
   maxSlideCount = 5,
   handleFileChange,
@@ -85,10 +89,16 @@ const AiPrompt = ({
 
   const isDisabled = !promptValue.trim();
 
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleSubmit();
+  };
+
   return (
-    <section
+    <form
       aria-label="프롬프트 입력"
       className="flex flex-col items-center gap-[2.8rem]"
+      onSubmit={handleFormSubmit}
     >
       <div
         ref={promptContainerRef}
@@ -143,7 +153,7 @@ const AiPrompt = ({
       </div>
 
       <SourceActions handleSourceActionClick={handleSourceActionClick} />
-    </section>
+    </form>
   );
 };
 

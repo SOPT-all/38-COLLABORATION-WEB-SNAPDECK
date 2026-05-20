@@ -6,6 +6,7 @@ import {
   contentQueryKeys,
   useDeckSlidesQuery,
   useDeleteSlideMutation,
+  usePostDeckSlideMutation,
   useUpdateSlideOrderMutation,
 } from "@/features/content/queries";
 import type {
@@ -29,9 +30,13 @@ const getDeckErrorMessage = (error: Error | null) => {
 const useContentDeckSlides = (deckId: number) => {
   const queryClient = useQueryClient();
   const query = useDeckSlidesQuery(deckId);
+
   const { mutate: updateSlideOrder, isPending: isReordering } =
     useUpdateSlideOrderMutation();
   const { mutate: deleteSlide } = useDeleteSlideMutation();
+  const { mutate: postDeckSlide, isPending: isAddingSlide } =
+    usePostDeckSlideMutation();
+
   const slides = query.data ?? EMPTY_SLIDES;
 
   const updateDeckSlides = useCallback(
@@ -85,8 +90,17 @@ const useContentDeckSlides = (deckId: number) => {
     [deckId, isReordering, updateSlideOrder],
   );
 
+  const handleAdd = useCallback(() => {
+    if (isAddingSlide) {
+      return;
+    }
+
+    postDeckSlide(deckId);
+  }, [deckId, isAddingSlide, postDeckSlide]);
+
   return {
     errorMessage: getDeckErrorMessage(query.error),
+    handleAdd,
     handleDelete,
     handleReorder,
     isError: query.isError,

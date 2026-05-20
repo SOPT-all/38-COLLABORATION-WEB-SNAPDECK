@@ -1,6 +1,7 @@
 import { DEFAULT_CHAT_GUIDELINES } from "@/features/content/components/chatPrompt/constants/chatGuideline";
 import useContentChatSection from "@/features/content/hooks/useContentChatSection";
 import type {
+  AssistantCompletion,
   ChatGuidelineChip,
   ChatPromptMode,
   ContentChatTurn,
@@ -27,7 +28,9 @@ type ChatSectionProps = {
     value: string;
     mode: ChatPromptMode;
     turnId: string;
+    action: "chat" | "add-slide";
   }) => void;
+  getAssistantCompletion?: () => AssistantCompletion | undefined;
 };
 
 const ChatSection = ({
@@ -41,6 +44,7 @@ const ChatSection = ({
   onGuidelineClick,
   onThemeSelect,
   onSubmit,
+  getAssistantCompletion,
 }: ChatSectionProps) => {
   const {
     turns,
@@ -60,6 +64,7 @@ const ChatSection = ({
     initialPromptMode,
     onGuidelineClick,
     onSubmit,
+    getAssistantCompletion,
   });
 
   const hasTurns = turns.length > 0;

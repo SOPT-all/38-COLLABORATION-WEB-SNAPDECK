@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+import { useNavigate } from "react-router";
+
+import { PATHS } from "@/app/router/paths";
 import type { CategoryValue } from "@/features/home/constants/categoryOptions";
 import {
   type SourceActionValue,
@@ -9,6 +12,7 @@ import {
 import useUrlModal from "./useUrlModal";
 
 const useHomePrompt = () => {
+  const navigate = useNavigate();
   const [promptValue, setPromptValue] = useState("");
   const [categoryValue, setCategoryValue] = useState<CategoryValue>();
   const [slideCount, setSlideCount] = useState(5);
@@ -42,6 +46,14 @@ const useHomePrompt = () => {
     resetUrlModal();
   };
 
+  const handlePromptSubmit = () => {
+    if (!promptValue.trim()) {
+      return;
+    }
+
+    navigate(PATHS.content);
+  };
+
   return {
     aiPromptProps: {
       promptValue,
@@ -53,6 +65,7 @@ const useHomePrompt = () => {
       selectedSourceAction,
       handleSourceActionChange: setSelectedSourceAction,
       handleSourceActionClick,
+      handleSubmit: handlePromptSubmit,
     },
     urlModalProps: urlModalType
       ? {

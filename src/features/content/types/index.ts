@@ -1,7 +1,7 @@
 export type {
   ChatMessage,
   ChatMessageRole,
-  ChatMessagesResponse,
+  DeckChatMessageDto,
 } from "./chatMessage";
 export type {
   AssistantStatus,
