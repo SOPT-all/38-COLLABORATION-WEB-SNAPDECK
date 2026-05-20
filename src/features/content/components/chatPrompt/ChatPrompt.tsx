@@ -145,7 +145,7 @@ const ChatPrompt = ({
             aria-haspopup="listbox"
             aria-label="프롬프트 모드 선택"
             className={cn(
-              "typo-caption-m-11 inline-flex items-center gap-0 transition-colors",
+              "typo-caption-m-11 hover:text-snapdeck-400 inline-flex items-center gap-0 transition-colors",
               isBottomRowActive ? "text-snapdeck-400" : "text-snapdeck-300",
             )}
             onClick={handleModeMenuToggleClick}
