@@ -10,6 +10,11 @@ export type ContentChatTurn = {
   assistantMessage?: string;
 };
 
+export type AssistantCompletion = {
+  statusLabel: string;
+  assistantMessage: string;
+};
+
 export type GuidelineChipBehavior = "instant-send" | "fill-input";
 
 export type ChatGuidelineChip = {

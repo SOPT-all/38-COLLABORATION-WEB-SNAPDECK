@@ -10,8 +10,12 @@ export const deckSlidesQueryOptions = (deckId: number) =>
     queryFn: () => getDeckSlides(deckId),
   });
 
-export const deckChatsQueryOptions = (deckId: number) =>
+export const deckChatsQueryOptions = (
+  deckId: number,
+  options: { enabled?: boolean } = {},
+) =>
   queryOptions({
     queryKey: contentQueryKeys.deckChats(deckId),
     queryFn: () => getDeckChats(deckId),
+    enabled: options.enabled,
   });

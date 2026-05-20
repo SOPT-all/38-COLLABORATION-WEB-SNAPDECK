@@ -38,10 +38,13 @@ const ContentPage = ({
 
   const {
     initialTurns: chatInitialTurns,
+    getAssistantCompletion,
     isPending: isChatPending,
     isError: isChatError,
     errorMessage: chatErrorMessage,
-  } = useContentPageChats(CONTENT_DEFAULT_DECK_ID);
+  } = useContentPageChats(CONTENT_DEFAULT_DECK_ID, {
+    enabled: turns === undefined,
+  });
 
   const handleChatSubmit: ComponentProps<typeof ChatSection>["onSubmit"] = ({
     action,
@@ -129,6 +132,7 @@ const ContentPage = ({
       <ChatSection
         className="h-full shrink-0"
         initialTurns={chatInitialTurns}
+        getAssistantCompletion={getAssistantCompletion}
         onSubmit={handleChatSubmit}
       />
     );

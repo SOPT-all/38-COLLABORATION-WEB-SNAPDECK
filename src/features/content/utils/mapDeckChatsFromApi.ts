@@ -1,4 +1,7 @@
-import type { ContentChatTurn } from "@/features/content/types/chat";
+import type {
+  AssistantCompletion,
+  ContentChatTurn,
+} from "@/features/content/types/chat";
 import type {
   ChatMessage,
   DeckChatMessageDto,
@@ -8,6 +11,8 @@ import { mapChatMessagesToTurns } from "./mapChatMessagesToTurns";
 
 const DEFAULT_CHAT_AI_STATUS_LABEL = "프로젝트 분석 완료";
 const DEFAULT_INITIAL_CHAT_MESSAGE_COUNT = 2;
+const sortDeckChatsByOrder = (messages: DeckChatMessageDto[]) =>
+  [...messages].sort((a, b) => a.order - b.order);
 
 export const mapDeckChatFromApi = (dto: DeckChatMessageDto): ChatMessage => ({
   id: String(dto.id),
@@ -20,11 +25,35 @@ export const mapDeckChatFromApi = (dto: DeckChatMessageDto): ChatMessage => ({
 export const mapDeckChatToInitialTurns = (
   messages: DeckChatMessageDto[],
 ): ContentChatTurn[] => {
-  const defaultMessages = messages.slice(0, DEFAULT_INITIAL_CHAT_MESSAGE_COUNT);
+  const initialMessages = sortDeckChatsByOrder(messages).slice(
+    0,
+    DEFAULT_INITIAL_CHAT_MESSAGE_COUNT,
+  );
 
-  if (defaultMessages.length === 0) {
+  if (initialMessages.length === 0) {
     return [];
   }
 
-  return mapChatMessagesToTurns(defaultMessages.map(mapDeckChatFromApi));
+  return mapChatMessagesToTurns(initialMessages.map(mapDeckChatFromApi));
+};
+
+export const mapDeckChatToPendingCompletions = (
+  messages: DeckChatMessageDto[],
+): AssistantCompletion[] => {
+  const pendingMessages = sortDeckChatsByOrder(messages).slice(
+    DEFAULT_INITIAL_CHAT_MESSAGE_COUNT,
+  );
+
+  return mapChatMessagesToTurns(pendingMessages.map(mapDeckChatFromApi))
+    .filter(
+      (
+        turn,
+      ): turn is ContentChatTurn & {
+        assistantMessage: string;
+      } => Boolean(turn.assistantMessage),
+    )
+    .map((turn) => ({
+      statusLabel: turn.statusLabel ?? DEFAULT_CHAT_AI_STATUS_LABEL,
+      assistantMessage: turn.assistantMessage,
+    }));
 };
